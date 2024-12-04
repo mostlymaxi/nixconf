@@ -1,6 +1,17 @@
 {...}: {
-  services.xserver.enable = false;
+  services = {
+    xserver.enable = false;
 
-  services.displayManager.sddm.wayland.enable = true;
-  services.desktopManager.plasma6.enable = true;
+    desktopManager.plasma6 = {
+      enable = true;
+      enableQt5Integration = true; #disable for qt6 full version
+    };
+
+    displayManager = {
+      defaultSession = "plasma";
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+      };
+    };
 }

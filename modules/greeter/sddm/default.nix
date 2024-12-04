@@ -8,4 +8,5 @@
         wayland.enable = true;
       };
     };
+  };
 }

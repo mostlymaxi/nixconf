@@ -9,6 +9,7 @@
     [
       ../../modules/system.nix
       ../../modules/desktop/plasma
+      ../../modules/greeter/sddm
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix

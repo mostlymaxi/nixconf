@@ -43,7 +43,6 @@
 
           modules = [
             ./hosts/nixos-test
-            ./users/${username}/nixos.nix
 
             home-manager.nixosModules.home-manager
             {

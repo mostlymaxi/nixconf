@@ -9,13 +9,11 @@
     [
       ../../modules/system.nix
       ../../modules/desktop/plasma
-      ../../modules/greeter/sddm
+      ../../modules/greeter/greetd
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-
-  services.mydesktop.plasma.enable = true;
 
   # Bootloader.
   boot.loader = {

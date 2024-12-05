@@ -67,6 +67,8 @@
 
 		  modules = [
 		    ./hosts/strawberry
+			
+                    plasma-manager.homeManagerModules.plasma-manager
 
 		    home-manager.nixosModules.home-manager
 		    {

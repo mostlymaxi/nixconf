@@ -1,4 +1,4 @@
-{config, ...}: 
+{config, lib, ...}: 
   let 
     cfg = config.services.mydesktop.plasma;
   in 

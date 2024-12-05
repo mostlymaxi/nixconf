@@ -1,10 +1,8 @@
 {config, ...}: 
   let 
     cfg = config.services.mydesktop.plasma;
-  in {
-
-
-  
+  in 
+  with lib; {
   services = mkif cfg.enable {
     xserver.enable = false;
 

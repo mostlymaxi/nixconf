@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ../../home/core.nix
-    ../../home/desktop/plasma
+    ../../home/desktop/niri
   ];
 
   programs.git = {

@@ -8,6 +8,7 @@
   imports =
     [
       ../../modules/system.nix
+      ../../modules/greeter/sddm
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -15,17 +16,8 @@
 
   # Bootloader.
   boot.loader = {
-    # efi = {
-    #   canTouchEfiVariables = true;
-    #   efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
-    # };
-    grub = {
-      enable = true;
-      device = "/dev/sda";  #  "nodev"
-      efiSupport = false;
-      useOSProber = true;
-      #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
-    };
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
   };
 
   networking.hostName = "nixos-test"; # Define your hostname.

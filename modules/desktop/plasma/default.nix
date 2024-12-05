@@ -3,7 +3,7 @@
     cfg = config.services.mydesktop.plasma;
   in 
   with lib; {
-  services = mkif cfg.enable {
+  services = mkIf cfg.enable {
     xserver.enable = false;
 
     desktopManager.plasma6 = {

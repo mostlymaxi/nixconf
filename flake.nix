@@ -1,14 +1,6 @@
 {
   description = "maxi's WIP NixOS configuration";
 
-  ##################################################################################################################
-  #
-  # Want to know Nix in details? Looking for a beginner-friendly tutorial?
-  # Check out https://github.com/ryan4yin/nixos-and-flakes-book !
-  #
-  ##################################################################################################################
-
-  # the nixConfig here only affects the flake itself, not the system configuration!
   nixConfig = {
     # substituers will be appended to the default substituters when fetching packages
     # nix com    extra-substituters = [munity's cache server
@@ -21,19 +13,30 @@
   };
 
   inputs = {
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs = inputs @ {
     self,
     nixpkgs,
     home-manager,
+    plasma-manager,
     ...
   }: {
     nixosConfigurations = {
-      nixos-test = let
+      orange-vm = let
         username = "maxi";
         specialArgs = {inherit username;};
       in
@@ -42,7 +45,7 @@
           system = "x86_64-linux";
 
           modules = [
-            ./hosts/nixos-test
+            ./hosts/orange-vm
 
             home-manager.nixosModules.home-manager
             {

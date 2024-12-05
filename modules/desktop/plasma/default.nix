@@ -1,5 +1,11 @@
-{...}: {
-  services = {
+{config, ...}: 
+  let 
+    cfg = config.services.mydesktop.plasma;
+  in {
+
+
+  
+  services = mkif cfg.enable {
     xserver.enable = false;
 
     desktopManager.plasma6 = {

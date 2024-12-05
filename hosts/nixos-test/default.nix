@@ -15,6 +15,8 @@
       ./hardware-configuration.nix
     ];
 
+  services.mydesktop.plasma.enable = true;
+
   # Bootloader.
   boot.loader = {
     # efi = {

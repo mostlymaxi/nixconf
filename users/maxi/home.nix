@@ -2,7 +2,7 @@
   imports = [
     ../../home/core.nix
     ../../home/fonts
-    ../../home/desktop/niri
+    ../../home/desktop
   ];
 
   programs.git = {

@@ -1,10 +1,9 @@
 {pkgs, ...}: {
-  fonts.fontconfig.enableProfileFonts = true;
+  fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs; {
+  home.packages = with pkgs; [
     noto-fonts
     
-  };
-
+  ];
 }
 

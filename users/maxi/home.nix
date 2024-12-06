@@ -4,6 +4,7 @@
     ../../home/fonts
     ../../home/desktop
     ../../home/shell
+    ../../home/programs
   ];
   
   desktop = "niri";

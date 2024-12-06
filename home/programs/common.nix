@@ -17,51 +17,24 @@
 
     # misc
     libnotify
-    wineWowPackages.wayland
     xdg-utils
     graphviz
 
     # productivity
-    obsidian
 
     # IDE
-    insomnia
 
     # cloud native
     docker-compose
-    kubectl
-
-    nodejs
-    nodePackages.npm
-    nodePackages.pnpm
-    yarn
 
     # db related
-    dbeaver-bin
-    mycli
-    pgcli
   ];
 
   programs = {
-    tmux = {
-      enable = true;
-      clock24 = true;
-      keyMode = "vi";
-      extraConfig = "mouse on";
-    };
-
-    bat = {
+     bat = {
       enable = true;
       config = {
         pager = "less -FR";
-        theme = "catppuccin-mocha";
-      };
-      themes = {
-        # https://raw.githubusercontent.com/catppuccin/bat/main/Catppuccin-mocha.tmTheme
-        catppuccin-mocha = {
-          src = catppuccin-bat;
-          file = "Catppuccin-mocha.tmTheme";
-        };
       };
     };
 
@@ -73,7 +46,6 @@
 
     skim = {
       enable = true;
-      enableZshIntegration = true;
       defaultCommand = "rg --files --hidden";
       changeDirWidgetOptions = [
         "--preview 'exa --icons --git --color always -T -L 3 {} | head -200'"

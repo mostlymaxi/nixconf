@@ -3,7 +3,11 @@
     ../../home/core.nix
     ../../home/fonts
     ../../home/desktop
+    ../../home/shell
   ];
+  
+  desktop = "niri";
+  shell = "fish";
 
   programs.git = {
     userName = "Maxi Saparov";

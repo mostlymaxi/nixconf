@@ -3,7 +3,7 @@
 
   options = {
     terminal = mkOption {
-      type = types.enum ["foot"];
+      type = types.enum [];
     };
 
     launchTerminal = mkOption {

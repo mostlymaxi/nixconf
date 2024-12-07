@@ -2,7 +2,10 @@
   imports = [ niri.homeModules.niri ];
 
   config = lib.mkIf (config.desktop == "niri") {
-    startDesktop = "niri";
+    home.file.".wayland-session" = {
+      source = "${pkgs.niri}/bin/niri-session";
+      executable = true;
+    };
 
     programs.niri.package = pkgs.niri;
 

@@ -1,7 +1,13 @@
-{pkgs, lib, config, options, catppuccin, ...}: {
+{lib, config, catppuccin, ...}: with lib; {
   imports = [ catppuccin.homeManagerModules.catppuccin ];
 
-  config = {
+  options = {
+    style = mkOption {
+      type = types.enum ["catppuccin"];
+    };
+  };
+
+  config = lib.mkIf (config.style == "catppuccin") {
     catppuccin.enable = true;
     catppuccin.flavor = "mocha";
   };

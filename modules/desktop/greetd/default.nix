@@ -1,11 +1,13 @@
 {pkgs, ...}: {
   services = {
+    xserver.enable = false;
+
     greetd = {
       enable = true;
 
       settings = rec {
 	default_session = {
-          command = "${pkgs.greetd.greetd}/bin/agreety --cmd niri-session";
+          command = "${pkgs.greetd.greetd}/bin/agreety --cmd $HOME/.wayland-session";
 	};
       };
     };

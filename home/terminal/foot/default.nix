@@ -1,6 +1,12 @@
-{pkgs, lib, config, ...}: {
+{pkgs, lib, config, ...}: with lib; {
+  options = {
+    terminal = mkOption {
+      type = types.enum ["foot"];
+    };
+  };
+
   config = lib.mkIf (config.terminal == "foot") {
-    launchTerminal = "footclient";
+    launchTerminal = "${pkgs.foot}/bin/footclient";
 
     programs.foot = {
       enable = true;
@@ -9,7 +15,7 @@
 
       settings = {
 	main = {
-	  shell = "${config.shell}";
+	  shell = "${config.launchShell}";
 	  term = "xterm-256color";
 	  font = "Cascadia Mono:size=14";
 	  dpi-aware = "yes";

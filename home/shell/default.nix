@@ -5,6 +5,11 @@
     shell = mkOption {
       type = types.enum [];
     };
+
+    launchShell = mkOption {
+      type = types.str;
+    };
+
     shellAliases = mkOption {
       type = types.attrsOf types.str;
       default = {

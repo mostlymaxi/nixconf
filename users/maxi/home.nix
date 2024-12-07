@@ -8,6 +8,7 @@
   desktop = "niri";
   terminal = "foot";
   shell = "fish";
+  style = "catppuccin";
 
   programs.git = {
     userName = "Maxi Saparov";

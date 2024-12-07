@@ -1,12 +1,13 @@
-{pkgs, ...}: {
+{pkgs, specialArgs, ...}: {
   services = {
     xserver.enable = false;
 
     greetd = {
       enable = true;
 
-      settings = rec {
+      settings = {
 	default_session = {
+	  user = specialArgs.username;
           command = "${pkgs.greetd.greetd}/bin/agreety --cmd $HOME/.wayland-session";
 	};
       };

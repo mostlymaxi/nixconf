@@ -1,14 +1,10 @@
 {pkgs, ...}: {
   imports = [
-    ../../home/core.nix
-    ../../home/fonts
-    ../../home/desktop
-    ../../home/terminal
-    ../../home/shell
-    ../../home/programs
-    ../../home/style/catppuccin
+    ../../home
   ];
-  
+ 
+  programs.enable = true; 
+
   desktop = "niri";
   terminal = "foot";
   shell = "fish";

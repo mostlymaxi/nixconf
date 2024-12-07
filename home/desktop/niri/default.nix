@@ -14,6 +14,10 @@
 	  matches = [{ app-id = "^foot$"; }];
 	  default-column-width = { proportion = 1.0 / 2.0; };
 	}
+	{
+	  matches = [{ app-id = "^footclient$"; }];
+	  default-column-width = { proportion = 1.0 / 2.0; };
+	}
       ];
       
       settings.binds = with config.lib.niri.actions; {

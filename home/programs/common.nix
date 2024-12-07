@@ -14,6 +14,7 @@
     ripgrep
     yq-go # https://github.com/mikefarah/yq
     htop
+    nnn # tui folder
 
     # misc
     libnotify

@@ -5,7 +5,7 @@
 
       settings = {
         default_session = {
-          command = "${pkgs.greetd.greetd}/bin/agreety --cmd niri";
+          command = "${pkgs.greetd.greetd}/bin/agreety --cmd niri-session";
         };
       };
     };

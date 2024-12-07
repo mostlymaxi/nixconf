@@ -5,5 +5,9 @@
     terminal = mkOption {
       type = types.enum ["foot"];
     };
+
+    launchTerminal = mkOption {
+      type = types.str;
+    };
   };
 }

@@ -8,6 +8,7 @@
   desktop = "niri";
   terminal = "foot";
   shell = "fish";
+  launcher = "fuzzel";
   style = "catppuccin";
 
   programs.git = {

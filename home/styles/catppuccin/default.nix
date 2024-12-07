@@ -8,6 +8,7 @@
   };
 
   config = lib.mkIf (config.style == "catppuccin") {
+    # gtk.catppuccin.enable = true; # deprecated
     catppuccin.enable = true;
     catppuccin.flavor = "mocha";
   };

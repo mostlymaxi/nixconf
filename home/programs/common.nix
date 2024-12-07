@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  catppuccin-bat,
   ...
 }: {
   home.packages = with pkgs; [
@@ -9,17 +8,23 @@
     zip
     unzip
     p7zip
+    zstd
 
     # utils
     ripgrep
-    yq-go # https://github.com/mikefarah/yq
+    # yq-go # https://github.com/mikefarah/yq
     htop
     nnn # tui folder
+    fzf
 
     # misc
-    libnotify
+    # libnotify
     xdg-utils
-    graphviz
+    # graphviz
+
+    # qt
+    qt6Packages.qtstyleplugin-kvantum
+    qt6Packages.qt6ct
 
     # productivity
 
@@ -53,6 +58,12 @@
         "--exact"
       ];
     };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme.name = "kvantum";
+    style.name = "kvantum";
   };
 
   services = {

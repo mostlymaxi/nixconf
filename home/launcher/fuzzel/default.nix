@@ -1,6 +1,6 @@
 {pkgs, lib, config, ...}: with lib; {
   options = {
-    terminal = mkOption {
+    launcher = mkOption {
       type = types.enum ["fuzzel"];
     };
   };
@@ -10,6 +10,13 @@
 
     programs.fuzzel = {
       enable = true;
+
+      settings = {
+	main = {
+	  terminal = "${config.launchTerminal}";
+	  font = "Cascadia Mono:size=18";
+	};
+      };
     };
   };
 }

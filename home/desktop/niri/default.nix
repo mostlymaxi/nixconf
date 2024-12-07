@@ -25,6 +25,7 @@
       
       settings.binds = with config.lib.niri.actions; {
         "Mod+Return".action = spawn "${config.launchTerminal}";
+	"Mod+D".action = spawn "${config.launchLauncher}";
 
 	"Mod+Q".action = close-window;
 	"Mod+Shift+E".action = quit { skip-confirmation = true; };

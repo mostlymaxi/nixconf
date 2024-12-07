@@ -10,7 +10,7 @@
 
   home.packages = with pkgs; [
     # audio control
-    pavucontrol
+    lxqt.pavucontrol-qt
     playerctl
     pulsemixer
     # images

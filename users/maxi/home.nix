@@ -6,6 +6,7 @@
     ../../home/terminal
     ../../home/shell
     ../../home/programs
+    ../../home/style/catppuccin
   ];
   
   desktop = "niri";

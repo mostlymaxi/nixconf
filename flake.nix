@@ -22,6 +22,7 @@
     };
 
     niri.url = "github:sodiboo/niri-flake";
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = inputs @ {

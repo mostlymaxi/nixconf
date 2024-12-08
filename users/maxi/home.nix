@@ -9,7 +9,7 @@
   terminal = "foot";
   shell = "fish";
   launcher = "fuzzel";
-  style = "catppuccin";
+  # style = "catppuccin";
 
   programs.git = {
     userName = "Maxi Saparov";

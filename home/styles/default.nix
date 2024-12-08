@@ -3,7 +3,7 @@
  
   stylix = {
     enable = true;
-    image = ~/Downloads/1.png;
+    image = ./1.png;
     polarity = "dark";
   }; 
 }

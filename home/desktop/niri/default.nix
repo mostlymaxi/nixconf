@@ -7,19 +7,54 @@
       executable = true;
     };
 
+    nixpkgs.overlays = [niri.overlays.niri];
     programs.niri.package = pkgs.niri;
 
     programs.niri = {
       enable = true;
 
+      settings.prefer-no-csd = true;
+
+      settings.cursor.size = 12;
+
+      settings.layout = {
+        gaps = 16;
+        # struts.left = 64;
+        # struts.right = 64;
+        always-center-single-column = true;
+
+        # border.width = 4;
+        # border.enable = true;
+
+        focus-ring.active.gradient = {
+          from = "#b4befe";
+          to = "#f38ba8";
+	  angle = 45;
+        };
+     };
+
       settings.window-rules = [
 	{
 	  matches = [{ app-id = "^foot$"; }];
 	  default-column-width = { proportion = 1.0 / 2.0; };
+	  open-maximized = true;
+	  opacity = .9;
 	}
 	{
 	  matches = [{ app-id = "^footclient$"; }];
 	  default-column-width = { proportion = 1.0 / 2.0; };
+	  open-maximized = true;
+	  opacity = .9;
+	}
+        {
+	  matches = [{ app-id = "^firefox$"; }];
+	  focus-ring.active.color = "#E66000";
+	  # borken for now
+          # focus-ring.active.gradient = {
+          #   from = "orange";
+          #   to = "red";
+          #   in' = "srgb-linear";
+          # };
 	}
       ];
       

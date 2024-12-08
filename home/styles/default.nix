@@ -1,9 +1,10 @@
-{lib, ...}: with lib; {
-  imports = [./catppuccin];
-
-  options = {
-    style = mkOption {
-      type = types.enum [];
-    };
-  };
+{pkgs, lib, config, options, stylix, ...}: {
+  imports = [ stylix.homeManagerModules.stylix ];
+ 
+  stylix = {
+    enable = true;
+    image = ~/Downloads/1.png;
+    polarity = "dark";
+  }; 
 }
+

@@ -9,8 +9,9 @@
   # ];
 
   home.packages = with pkgs; [
+    ffmpeg-full
+
     # audio control
-    lxqt.pavucontrol-qt
     playerctl
     pulsemixer
     # images
@@ -18,15 +19,18 @@
   ];
 
   programs = {
-    mpv = {
+    obs-studio = {
       enable = true;
-      defaultProfiles = ["gpu-hq"];
-      scripts = [pkgs.mpvScripts.mpris];
-    };
 
-    obs-studio.enable = true;
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+        obs-vaapi
+        obs-backgroundremoval
+        obs-pipewire-audio-capture
+      ];
+    }; 
   };
-
+ 
   services = {
     playerctld.enable = true;
   };

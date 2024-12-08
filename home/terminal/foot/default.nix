@@ -14,12 +14,14 @@
       server.enable = true;
 
       settings = {
+        csd = { preferred = "server"; };
+
 	main = {
 	  shell = "${config.launchShell}";
 	  term = "xterm-256color";
 	  font = "Cascadia Mono:size=14";
 	  dpi-aware = "yes";
-	  pad = "10x0";
+	  pad = "5x0";
 	};
 	
 	mouse = {
@@ -27,7 +29,7 @@
 	};
 
 # 	colors = {
-# 	  alpha = "0.75";
+#  	  alpha = "0.75";
 # 	  foreground = "cad3f5"; # Text
 # 	  background = "24273a"; # Base
 # 	  regular0 = "494d64";   # Surface 1

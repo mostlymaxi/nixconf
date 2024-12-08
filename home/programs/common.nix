@@ -16,6 +16,9 @@
     htop
     nnn # tui folder
     fzf
+    fastfetch
+    hyfetch
+    grc
 
     # misc
     # libnotify
@@ -23,8 +26,8 @@
     # graphviz
 
     # qt
-    qt6Packages.qtstyleplugin-kvantum
-    qt6Packages.qt6ct
+    libsForQt5.qtstyleplugin-kvantum
+    libsForQt5.qt5ct
 
     # productivity
 

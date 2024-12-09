@@ -16,14 +16,36 @@
     pulsemixer
     # images
     imv
+
   ];
+
+  xdg.portal = {
+    enable = true;
+
+    config = {
+      common = {
+        default = [
+          "gnome"
+        ];
+        "org.freedesktop.impl.portal.Secret" = [
+          "gnome-keyring"
+        ];
+      };
+    };
+
+    xdgOpenUsePortal = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gnome # for gtk
+      # xdg-desktop-portal-kde  # for kde
+    ];
+  };
 
   programs = {
     obs-studio = {
       enable = true;
 
       plugins = with pkgs.obs-studio-plugins; [
-        wlrobs
+        # wlrobs
         obs-vaapi
         obs-backgroundremoval
         obs-pipewire-audio-capture
@@ -31,7 +53,7 @@
     }; 
   };
  
-  services = {
-    playerctld.enable = true;
-  };
+  # services = {
+  #   playerctld.enable = true;
+  # };
 }

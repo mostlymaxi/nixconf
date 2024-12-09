@@ -1,6 +1,6 @@
 {pkgs, specialArgs, ...}: {
   services = {
-    xserver.enable = true;
+    xserver.enable = false;
 
     greetd = {
       enable = true;

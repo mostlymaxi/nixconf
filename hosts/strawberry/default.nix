@@ -20,6 +20,14 @@
     efi.canTouchEfiVariables = true;
   };
 
+  xdg.portal = {
+    enable = true;
+
+    extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+  };
+
+  services.flatpak.enable = true;
+
   networking.hostName = "nixos-test"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 

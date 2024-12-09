@@ -26,9 +26,9 @@
     # graphviz
 
     # qt
-    libsForQt5.qtstyleplugin-kvantum
-    libsForQt5.qt5ct
-
+    # libsForQt5.qtstyleplugin-kvantum
+    # libsForQt5.qt5ct
+    #
     # productivity
 
     # IDE
@@ -51,26 +51,16 @@
     eza.enable = true; # A modern replacement for ‘ls’
     jq.enable = true; # A lightweight and flexible command-line JSON processor
     ssh.enable = true;
-    aria2.enable = true;
-
-    skim = {
-      enable = true;
-      defaultCommand = "rg --files --hidden";
-      changeDirWidgetOptions = [
-        "--preview 'exa --icons --git --color always -T -L 3 {} | head -200'"
-        "--exact"
-      ];
-    };
   };
 
-  qt = {
-    enable = true;
-    # platformTheme = "qt5ct";
-  };
 
+  # qt = {
+  #   enable = true;
+  #   platformTheme = "qt5ct";
+  #   # style.name = "kvantum";
+  # };
+  #
   services = {
-    syncthing.enable = true;
-
     # auto mount usb drives
     udiskie.enable = true;
   };

@@ -8,7 +8,7 @@
   imports =
     [
       ../../modules/system.nix
-      ../../modules/desktop/greetd
+      ../../modules/greeter/greetd
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -20,13 +20,16 @@
     efi.canTouchEfiVariables = true;
   };
 
+  # ------- HACK -------
+  # i want this to be a part of home manager
+  # but for some reason niri is unhappy with me
+  # so it needs to be here :(
   xdg.portal = {
     enable = true;
 
     extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+    config.common.default = "*";
   };
-
-  services.flatpak.enable = true;
 
   networking.hostName = "nixos-test"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

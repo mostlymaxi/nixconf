@@ -69,18 +69,18 @@
       #  - settings: Override the default settings passed when initializing the server.
       #        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       servers = {
-        # clangd = {
-        #  enable = true;
-        #}
+        clangd = {
+         enable = true;
+        }
         # gopls = {
         #  enable = true;
         #}
         # pyright = {
         #  enable = true;
         #}
-        # rust_analyzer = {
-        #  enable = true;
-        #}
+        rust_analyzer = {
+         enable = true;
+        }
         # ...etc. See `https://nix-community.github.io/nixvim/plugins/lsp` for a list of pre-configured LSPs
         #
         # Some languages (like typscript) have entire language plugins that can be useful:

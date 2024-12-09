@@ -19,8 +19,8 @@
 	main = {
 	  shell = "${config.launchShell}";
 	  term = "xterm-256color";
-	  font = "Cascadia Mono:size=14";
-	  dpi-aware = "yes";
+	  # font = "Cascadia Mono:size=14";
+	  # dpi-aware = "yes";
 	  pad = "5x0";
 	};
 	

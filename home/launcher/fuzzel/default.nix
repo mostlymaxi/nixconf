@@ -14,7 +14,7 @@
       settings = {
 	main = {
 	  terminal = "${config.launchTerminal}";
-	  font = "Cascadia Mono:size=18";
+	  font = mkForce "${config.stylix.fonts.monospace.name}:size=${toString config.stylix.fonts.sizes.popups}";
 	};
       };
     };

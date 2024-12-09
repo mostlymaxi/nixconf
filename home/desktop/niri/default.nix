@@ -8,14 +8,15 @@
     };
 
     nixpkgs.overlays = [niri.overlays.niri];
-    programs.niri.package = pkgs.niri;
+    # programs.niri.package = pkgs.niri-unstable;
 
     programs.niri = {
       enable = true;
 
       settings.prefer-no-csd = true;
 
-      settings.cursor.size = 12;
+      settings.cursor.size = config.stylix.cursor.size;
+      settings.cursor.hide-after-inactive-ms = 3000;
 
       settings.layout = {
         gaps = 16;
@@ -48,19 +49,22 @@
 	}
         {
 	  matches = [{ app-id = "^firefox$"; }];
-	  focus-ring.active.color = "#E66000";
+	  # focus-ring.active.color = "#E66000";
 	  # borken for now
-          # focus-ring.active.gradient = {
-          #   from = "orange";
-          #   to = "red";
-          #   in' = "srgb-linear";
-          # };
+          focus-ring.active.gradient = {
+            from = "orange";
+            to = "red";
+            in' = "srgb-linear";
+          };
 	}
       ];
       
       settings.binds = with config.lib.niri.actions; {
         "Mod+Return".action = spawn "${config.launchTerminal}";
 	"Mod+D".action = spawn "${config.launchLauncher}";
+
+	"Mod+P".action = screenshot-screen;
+	"Mod+Shift+P".action = screenshot-window;
 
 	"Mod+Q".action = close-window;
 	"Mod+Shift+E".action = quit { skip-confirmation = true; };

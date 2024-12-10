@@ -6,7 +6,8 @@
   };
 
   config = lib.mkIf (config.terminal == "foot") {
-    launchTerminal = "${pkgs.foot}/bin/footclient";
+    # launchTerminal = "${pkgs.foot}/bin/footclient";
+    launchTerminal = "footclient";
 
     programs.foot = {
       enable = true;

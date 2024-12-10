@@ -6,7 +6,8 @@
   };
 
   config = lib.mkIf (config.launcher == "fuzzel") {
-    launchLauncher = "${pkgs.fuzzel}/bin/fuzzel";
+    # launchLauncher = "${pkgs.fuzzel}/bin/fuzzel";
+    launchLauncher = "fuzzel";
 
     programs.fuzzel = {
       enable = true;

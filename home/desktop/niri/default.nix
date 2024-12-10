@@ -50,6 +50,7 @@
       ];
 
       settings.binds = with config.lib.niri.actions; {
+	"Mod+Shift+Slash".action = show-hotkey-overlay;
 	"Mod+Return".action = spawn "${config.launchTerminal}";
 	"Mod+D".action = spawn "${config.launchLauncher}";
 

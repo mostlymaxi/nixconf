@@ -21,6 +21,10 @@
       settings.hotkey-overlay.skip-at-startup = true;
       settings.cursor.hide-after-inactive-ms = 3000;
 
+      settings.environment = {
+	DISPLAY = ":0";
+      };
+
       settings.layout = {
 	gaps = 16;
 	always-center-single-column = true;

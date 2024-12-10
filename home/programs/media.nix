@@ -11,6 +11,8 @@
   home.packages = with pkgs; [
     ffmpeg-full
 
+    # spicetify
+
     # audio control
     # images
     imv

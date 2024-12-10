@@ -31,10 +31,17 @@
     # };
 
     # Coca Cola Anime Girl
+    # image = pkgs.fetchurl {
+    #     url = "https://w.wallhaven.cc/full/r2/wallhaven-r27kwq.jpg";
+    #     hash = "sha256-NcHYoGCORoMs+I0jW5Z6XR07X8Iizfh7Z1gLULlepe0=";
+    # };
+
+    # DanDanDan
     image = pkgs.fetchurl {
-        url = "https://w.wallhaven.cc/full/r2/wallhaven-r27kwq.jpg";
-        hash = "sha256-NcHYoGCORoMs+I0jW5Z6XR07X8Iizfh7Z1gLULlepe0=";
+        url = "https://w.wallhaven.cc/full/yx/wallhaven-yxd17l.png";
+        hash = "sha256-nmBdaoYEb09MMy25IKNGDMsbL/8ldhhgWcg1v9aakuI=";
     };
+
 
     polarity = "dark";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";

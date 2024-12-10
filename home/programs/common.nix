@@ -1,7 +1,7 @@
 {
-  lib,
-  pkgs,
-  ...
+lib,
+pkgs,
+...
 }: {
   home.packages = with pkgs; [
     # archives
@@ -16,13 +16,13 @@
     htop
     nnn # tui folder
     fzf
-    fastfetch
     hyfetch
     grc
 
     # misc
     libnotify
     xdg-utils
+    xwayland
     # graphviz
 
     # qt
@@ -31,17 +31,109 @@
     #
     # productivity
 
-    # IDE
+    vesktop
 
     # cloud native
     docker-compose
   ];
 
   programs = {
-     bat = {
+    bat = {
       enable = true;
       config = {
         pager = "less -FR";
+      };
+    };
+
+    fastfetch = {
+      enable = true;
+      settings = {
+        schema = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
+        display = {
+          separator = " ";
+        };
+        modules = [
+          "break"
+          {
+            type = "host";
+            key = "╭─󰌢";
+            keyColor = "green";
+          }
+          {
+            type = "cpu";
+            key = "├─󰻠";
+            keyColor = "green";
+          }
+          {
+            type = "gpu";
+            key = "├─󰍛";
+            keyColor = "green";
+          }
+          {
+            type = "disk";
+            key = "├─";
+            keyColor = "green";
+          }
+          {
+            type = "memory";
+            key = "├─󰑭";
+            keyColor = "green";
+          }
+          {
+            type = "swap";
+            key = "├─󰓡";
+            keyColor = "green";
+          }
+          {
+            type = "display";
+            key = "╰─󰍹";
+            keyColor = "green";
+          }
+          "break"
+
+          {
+            type = "shell";
+            key = "╭─";
+            keyColor = "yellow";
+          }
+          {
+            type = "terminal";
+            key = "├─";
+            keyColor = "yellow";
+          }
+          {
+            type = "wm";
+            key = "├─";
+            keyColor = "yellow";
+          }
+          {
+            type = "terminalfont";
+            key = "╰─";
+            keyColor = "yellow";
+          }
+          "break"
+          {
+            type = "title";
+            key = "╭─";
+            format = "{user-name}@{host-name}";
+            keyColor = "blue";
+          }
+          {
+            type = "os";
+            key = "├─{icon}"; # Just get your distro's logo off nerdfonts.com
+            keyColor = "blue";
+          }
+          {
+            type = "kernel";
+            key = "├─";
+            keyColor = "blue";
+          }
+          {
+            type = "uptime";
+            key = "╰─󰅐";
+            keyColor = "blue";
+          }
+        ];
       };
     };
 

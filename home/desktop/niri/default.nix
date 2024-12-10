@@ -1,7 +1,10 @@
-{pkgs, lib, config, options, niri, ...}: {
-  imports = [ niri.homeModules.niri ];
+{pkgs, lib, config, options, niri, ...}: with lib; {
+  imports = [ 
+    niri.homeModules.niri
+    ./stylix.nix
+  ];
 
-  config = lib.mkIf (config.desktop == "niri") {
+  config = mkIf (config.desktop == "niri") {
     home.file.".wayland-session" = {
       source = "${pkgs.niri}/bin/niri-session";
       executable = true;
@@ -14,25 +17,13 @@
       enable = true;
 
       settings.prefer-no-csd = true;
-
-      settings.cursor.size = config.stylix.cursor.size;
       settings.cursor.hide-after-inactive-ms = 3000;
 
       settings.layout = {
-        gaps = 16;
-        # struts.left = 64;
-        # struts.right = 64;
-        always-center-single-column = true;
+	gaps = 16;
+	always-center-single-column = true;
+      };
 
-        # border.width = 4;
-        # border.enable = true;
-
-        focus-ring.active.gradient = {
-          from = "#b4befe";
-          to = "#f38ba8";
-	  angle = 45;
-        };
-     };
 
       settings.window-rules = [
 	{
@@ -43,31 +34,22 @@
 	  geometry-corner-radius.top-right = 6.0;
 	}
 	{
-	  matches = [{ app-id = "^foot$"; }];
+	  matches = [{ app-id = "^foot|footclient$"; }];
 	  default-column-width = { proportion = 1.0 / 2.0; };
 	  open-maximized = true;
 	  opacity = .9;
 	}
 	{
-	  matches = [{ app-id = "^footclient$"; }];
-	  default-column-width = { proportion = 1.0 / 2.0; };
-	  open-maximized = true;
-	  opacity = .9;
-	}
-        {
 	  matches = [{ app-id = "^firefox$"; }];
-	  # focus-ring.active.color = "#E66000";
-	  # borken for now
-          focus-ring.active.gradient = {
-            from = "orange";
-            to = "red";
-            in' = "srgb-linear";
-          };
+	  border.active.gradient = {
+	    from = "orange";
+	    to = "red";
+	  };
 	}
       ];
-      
+
       settings.binds = with config.lib.niri.actions; {
-        "Mod+Return".action = spawn "${config.launchTerminal}";
+	"Mod+Return".action = spawn "${config.launchTerminal}";
 	"Mod+D".action = spawn "${config.launchLauncher}";
 
 	"Mod+P".action = screenshot-screen;
@@ -115,7 +97,7 @@
 	"Mod+R".action = switch-preset-column-width;
 	"Mod+F".action = maximize-column;
 	"Mod+C".action = center-column;
-	
+
 	"Mod+Comma".action = consume-window-into-column;
 	"Mod+Period".action = expel-window-from-column;
 

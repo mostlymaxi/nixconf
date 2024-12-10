@@ -36,6 +36,13 @@
 
       settings.window-rules = [
 	{
+	  clip-to-geometry = true;
+	  geometry-corner-radius.bottom-left = 6.0;
+	  geometry-corner-radius.bottom-right = 6.0;
+	  geometry-corner-radius.top-left = 6.0;
+	  geometry-corner-radius.top-right = 6.0;
+	}
+	{
 	  matches = [{ app-id = "^foot$"; }];
 	  default-column-width = { proportion = 1.0 / 2.0; };
 	  open-maximized = true;

@@ -1,11 +1,14 @@
 {
   programs.waybar = {
+    enable = true;
     systemd.enable = true;
+
     settings = [
       {
         layer = "top";
         position = "bottom";
-        spacing = 0;
+        spacing = "8";
+        # margin = "5";
         modules-left = [
           "niri/workspaces"
           "wlr/taskbar"
@@ -14,7 +17,6 @@
           "tray"
           "cpu"
           "memory"
-          "pulseaudio"
           "clock"
         ];
         "niri/workspaces" = {
@@ -34,9 +36,8 @@
         clock = {
           timezone = "America/New York";
           tooltip-format = ''
-            <big>{:%Y %B}</big>
-            <tt><small>{calendar}</small></tt>'';
-          format-alt = "{:%Y-%m-%d}";
+            <big>{:%d %B %Y}</big>'';
+          format = "{:%I:%M %p }";
         };
         cpu = {
           format = "{usage}% ";
@@ -53,7 +54,7 @@
         #   format-disconnected = "Disconnected ⚠";
         #   format-alt = "{ifname}: {ipaddr}/{cidr}";
         # };
-        # pulseaudio = {
+        pulseaudio = {
           format = "{volume}% {icon} {format_source}";
           format-bluetooth = "{volume}% {icon} {format_source}";
           format-bluetooth-muted = " {icon} {format_source}";

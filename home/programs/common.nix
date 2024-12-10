@@ -21,7 +21,7 @@
     grc
 
     # misc
-    # libnotify
+    libnotify
     xdg-utils
     # graphviz
 
@@ -61,6 +61,8 @@
   # };
   #
   services = {
+    # notification daemon
+    mako.enable = true;
     # auto mount usb drives
     udiskie.enable = true;
   };

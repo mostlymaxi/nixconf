@@ -4,6 +4,7 @@
     ./common.nix
     ./git.nix
     ./media.nix
+    ./waybar.nix
     # ./xdg.nix
   ];
   

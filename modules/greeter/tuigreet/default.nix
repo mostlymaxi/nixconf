@@ -8,10 +8,10 @@
       settings = {
 	default_session = {
 	  user = specialArgs.username;
-	  command = "${pkgs.greetd.tuigreet}/bin/tuigreet
-	    -t 
-	    --theme 'border=magenta;text=cyan;prompt=cyan'
-	    --cmd $HOME/.wayland-session";
+	  command = "${pkgs.greetd.tuigreet}/bin/tuigreet"
+	    + " -t -r"
+	    # + " --theme 'border=magenta;text=cyan;prompt=cyan'"
+	    + " --cmd $HOME/.wayland-session";
 	};
       };
     };

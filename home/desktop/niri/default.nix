@@ -1,17 +1,18 @@
-{pkgs, lib, config, options, niri, ...}: with lib; {
+{pkgs, lib, config, osConfig, options, niri, ...}: with lib; {
   imports = [ 
     niri.homeModules.niri
     ./stylix.nix
   ];
 
+
   config = mkIf (config.desktop == "niri") {
-    home.file.".wayland-session" = {
-      source = "${pkgs.niri}/bin/niri-session";
-      executable = true;
-    };
+    # if we want wayland sessions to be defined by home-manager
+    # home.file.".wayland-session" = {
+    #   source = "${pkgs.niri}/bin/niri-session";
+    #   executable = true;
+    # };
 
     nixpkgs.overlays = [niri.overlays.niri];
-    # programs.niri.package = pkgs.niri-unstable;
 
     programs.niri = {
       enable = true;

@@ -9,6 +9,7 @@
     [
       ../../modules/system.nix
       ../../modules/greeter/tuigreet
+      ../../modules/desktop/niri
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -18,17 +19,6 @@
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
-  };
-
-  # ------- HACK -------
-  # i want this to be a part of home manager
-  # but for some reason niri is unhappy with me
-  # so it needs to be here :(
-  xdg.portal = {
-    enable = true;
-
-    extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
-    config.common.default = "*";
   };
 
   networking.hostName = "nixos-test"; # Define your hostname.

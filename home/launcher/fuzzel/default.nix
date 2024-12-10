@@ -14,7 +14,7 @@
       settings = {
 	main = {
 	  terminal = "${config.launchTerminal}";
-	  font = mkForce "${config.stylix.fonts.monospace.name}:size=${toString config.stylix.fonts.sizes.popups}";
+	  font = mkForce "${config.stylix.fonts.monospace.name}:size=20";
 	};
       };
     };

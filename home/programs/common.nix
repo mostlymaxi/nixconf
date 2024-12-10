@@ -62,7 +62,10 @@
   #
   services = {
     # notification daemon
-    mako.enable = true;
+    mako = {
+      enable = true;
+      defaultTimeout = 5000;
+    };
     # auto mount usb drives
     udiskie.enable = true;
   };

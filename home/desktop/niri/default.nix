@@ -24,7 +24,6 @@
 	always-center-single-column = true;
       };
 
-
       settings.window-rules = [
 	{
 	  clip-to-geometry = true;
@@ -44,6 +43,7 @@
 	  border.active.gradient = {
 	    from = "orange";
 	    to = "red";
+	    angle = 45;
 	  };
 	}
       ];

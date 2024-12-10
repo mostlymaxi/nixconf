@@ -1,5 +1,5 @@
-{lib, ...}: with lib; {
-  config = mkIf (config.stylix.enable && config.stylix.targets.niri.enable) {
+{lib, config, ...}: with lib; {
+  config = mkIf (config.stylix.enable) {
     programs.niri.settings = {
       cursor.size = mkDefault config.stylix.cursor.size;
       cursor.theme = mkDefault config.stylix.cursor.name;
@@ -7,8 +7,9 @@
       layout.border = with config.lib.stylix.colors.withHashtag; {
 	enable = mkDefault true;
 	active.gradient = mkDefault {
-	  from = base0D;
-	  to = base0E;
+	  from = base05;
+	  to = base0D;
+	  angle = 45;
 	};
 	inactive = mkDefault {color = base03;};
       };

@@ -1,5 +1,6 @@
 {lib, config, ...}: with lib; {
   config = mkIf (config.stylix.enable) {
+
     programs.niri.settings = {
       cursor.size = mkDefault config.stylix.cursor.size;
       cursor.theme = mkDefault config.stylix.cursor.name;
@@ -7,7 +8,7 @@
       layout.border = with config.lib.stylix.colors.withHashtag; {
 	enable = mkDefault true;
 	active.gradient = mkDefault {
-	  from = base05;
+	  from = base0C;
 	  to = base0D;
 	  angle = 45;
 	};

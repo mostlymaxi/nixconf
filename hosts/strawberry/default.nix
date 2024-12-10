@@ -8,7 +8,7 @@
   imports =
     [
       ../../modules/system.nix
-      ../../modules/greeter/greetd
+      ../../modules/greeter/tuigreet
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix

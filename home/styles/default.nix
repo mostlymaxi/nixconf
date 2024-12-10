@@ -18,19 +18,23 @@
     enable = true;
     autoEnable = true;
 
-    # image = ./1.png;
-
-    image = pkgs.fetchurl {
-        url = "https://w.wallhaven.cc/full/3z/wallhaven-3z97yd.jpg";
-        hash = "sha256-Dc/VgWkzlhdLaLzZAJe76GfoyECabTIqUilDNbd+dYk=";
-    };
-
+    # gay (straight)
     # image = pkgs.fetchurl {
-    #     url = "https://w.wallhaven.cc/full/r2/wallhaven-r27kwq.jpg";
-    #     hash = "sha256-NcHYoGCORoMs+I0jW5Z6XR07X8Iizfh7Z1gLULlepe0=";
+    #     url = "https://w.wallhaven.cc/full/3z/wallhaven-3z97yd.jpg";
+    #     hash = "sha256-Dc/VgWkzlhdLaLzZAJe76GfoyECabTIqUilDNbd+dYk=";
     # };
-    #
 
+    # cityscape laptop
+    # image = pkgs.fetchurl {
+    #     url = "https://4kwallpapers.com/images/wallpapers/lofi-room-cityscape-urban-3840x2160-14880.jpg";
+    #     hash = "sha256-chYF50xJYWpdnV+tTp9b0VgjVXrBl8L3JjEiNbVqOZc=";
+    # };
+
+    # Coca Cola Anime Girl
+    image = pkgs.fetchurl {
+        url = "https://w.wallhaven.cc/full/r2/wallhaven-r27kwq.jpg";
+        hash = "sha256-NcHYoGCORoMs+I0jW5Z6XR07X8Iizfh7Z1gLULlepe0=";
+    };
 
     polarity = "dark";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";

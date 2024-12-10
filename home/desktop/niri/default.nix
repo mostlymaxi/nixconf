@@ -7,10 +7,10 @@
 
   config = mkIf (config.desktop == "niri") {
     # if we want wayland sessions to be defined by home-manager
-    # home.file.".wayland-session" = {
-    #   source = "${pkgs.niri}/bin/niri-session";
-    #   executable = true;
-    # };
+    home.file.".wayland-session" = {
+      source = "${pkgs.niri}/bin/niri-session";
+      executable = true;
+    };
 
     nixpkgs.overlays = [niri.overlays.niri];
 
@@ -18,6 +18,7 @@
       enable = true;
 
       settings.prefer-no-csd = true;
+      settings.hotkey-overlay.skip-at-startup = true;
       settings.cursor.hide-after-inactive-ms = 3000;
 
       settings.layout = {

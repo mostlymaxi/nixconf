@@ -18,8 +18,6 @@
     enable = true;
     autoEnable = true;
 
-    # targets.firefox.enable = false;
-
     # image = ./1.png;
 
     # image = pkgs.fetchurl {
@@ -48,15 +46,15 @@
     fonts = {
       monospace.package = pkgs.cascadia-code;
       monospace.name = "Cascadia Mono";
-      # sansSerif.package = pkgs.cascadia-code;
-      # sansSerif.name = "Cascadia Mono";
-      # serif.package = pkgs.cascadia-code;
-      # serif.name = "Cascadia Mono";
+      sansSerif.package = pkgs.noto-fonts;
+      sansSerif.name = "Noto Sans";
+      serif.package = pkgs.noto-fonts;
+      serif.name = "Noto Sans";
 
       sizes = {
         applications = 12;
         desktop = 12;
-        popups = 12;
+        popups = 16;
         terminal = 16;
       };
     };

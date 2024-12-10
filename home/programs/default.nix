@@ -5,7 +5,7 @@
     ./git.nix
     ./media.nix
     ./waybar.nix
-    # ./xdg.nix
+    ./fonts.nix
   ];
   
    options.programs = { enable = lib.mkEnableOption "programs"; };

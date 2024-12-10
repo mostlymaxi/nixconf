@@ -35,8 +35,6 @@
 
     # cloud native
     docker-compose
-
-    # db related
   ];
 
   programs = {

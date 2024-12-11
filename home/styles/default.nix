@@ -30,29 +30,30 @@
     #     hash = "sha256-chYF50xJYWpdnV+tTp9b0VgjVXrBl8L3JjEiNbVqOZc=";
     # };
 
-    # Coca Cola Anime Girl
-    # image = pkgs.fetchurl {
-    #     url = "https://w.wallhaven.cc/full/r2/wallhaven-r27kwq.jpg";
-    #     hash = "sha256-NcHYoGCORoMs+I0jW5Z6XR07X8Iizfh7Z1gLULlepe0=";
-    # };
-
-    # DanDanDan
+    Coca Cola Anime Girl
     image = pkgs.fetchurl {
-        url = "https://w.wallhaven.cc/full/yx/wallhaven-yxd17l.png";
-        hash = "sha256-nmBdaoYEb09MMy25IKNGDMsbL/8ldhhgWcg1v9aakuI=";
+        url = "https://w.wallhaven.cc/full/r2/wallhaven-r27kwq.jpg";
+        hash = "sha256-NcHYoGCORoMs+I0jW5Z6XR07X8Iizfh7Z1gLULlepe0=";
     };
 
+    # DanDanDan
+    # image = pkgs.fetchurl {
+    #     url = "https://w.wallhaven.cc/full/yx/wallhaven-yxd17l.png";
+    #     hash = "sha256-nmBdaoYEb09MMy25IKNGDMsbL/8ldhhgWcg1v9aakuI=";
+    # };
+    #
 
-    polarity = "light";
+    polarity = "dark";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/pandora.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/pop.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/jabuti.yaml";
+    # base16Scheme = ./dandandan.style;
 
     # this must be a multiple of 3 for gtk-3.0
     # apps to understand this properly for some
     # very strange reason
-    cursor.size = 33;
+    cursor.size = 32;
 
     fonts = {
       monospace.package = pkgs.cascadia-code;

@@ -30,7 +30,7 @@
     #     hash = "sha256-chYF50xJYWpdnV+tTp9b0VgjVXrBl8L3JjEiNbVqOZc=";
     # };
 
-    Coca Cola Anime Girl
+    # Coca Cola Anime Girl
     image = pkgs.fetchurl {
         url = "https://w.wallhaven.cc/full/r2/wallhaven-r27kwq.jpg";
         hash = "sha256-NcHYoGCORoMs+I0jW5Z6XR07X8Iizfh7Z1gLULlepe0=";

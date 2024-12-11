@@ -10,6 +10,7 @@
     ./plugins/nvim-cmp.nix
     ./plugins/mini.nix
     ./plugins/treesitter.nix
+    ./plugins/colorizer.nix
 
     # NOTE: Add/Configure additional plugins for Kickstart.nixvim
     #

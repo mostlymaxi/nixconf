@@ -1,9 +1,13 @@
 {lib, ...}: with lib; {
   imports = [./niri];
 
-  xdg.portal.enable = true;
+  options = {
+    available-desktops = mkOption {
+      type = types.listOf types.enum [];
+    };
+  };
 
-  options.desktop = {
-    niri.enable = mkEnableOption "Niri";
+  config = {
+    xdg.portal.enable = true;
   };
 }

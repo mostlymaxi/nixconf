@@ -8,14 +8,15 @@
   imports =
     [
       ../../modules/system.nix
-      ../../modules/greeter/tuigreet
+      ../../modules/greeter
       ../../modules/desktop
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
-  desktop.niri.enable = true;
+  greeter = "tuigreet";
+  available-desktops = ["niri"];
 
   # Bootloader.
   boot.loader = {

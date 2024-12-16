@@ -4,8 +4,18 @@
     ./stylix.nix
   ];
 
+  options = {
+    desktop.niri.enable = mkEnableOption "Niri";
+  };
 
-  config = mkIf (config.desktop == "niri") {
+  config = mkIf (config.desktop.niri.enable) {
+    assertions = [
+      {
+	assertion = osConfig.available-desktops.niri.enable;
+	message = "Niri is not an available desktop";
+      }
+    ];
+
     # if we want wayland sessions to be defined by home-manager
     home.file.".wayland-session" = {
       source = "${pkgs.niri}/bin/niri-session";

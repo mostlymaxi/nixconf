@@ -1,6 +1,12 @@
-{pkgs, lib, ...}: with lib; {
+{pkgs, lib, config, ...}: with lib; {
 
-  config = mkIf desktop == "niri" {
+  options = {
+    available-desktops = mkOption {
+      type = types.listOf types.enum ["niri"];
+    };
+  };
+
+  config = mkIf (config.available-desktops.niri.enable) {
     services.displayManager.sessionPackages = [ pkgs.niri ];
 
     environment.systemPackages = with pkgs; [

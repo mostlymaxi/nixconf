@@ -4,8 +4,8 @@
   ];
  
   programs.enable = true; 
+  desktop.niri.enable = true;
 
-  desktop = "niri";
   terminal = "foot";
   shell = "fish";
   launcher = "fuzzel";

@@ -2,7 +2,7 @@
   imports = [./niri];
 
   options = {
-    desktop = mkOption {
+    desktop = mkIf (osConfig.desktop.niri) mkOption {
       type = types.enum ["niri"];
     };
     

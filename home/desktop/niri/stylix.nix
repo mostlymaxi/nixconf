@@ -8,7 +8,7 @@
       layout.border = with config.lib.stylix.colors.withHashtag; {
 	enable = mkDefault true;
 	active.gradient = mkDefault {
-	  from = base0C;
+	  from = base08;
 	  to = base0D;
 	  angle = 45;
 	};

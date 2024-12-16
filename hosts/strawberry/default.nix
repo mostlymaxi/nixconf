@@ -9,11 +9,13 @@
     [
       ../../modules/system.nix
       ../../modules/greeter/tuigreet
-      ../../modules/desktop/niri
+      ../../modules/desktop
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+
+  desktop.niri.enable = true;
 
   # Bootloader.
   boot.loader = {

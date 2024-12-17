@@ -18,9 +18,15 @@
 	enable = true;
 
 	settings = {
-	  default_session = {
+	  initial_session = {
 	    user = specialArgs.username;
-	    command = "${pkgs.greetd.greetd}/bin/agreety --cmd $HOME/.wayland-session";
+	    # command = "$HOME/.wayland-session";
+	    command = "${config.initial-session}";
+	  };
+
+	  default_session = {
+	    user = "greeter";
+	    command = "${pkgs.greetd.greetd}/bin/agreety --cmd ${config.initial-session}";
 	  };
 	};
       };

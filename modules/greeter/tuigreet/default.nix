@@ -19,8 +19,14 @@
 	enable = true;
 
 	settings = {
-	  default_session = {
+	  initial_session = {
 	    user = specialArgs.username;
+	    # command = "$HOME/.wayland-session";
+	    command = "${config.initial-session}";
+	  };
+
+	  default_session = {
+	    user = "greeter";
 	    command = "${pkgs.greetd.tuigreet}/bin/tuigreet"
 	      + " -t -r";
 	      # + " --theme 'border=magenta;text=cyan;prompt=cyan'"

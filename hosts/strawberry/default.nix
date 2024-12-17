@@ -17,6 +17,7 @@
 
   greeter = "tuigreet";
   available-desktops = ["niri"];
+  initial-session = "${pkgs.niri}/bin/niri-session";
 
   # Bootloader.
   boot.loader = {

@@ -19,11 +19,10 @@
     ];
 
     # if we want wayland sessions to be defined by home-manager
-    # home.file.".wayland-session" = {
-    #   source = "${pkgs.niri}/bin/niri-session";
-    #   executable = true;
-    # };
-    #
+    home.file.".wayland-session" = {
+      source = "${pkgs.niri}/bin/niri-session";
+      executable = true;
+    };
 
     nixpkgs.overlays = [niri.overlays.niri];
 

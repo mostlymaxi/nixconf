@@ -5,6 +5,10 @@
     available-desktops = mkOption {
       type = types.listOf (types.enum []);
     };
+
+    initial-session = mkOption {
+      type = types.str;
+    };
   };
 
   config = {

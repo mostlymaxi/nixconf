@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: with lib; {
   imports = [./greetd ./tuigreet];
 
   # this option is an enum because we only

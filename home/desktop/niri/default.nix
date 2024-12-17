@@ -1,26 +1,29 @@
-{pkgs, lib, config, osConfig, options, niri, ...}: with lib; {
+{pkgs, lib, config, osConfig, options, niri, ...}: with lib; let name = "niri"; in {
   imports = [ 
     niri.homeModules.niri
     ./stylix.nix
   ];
 
   options = {
-    desktop.niri.enable = mkEnableOption "Niri";
+    desktop = mkOption {
+      type = types.enum [name];
+    };
   };
 
-  config = mkIf (config.desktop.niri.enable) {
+  config = mkIf (config.desktop == name) {
     assertions = [
       {
-	assertion = osConfig.available-desktops.niri.enable;
-	message = "Niri is not an available desktop";
+	assertion = builtins.elem name osConfig.available-desktops;
+	message = "${name} is not an available desktop environment";
       }
     ];
 
     # if we want wayland sessions to be defined by home-manager
-    home.file.".wayland-session" = {
-      source = "${pkgs.niri}/bin/niri-session";
-      executable = true;
-    };
+    # home.file.".wayland-session" = {
+    #   source = "${pkgs.niri}/bin/niri-session";
+    #   executable = true;
+    # };
+    #
 
     nixpkgs.overlays = [niri.overlays.niri];
 

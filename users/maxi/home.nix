@@ -2,14 +2,17 @@
   imports = [
     ../../home
   ];
- 
-  programs.enable = true; 
-  desktop.niri.enable = true;
 
+  # adds a bunch of default programs
+  programs.enable = true; 
+  # stylix config to manage color schemes + swaybg
+  pretty.enable = true;
+
+  # setting environment config
+  desktop = "niri";
   terminal = "foot";
   shell = "fish";
   launcher = "fuzzel";
-  # style = "catppuccin";
 
   programs.git = {
     userName = "Maxi Saparov";

@@ -3,7 +3,7 @@
 
   options = {
     available-desktops = mkOption {
-      type = types.listOf types.enum [];
+      type = types.listOf (types.enum []);
     };
   };
 

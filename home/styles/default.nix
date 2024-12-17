@@ -1,4 +1,4 @@
-{pkgs, lib, config, options, stylix, ...}: {
+{pkgs, lib, config, options, stylix, ...}: with lib; {
   imports = [ stylix.homeManagerModules.stylix ];
 
   options = {

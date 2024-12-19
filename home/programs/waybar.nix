@@ -1,7 +1,9 @@
-{
+{lib, ...}: {
   programs.waybar = {
     enable = true;
     systemd.enable = true;
+
+    style = lib.mkAfter (builtins.readFile ./custom.css);
 
     settings = [
       {

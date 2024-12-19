@@ -26,7 +26,7 @@
 
     nixpkgs.overlays = [niri.overlays.niri];
 
-    programs.niri = {
+    programs.niri = let gaps = 16; bar-height = 60; in {
       enable = true;
 
       settings.prefer-no-csd = true;
@@ -49,6 +49,8 @@
 	  geometry-corner-radius.bottom-right = 6.0;
 	  geometry-corner-radius.top-left = 6.0;
 	  geometry-corner-radius.top-right = 6.0;
+
+	  max-height = 1080 - gaps - bar-height;
 	}
 	{
 	  matches = [{ app-id = "^foot|footclient$"; }];
@@ -63,6 +65,10 @@
 	    to = "red";
 	    angle = 45;
 	  };
+	}
+	{
+	  matches = [{ app-id = "obs"; }];
+	  block-out-from = "screencast";
 	}
       ];
 
@@ -115,10 +121,11 @@
 
 	"Mod+R".action = switch-preset-column-width;
 	"Mod+F".action = maximize-column;
+	"Mod+Shift+F".action = fullscreen-window;
 	"Mod+C".action = center-column;
 
-	"Mod+Comma".action = consume-window-into-column;
-	"Mod+Period".action = expel-window-from-column;
+	"Mod+Comma".action = consume-or-expel-window-left;
+	"Mod+Period".action = consume-or-expel-window-right;
 
       };
     };

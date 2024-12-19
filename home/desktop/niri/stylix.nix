@@ -9,7 +9,7 @@
 	enable = mkDefault true;
 	active.gradient = mkDefault {
 	  from = base08;
-	  to = base0D;
+	  to = base0C;
 	  angle = 45;
 	};
 	inactive = mkDefault {color = base03;};

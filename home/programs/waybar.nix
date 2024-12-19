@@ -10,13 +10,12 @@
         layer = "top";
         position = "bottom";
         spacing = "8";
-        # margin = "5";
+        margin = "0 8 4";
         modules-left = [
           "niri/workspaces"
-          "wlr/taskbar"
+          # "wlr/taskbar"
         ];
         modules-right = [
-          "tray"
           "cpu"
           "memory"
           "clock"
@@ -39,14 +38,14 @@
           timezone = "America/New York";
           tooltip-format = ''
             <big>{:%d %B %Y}</big>'';
-          format = "{:%I:%M %p }";
+          format = "{:%I:%M %p}";
         };
         cpu = {
-          format = "{usage}% ";
+          format = "{usage}% 󰍛";
           tooltip = false;
         };
         memory = {
-          format = "{}% ";
+          format = "{}% 󰑭";
         };
        # network = {
         #   format-wifi = "{essid} ({signalStrength}%) ";

@@ -18,7 +18,11 @@
     niri.url = "github:sodiboo/niri-flake";
 
     stylix.url = "github:danth/stylix";
-    catppuccin.url = "github:catppuccin/nix";
+
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {

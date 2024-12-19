@@ -1,42 +1,22 @@
 {
   pkgs,
-  config,
+  spicetify-nix,
   ...
 }:
 # media - control and enjoy audio/video
 {
-  # imports = [
-  # ];
+  imports = [
+    spicetify-nix.homeManagerModules.default
+  ];
 
   home.packages = with pkgs; [
     ffmpeg-full
-
-    # spicetify
 
     # audio control
     # images
     imv
 
   ];
-  #
-  # xdg.portal = {
-  #   config = {
-  #     niri = {
-  #       default = [
-  #         "gnome"
-  #       ];
-  #       "org.freedesktop.impl.portal.Secret" = [
-  #         "gnome-keyring"
-  #       ];
-  #     };
-  #   };
-  # };
-  #
-  #   extraPortals = with pkgs; [
-  #     xdg-desktop-portal-gnome # for gtk
-  #     # xdg-desktop-portal-kde  # for kde
-  #   ];
-  # };
 
   programs = {
     obs-studio = {
@@ -48,7 +28,11 @@
         obs-backgroundremoval
         obs-pipewire-audio-capture
       ];
-    }; 
+    };
+
+    spicetify = {
+      enable = true;
+    };
   };
  
   # services = {

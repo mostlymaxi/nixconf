@@ -1,0 +1,47 @@
+
+window#waybar {
+    background: transparent;
+    border-radius: 8px;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#workspaces {
+    background-color: @base00;
+    border-radius: 8px;
+    border: 2px solid @base08;
+}
+
+#cpu {
+    background-color: @base00;
+    border-radius: 8px 0 0 8px;
+    border: 2px solid @base0C;
+    border-right: 0;
+    margin-right: 0;
+    padding-left: 8px;
+    font-weight: bold;
+}
+
+#memory {
+    background-color: @base00;
+    border-radius: 0 ;
+    border: 2px solid @base0C;
+    border-left: 0;
+    border-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+#clock {
+    background-color: @base00;
+    border-radius: 0 8px 8px 0;
+    border: 2px solid @base0C;
+    border-left: 0;
+    margin-left: 0;
+    padding-right: 8px;
+    font-weight: bold;
+}
+

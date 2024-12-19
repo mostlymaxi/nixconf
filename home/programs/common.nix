@@ -154,8 +154,17 @@ pkgs,
     # notification daemon
     mako = {
       enable = true;
+
       defaultTimeout = 15000;
+
+      margin = "24";
+      padding = "8";
+      borderSize = 2;
+      borderRadius = 8;
+      width = 300;
+      height = 160;
     };
+
     # auto mount usb drives
     udiskie.enable = true;
   };

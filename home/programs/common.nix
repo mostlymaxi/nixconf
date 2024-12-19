@@ -154,7 +154,7 @@ pkgs,
     # notification daemon
     mako = {
       enable = true;
-      defaultTimeout = 5000;
+      defaultTimeout = 15000;
     };
     # auto mount usb drives
     udiskie.enable = true;

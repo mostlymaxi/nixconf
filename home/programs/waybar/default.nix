@@ -15,6 +15,9 @@
           "niri/workspaces"
           # "wlr/taskbar"
         ];
+        modules-center = [
+          "custom/music"
+        ];
         modules-right = [
           "cpu"
           "memory"
@@ -23,6 +26,23 @@
         "niri/workspaces" = {
           format = "{index}";
           on-click = "activate";
+        };
+        "custom/music" = {
+          format = "{icon}{}";
+          format-icons = {
+            Playing = " ";
+            Paused = " ";
+            Stopped = "&#x202d;ﭥ ";
+          };
+          escape = true;
+          tooltip = true;
+          exec = ./scripts/caway;
+          return-type = "json";
+          on-click = "playerctl play-pause";
+          on-scroll-up = "playerctl previous";
+          on-scroll-down = "playerctl next";
+          on-click-right = "g4music";
+          max-length = 35;
         };
         "wlr/taskbar" = {
           format = "{icon}";

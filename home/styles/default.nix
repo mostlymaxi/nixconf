@@ -62,7 +62,7 @@
 
       fonts = {
         monospace.package = pkgs.cascadia-code;
-        monospace.name = "Cascadia Mono";
+        monospace.name = "Cascadia Code NF";
         sansSerif.package = pkgs.noto-fonts;
         sansSerif.name = "Noto Sans";
         serif.package = pkgs.noto-fonts;

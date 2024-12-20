@@ -61,7 +61,8 @@
           format = "{:%I:%M %p}";
         };
         cpu = {
-          format = "{usage}% 󰍛";
+          format = "{usage}% ";
+          interval = 2;
           states = {
             warning = 50;
             critical = 80;
@@ -70,6 +71,7 @@
         };
         memory = {
           format = "{}% 󱘲";
+          interval = 2;
           states = {
             warning = 50;
             critical = 80;

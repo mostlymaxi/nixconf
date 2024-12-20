@@ -3,21 +3,23 @@
   spicetify-nix,
   ...
 }:
-# media - control and enjoy audio/video
+# Media - control and enjoy audio/video
 {
   imports = [
     spicetify-nix.homeManagerModules.default
   ];
 
+  # Media packages
   home.packages = with pkgs; [
+    # utils
     ffmpeg-full
-
-    # audio control
-    # images
     imv
 
+    # misc
+    cava
   ];
 
+  # Media programs we want to manage w/ HM
   programs = {
     obs-studio = {
       enable = true;
@@ -30,12 +32,14 @@
       ];
     };
 
+    # pretty spotify managed by stylix
     spicetify = {
       enable = true;
     };
   };
- 
-  # services = {
-  #   playerctld.enable = true;
-  # };
+
+  # playback control
+  services = {
+    playerctld.enable = true;
+  };
 }

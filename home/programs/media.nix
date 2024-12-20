@@ -13,6 +13,7 @@
   home.packages = with pkgs; [
     # utils
     ffmpeg-full
+    playerctl
     imv
 
     # misc

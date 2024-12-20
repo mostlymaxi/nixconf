@@ -7,7 +7,6 @@
     noto-fonts-emoji
 
     fira-code-symbols
-
   ];
 
   fonts.fontconfig.enable = true;

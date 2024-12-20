@@ -4,8 +4,8 @@
     ./common.nix
     ./git.nix
     ./media.nix
-    ./waybar.nix
     ./fonts.nix
+    ./waybar
   ];
   
    options.programs = { enable = lib.mkEnableOption "programs"; };

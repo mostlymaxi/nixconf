@@ -31,7 +31,7 @@
           format = "{icon}{}";
           format-icons = {
             Playing = " ";
-            Paused = " ";
+            Paused = "󰏥 ";
             Stopped = "&#x202d;ﭥ ";
           };
           escape = true;
@@ -62,10 +62,18 @@
         };
         cpu = {
           format = "{usage}% 󰍛";
+          states = {
+            warning = 50;
+            critical = 80;
+          };
           tooltip = false;
         };
         memory = {
-          format = "{}% 󰑭";
+          format = "{}% 󱘲";
+          states = {
+            warning = 50;
+            critical = 80;
+          };
         };
        # network = {
         #   format-wifi = "{essid} ({signalStrength}%) ";

@@ -16,6 +16,7 @@
           # "wlr/taskbar"
         ];
         modules-center = [
+          "custom/peak-meter"
           "custom/music"
         ];
         modules-right = [
@@ -26,6 +27,12 @@
         "niri/workspaces" = {
           format = "{index}";
           on-click = "activate";
+        };
+        "custom/peak-meter" = {
+          format = "{}";
+          escape = true;
+          exec = ./scripts/peak-meter-visualizer;
+          return-type = "json";
         };
         "custom/music" = {
           format = "{icon}{}";

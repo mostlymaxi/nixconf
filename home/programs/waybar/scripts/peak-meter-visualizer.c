@@ -17,6 +17,7 @@
  [title]
  */
 
+#include <stdint.h>
 #include <stdio.h>
 #include <errno.h>
 #include <math.h>
@@ -30,7 +31,14 @@
 static float peak = 0.0f;
 static float decay_factor = 0.95;
 
-static char stars[] = "*************************************************************";
+// should be a divisor of 60
+const uint32_t num_bars = 30;
+
+const char bars[]  = "████████████████████████████████████████████████████████████";
+const char empty[] = "                                                            ";
+
+const uint32_t bars_codepoint_len = 3;
+const uint32_t empty_codepoint_len = 3;
 
 struct data {
         struct pw_main_loop *loop;
@@ -85,7 +93,8 @@ static void on_process(void *userdata)
 
         peak = fmaxf(max, peak * decay_factor);
         peak_db = linear_to_db(peak);
-        peak_adj = (uint32_t)SPA_CLAMPF(peak_db + 60, 0.f, 59.f);
+        peak_adj = (uint32_t)SPA_CLAMPF((peak_db + 60) / (60 / num_bars),
+                                        0.f, (float)(num_bars - 1));
 
         char* peak_class;
 
@@ -97,8 +106,10 @@ static void on_process(void *userdata)
                 peak_class = "safe";
 
 
-        fprintf(stdout, "{\"text\":\"|%.*s%*s|\",\"class\":\"%s\"}\n",
-                peak_adj+1, stars, 60 - peak_adj, "", peak_class);
+        fprintf(stdout, "{\"text\":\"%.*s%.*s\",\"class\":\"%s\"}\n",
+                bars_codepoint_len * (peak_adj+1), bars,
+                empty_codepoint_len * (num_bars - peak_adj), empty,
+                peak_class);
 
         data->move = true;
         fflush(stdout);

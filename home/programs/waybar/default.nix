@@ -13,10 +13,10 @@
         margin = "0 8 4";
         modules-left = [
           "niri/workspaces"
+          "custom/peak-meter"
           # "wlr/taskbar"
         ];
         modules-center = [
-          "custom/peak-meter"
           "custom/music"
         ];
         modules-right = [
@@ -68,7 +68,7 @@
           format = "{:%I:%M %p}";
         };
         cpu = {
-          format = "{usage}% ";
+          format = "{usage:2}% ";
           interval = 2;
           states = {
             warning = 50;
@@ -77,7 +77,7 @@
           tooltip = false;
         };
         memory = {
-          format = "{}% 󱘲";
+          format = "{:2}% 󱘲";
           interval = 2;
           states = {
             warning = 50;

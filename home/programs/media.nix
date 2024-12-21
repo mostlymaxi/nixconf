@@ -14,6 +14,7 @@
     # utils
     ffmpeg-full
     playerctl
+    pavucontrol
     imv
     grim  # wayland screenshots - needed for satty
     satty # screenshot annotator 

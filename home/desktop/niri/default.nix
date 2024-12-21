@@ -70,6 +70,11 @@
           matches = [{ app-id = "obs"; }];
           block-out-from = "screencast";
         }
+        {
+          # doesn't work for some reason
+          matches = [{ app-id = "satty"; }];
+          open-fullscreen = true;
+        }
       ];
 
       settings.binds = with config.lib.niri.actions; {
@@ -78,6 +83,7 @@
         "Mod+D".action = spawn "${config.launchLauncher}";
 
         "Mod+P".action = screenshot-screen;
+        "Mod+Control+P".action = spawn "bash" "-c" "grim - | satty -f -";
         "Mod+Shift+P".action = screenshot-window;
 
         "Mod+Q".action = close-window;

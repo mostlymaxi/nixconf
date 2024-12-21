@@ -15,6 +15,7 @@
     ffmpeg-full
     playerctl
     imv
+    grim  # wayland screenshots - needed for satty
     satty # screenshot annotator 
 
     # misc

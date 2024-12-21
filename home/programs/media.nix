@@ -15,6 +15,7 @@
     ffmpeg-full
     playerctl
     imv
+    satty # screenshot annotator 
 
     # misc
     cava

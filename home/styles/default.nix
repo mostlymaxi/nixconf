@@ -1,4 +1,4 @@
-{pkgs, lib, config, options, stylix, ...}: with lib; {
+{pkgs, lib, config, stylix, ...}: with lib; {
   imports = [ stylix.homeManagerModules.stylix ];
 
   options = {
@@ -29,17 +29,17 @@
       #     hash = "sha256-Dc/VgWkzlhdLaLzZAJe76GfoyECabTIqUilDNbd+dYk=";
       # };
 
-      # cityscape laptop
-      # image = pkgs.fetchurl {
-      #     url = "https://4kwallpapers.com/images/wallpapers/lofi-room-cityscape-urban-3840x2160-14880.jpg";
-      #     hash = "sha256-chYF50xJYWpdnV+tTp9b0VgjVXrBl8L3JjEiNbVqOZc=";
-      # };
+      ### cityscape laptop
+      image = pkgs.fetchurl {
+          url = "https://4kwallpapers.com/images/wallpapers/lofi-room-cityscape-urban-3840x2160-14880.jpg";
+          hash = "sha256-chYF50xJYWpdnV+tTp9b0VgjVXrBl8L3JjEiNbVqOZc=";
+      };
 
       # Coca Cola Anime Girl
-      image = pkgs.fetchurl {
-        url = "https://w.wallhaven.cc/full/r2/wallhaven-r27kwq.jpg";
-        hash = "sha256-NcHYoGCORoMs+I0jW5Z6XR07X8Iizfh7Z1gLULlepe0=";
-      };
+      # image = pkgs.fetchurl {
+      #   url = "https://w.wallhaven.cc/full/r2/wallhaven-r27kwq.jpg";
+      #   hash = "sha256-NcHYoGCORoMs+I0jW5Z6XR07X8Iizfh7Z1gLULlepe0=";
+      # };
 
       # DanDanDan
       # image = pkgs.fetchurl {
@@ -52,7 +52,7 @@
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/pandora.yaml";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/pop.yaml";
-      # base16Scheme = "${pkgs.base16-schemes}/share/themes/jabuti.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/irblack.yaml";
       # base16Scheme = ./dandandan.style;
 
       # this must be a multiple of 3 for gtk-3.0

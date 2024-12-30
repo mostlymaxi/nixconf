@@ -26,7 +26,7 @@
 
     nixpkgs.overlays = [niri.overlays.niri];
 
-    programs.niri = let gaps = 16; bar-height = 60; in {
+    programs.niri = let gaps = 16; bar-height = 45; in {
       enable = true;
 
       settings.prefer-no-csd = true;
@@ -50,7 +50,7 @@
           geometry-corner-radius.top-left = 6.0;
           geometry-corner-radius.top-right = 6.0;
 
-          max-height = 1080 - gaps - bar-height;
+          max-height = 1080 - 2 * gaps - bar-height;
         }
         {
           matches = [{ app-id = "^foot|footclient$"; }];

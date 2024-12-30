@@ -21,6 +21,7 @@
 
     # misc
     cava
+    krita
   ];
 
   # Media programs we want to manage w/ HM

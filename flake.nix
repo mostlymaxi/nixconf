@@ -23,6 +23,11 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    luasnip-snippets = {
+      url = "github:TwIStOy/luasnip-snippets";
+      flake = false;
+    };
   };
 
   outputs = inputs @ {

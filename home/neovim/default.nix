@@ -1,4 +1,4 @@
-{pkgs, nixvim, ...}: {
+{pkgs, nixvim, luasnip-snippets, ...}: {
   imports = [
     nixvim.homeManagerModules.nixvim
         # Plugins
@@ -24,7 +24,6 @@
     # ./plugins/kickstart/plugins/autopairs.nix
     # ./plugins/kickstart/plugins/neo-tree.nix
   ];
-
 
   /*
   =====================================================================
@@ -327,7 +326,15 @@
     extraPlugins = with pkgs.vimPlugins; [
       # Useful for getting pretty icons, but requires a Nerd Font.
       nvim-web-devicons # TODO: Figure out how to configure using this with telescope
+      (pkgs.vimUtils.buildVimPlugin {
+        name = "luasnip-snippets";
+        src = luasnip-snippets;
+      })
     ];
+
+    extraConfigLua = ''
+      require("luasnip-snippets").setup()
+    '';
 
     # TODO: Figure out where to move this
     # https://nix-community.github.io/nixvim/NeovimOptions/index.html?highlight=extraplugins#extraconfigluapre

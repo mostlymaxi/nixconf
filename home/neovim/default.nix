@@ -12,7 +12,7 @@
     ./plugins/treesitter.nix
     ./plugins/colorizer.nix
     ./plugins/oil.nix
-    # ./plugins/rustaceanvim.nix
+    ./plugins/rustaceanvim.nix
 
     # NOTE: Add/Configure additional plugins for Kickstart.nixvim
     #
@@ -200,6 +200,9 @@
         mode = "n";
         key = "<leader>cc";
         action = ":exec 'cd' . expand('%:p:h')<CR>";
+        options = {
+          desc = "[C]hange to [C]urrent directory";
+        };
       }
       # Clear highlights on search when pressing <Esc> in normal mode
       {

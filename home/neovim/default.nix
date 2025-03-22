@@ -12,6 +12,7 @@
     ./plugins/treesitter.nix
     ./plugins/colorizer.nix
     ./plugins/oil.nix
+    ./plugins/rustaceanvim.nix
 
     # NOTE: Add/Configure additional plugins for Kickstart.nixvim
     #
@@ -114,7 +115,7 @@
       maplocalleader = " ";
 
       # Set to true if you have a Nerd Font installed and selected in the terminal
-      have_nerd_font = false;
+      have_nerd_font = true;
     };
 
     # [[ Setting options ]]
@@ -195,6 +196,11 @@
     #  See `:help vim.keymap.set()`
     # https://nix-community.github.io/nixvim/keymaps/index.html
     keymaps = [
+      {
+        mode = "n";
+        key = "<leader>cc";
+        action = ":exec 'cd' . expand('%:p:h')<CR>";
+      }
       # Clear highlights on search when pressing <Esc> in normal mode
       {
         mode = "n";

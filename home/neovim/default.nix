@@ -12,7 +12,7 @@
     ./plugins/treesitter.nix
     ./plugins/colorizer.nix
     ./plugins/oil.nix
-    ./plugins/rustaceanvim.nix
+    # ./plugins/rustaceanvim.nix
 
     # NOTE: Add/Configure additional plugins for Kickstart.nixvim
     #

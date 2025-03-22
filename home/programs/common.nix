@@ -30,6 +30,8 @@ pkgs,
     # libsForQt5.qt5ct
     #
     # productivity
+    rustup
+    clang
 
     vesktop
 

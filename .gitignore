@@ -1,0 +1,4 @@
+/result
+
+/secret/*
+!/secret/*.age

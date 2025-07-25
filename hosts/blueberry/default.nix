@@ -5,8 +5,6 @@
     ../../modules/system
   ];
 
-  networking.hostName = "${hostname}";
-
   host.is_headless = true;
 
   boot = {

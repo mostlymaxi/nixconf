@@ -1,12 +1,9 @@
 {
-  hostname,
   username,
   ...
 }:
 {
   imports = [ ../../modules/system/darwin.nix ];
-
-  networking.hostName = "${hostname}";
 
   system = {
     # Used for backwards compatibility, please read the changelog before changing.
@@ -52,11 +49,14 @@
   # Enables TouchID for sudo operations
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  environment.variables.EDITOR = "nvim";
+
   homebrew = {
     # install apps from the Mac App Store
-    masApps = { };
-
-    brews = [ "mas" ];
+    masApps = {
+      "Bitwarden" = 6497335175;
+      "Okta Verify" = 490179405;
+    };
 
     casks = [
       "discord"

@@ -35,7 +35,7 @@ with lib;
       docker-compose
       kubectl
 
-      teleport_16
+      go
     ];
 
     programs = {

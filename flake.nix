@@ -79,7 +79,7 @@
             mylib = import ./utils.nix { inherit lib; };
 
             username = "masaparov";
-            hostname = "tangerine";
+            hostname = "CW-D0XG2Q16P7-L";
 
             specialArgs = {
               inherit hostname username mylib;
@@ -90,7 +90,7 @@
             system = "aarch64-darwin";
 
             modules = [
-              ./hosts/${hostname}
+              ./hosts/tangerine
 
               home-manager.darwinModules.home-manager
               {
@@ -99,7 +99,7 @@
 
                 home-manager.extraSpecialArgs = inputs // specialArgs;
 
-                home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
+                home-manager.users.${username} = import ./hosts/tangerine/home.nix;
 
               }
             ];

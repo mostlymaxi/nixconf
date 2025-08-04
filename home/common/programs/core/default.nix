@@ -22,6 +22,8 @@ with lib;
 
       # utils
       nh # nix cli
+      gh
+      watch
       ripgrep # better grep
       bottom # rust alternative to top
       htop # another alternative to top
@@ -32,6 +34,8 @@ with lib;
       # containerization
       docker-compose
       kubectl
+
+      teleport_16
     ];
 
     programs = {

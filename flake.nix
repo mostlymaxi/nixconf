@@ -37,6 +37,7 @@
     }:
     {
       homeConfigurations = {
+        # Ubuntu Work VDI (why no nixos :[ )
         vdi-1 =
           let
             inherit (inputs.nixpkgs) lib;
@@ -75,6 +76,7 @@
       };
 
       darwinConfigurations = {
+        # Work Laptop
         tangerine =
           let
             inherit (inputs.nixpkgs) lib;
@@ -93,7 +95,6 @@
 
             modules = [
               ./hosts/tangerine
-              inputs.coreweave.darwinModules.default
 
               home-manager.darwinModules.home-manager
               {

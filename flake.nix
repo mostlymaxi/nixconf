@@ -13,6 +13,8 @@
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
+    coreweave.url = "git+ssh://git@github.com/coreweave/coreweave.nix";
+
     # disabled flakes on work local
     # nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     #
@@ -91,6 +93,7 @@
 
             modules = [
               ./hosts/tangerine
+              inputs.coreweave.darwinModules.default
 
               home-manager.darwinModules.home-manager
               {

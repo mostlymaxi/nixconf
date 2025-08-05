@@ -21,6 +21,11 @@ with lib;
   config = mkIf config.terminal.kitty.enable {
     terminal.exec = mkIf (config.terminal.default == "kitty") "${pkgs.kitty}/bin/kitty";
 
+    home.file.".config/kitty/ssh.conf".text = ''
+      hostname *tenant-coreweave-vdi.coreweave.cloud
+      color_scheme Chalk
+    '';
+
     programs.kitty = {
       enable = true;
 

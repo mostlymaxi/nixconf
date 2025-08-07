@@ -19,6 +19,7 @@
     ./plugins/colorizer.nix
     ./plugins/oil.nix
     ./plugins/lazygit.nix
+    ./plugins/claude-code.nix
 
     # NOTE: Add/Configure additional plugins for Kickstart.nixvim
     #
@@ -112,6 +113,12 @@
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
+
+    nixpkgs = {
+      config = {
+        allowUnfree = true;
+      };
+    };
 
     # https://nix-community.github.io/nixvim/NeovimOptions/index.html?highlight=globals#globals
     globals = {

@@ -53,11 +53,6 @@
 
   homebrew = {
     # install apps from the Mac App Store
-    masApps = {
-      "Bitwarden" = 6497335175;
-      "Okta Verify" = 490179405;
-    };
-
     casks = [
       "discord"
       "kitty"

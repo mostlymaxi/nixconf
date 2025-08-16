@@ -60,7 +60,6 @@
 
                 home-manager.extraSpecialArgs = inputs // specialArgs;
 
-                # home-manager.users.${username} = import ./hosts/${hostname}/${username}/home.nix;
                 home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
 
               }

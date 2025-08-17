@@ -23,11 +23,13 @@ with lib;
 
     home.file.".config/kitty/ssh.conf".text = ''
       hostname *tenant-coreweave-vdi.coreweave.cloud
-      color_scheme Chalk
+      color_scheme Eldritch
     '';
 
     programs.kitty = {
       enable = true;
+
+      # themeFile = "Eldritch";
 
       settings = {
         cursor_shape = "block";
@@ -63,14 +65,19 @@ with lib;
         "cmd+8" = "goto_tab 8";
         "cmd+9" = "goto_tab 9";
 
-        "cmd+plus" = "change_font_size all +2.0";
         "cmd+equal" = "change_font_size all +2.0";
-        "shift+cmd+equal" = "change_font_size all +2.0";
 
         "cmd+minus" = "change_font_size all -2.0";
-        "shift+cmd+minus" = "change_font_size all -2.0";
 
         "cmd+0" = "change_font_size all 0";
+
+        "cmd+{" = "scroll_to_prompt -1 0";
+        "cmd+}" = "scroll_to_prompt 1 0";
+        "cmd+shift+o" = "show_last_visited_command_output";
+
+        "cmd+shift+g" = "scroll_end";
+        "cmd+k" = "scroll_line_up";
+        "cmd+j" = "scroll_line_down";
       };
 
       shellIntegration = {

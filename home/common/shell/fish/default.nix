@@ -1,4 +1,11 @@
-{ pkgs, lib, config, ... }: with lib; {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+with lib;
+{
   options = {
     shell = {
       default = mkOption {
@@ -25,12 +32,20 @@
       };
 
       plugins = mkMerge [
-        ([ ])
-        (mkIf (config.programs.core.enable) [{ name = "grc"; src = pkgs.fishPlugins.grc.src; }])
+        [
+          {
+            name = "hydro";
+            src = pkgs.fishPlugins.hydro.src;
+          }
+        ]
+        (mkIf (config.programs.core.enable) [
+          {
+            name = "grc";
+            src = pkgs.fishPlugins.grc.src;
+          }
+        ])
       ];
 
     };
   };
 }
-
-

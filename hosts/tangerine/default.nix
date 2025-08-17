@@ -9,7 +9,7 @@
 
   networking.hostName = "${hostname}";
 
-  nix.enable = lib.mkForce false;
+  nix.enable = lib.mkForce true;
 
   system = {
     # Used for backwards compatibility, please read the changelog before changing.

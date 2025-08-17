@@ -21,6 +21,8 @@
     ./plugins/lazygit.nix
     ./plugins/claude-code.nix
 
+    ./plugins/custom/eldritch.nix
+
     # NOTE: Add/Configure additional plugins for Kickstart.nixvim
     #
     #  Here are some example plugins that I've included in the Kickstart repository.

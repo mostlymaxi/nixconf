@@ -41,8 +41,22 @@ with lib;
     programs = {
       bat = {
         enable = true;
+
         config = {
           pager = "less -FR";
+          theme = "eldritch";
+        };
+
+        themes = {
+          eldritch = {
+            src = pkgs.fetchFromGitHub {
+              owner = "eldritch-theme";
+              repo = "bat"; # Bat uses sublime syntax for its themes
+              rev = "33f8a2543f626637e8d85356e85bf32eee414f17";
+              sha256 = "sha256-zZbe3eFxG/cC6s6vOnDvpVkDysCg+PkK5Uunr9oVGrU=";
+            };
+            file = "Eldritch.tmTheme";
+          };
         };
       };
 

@@ -11,4 +11,5 @@
   programs.core.enable = true;
 
   coreweave.programs.kubernetes.enable = true;
+  coreweave.programs.teleport.enable = true;
 }

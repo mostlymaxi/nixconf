@@ -24,6 +24,8 @@ with lib;
     home.file.".config/kitty/ssh.conf".text = ''
       hostname *tenant-coreweave-vdi.coreweave.cloud
       color_scheme Eldritch
+
+      env FORCE_SHELL_ONCE=1
     '';
 
     programs.kitty = {

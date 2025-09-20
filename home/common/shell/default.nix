@@ -42,6 +42,7 @@ with lib;
         top = "btm";
         ff = "fastfetch";
         please = "sudo";
+        dev = "nix develop -c $SHELL";
       };
 
       greeting = mkIf config.programs.core.enable "fastfetch";

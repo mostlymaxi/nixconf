@@ -14,6 +14,7 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
     coreweave.url = "git+ssh://git@github.com/coreweave/coreweave.nix";
+    coreweave.inputs.nixpkgs.follows = "nixpkgs";
 
     # disabled flakes on work local
     # nixos-hardware.url = "github:NixOS/nixos-hardware/master";

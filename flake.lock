@@ -9,7 +9,9 @@
         "home-manager": "home-manager",
         "lib-extras": "lib-extras",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "systems": "systems_2",
         "treefmt-nix": "treefmt-nix"
       },
@@ -326,22 +328,6 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1753328757,
-        "narHash": "sha256-vvebWWGuUq+f//AAEhQLRPAvczSvda9S1N1/5r5Oq1E=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "0847254455ad659c00a7e43bd444b401e8c04bd7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "0847254455ad659c00a7e43bd444b401e8c04bd7",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
         "lastModified": 1755268003,
         "narHash": "sha256-nNaeJjo861wFR0tjHDyCnHs1rbRtrMgxAKMoig9Sj/w=",
         "owner": "NixOS",
@@ -407,7 +393,7 @@
         "coreweave": "coreweave",
         "home-manager": "home-manager_2",
         "nix-darwin": "nix-darwin_2",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "nixvim": "nixvim"
       }
     },

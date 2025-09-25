@@ -20,6 +20,7 @@
     ./plugins/oil.nix
     ./plugins/lazygit.nix
     ./plugins/claude-code.nix
+    ./plugins/rustaceanvim.nix
 
     ./plugins/custom/eldritch.nix
 

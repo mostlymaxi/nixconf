@@ -18,6 +18,10 @@
     ./plugins/treesitter.nix
     ./plugins/colorizer.nix
     ./plugins/oil.nix
+    ./plugins/rustaceanvim.nix
+    ./plugins/lazygit.nix
+
+    ./plugins/custom/eldritch-theme.nix
 
     # NOTE: Add/Configure additional plugins for Kickstart.nixvim
     #

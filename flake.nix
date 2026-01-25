@@ -19,6 +19,14 @@
     agenix-rekey.url = "github:oddlama/agenix-rekey";
     agenix-rekey.inputs.nixpkgs.follows = "nixpkgs";
 
+    niri.url = "github:sodiboo/niri-flake";
+    niri.inputs.nixpkgs.follows = "nixpkgs";
+
+    stylix.url = "github:danth/stylix";
+
+    spicetify.url = "github:Gerg-L/spicetify-nix";
+    spicetify.inputs.nixpkgs.follows = "nixpkgs";
+
     private-fonts.url = "git+ssh://git@github.com/mostlymaxi/private-fonts.git?shallow=1";
     private-fonts.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -43,7 +51,7 @@
             hostname = "orange";
 
             specialArgs = {
-              inherit hostname username mylib;
+              inherit inputs hostname username mylib;
             };
           in
           nix-darwin.lib.darwinSystem {
@@ -58,7 +66,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
 
-                home-manager.extraSpecialArgs = inputs // specialArgs;
+                home-manager.extraSpecialArgs = specialArgs;
 
                 home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
 
@@ -68,6 +76,29 @@
       };
 
       nixosConfigurations = {
+        strawberry =
+          let
+            hostname = "strawberry";
+            username = "maxi";
+            specialArgs = { inherit hostname username inputs; };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit specialArgs;
+            system = "x86_64-linux";
+
+            modules = [
+              ./hosts/strawberry
+
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+
+                home-manager.extraSpecialArgs = specialArgs;
+                home-manager.users.${username} = import ./users/${username}/home.nix;
+              }
+            ];
+          };
         blueberry =
           let
             inherit (inputs.nixpkgs) lib;
@@ -76,7 +107,7 @@
             username = "maxi";
             hostname = "blueberry";
 
-            specialArgs = { inherit hostname username mylib; };
+            specialArgs = { inherit inputs hostname username mylib; };
           in
           nixpkgs.lib.nixosSystem {
             inherit specialArgs;
@@ -90,9 +121,8 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
 
-                home-manager.extraSpecialArgs = inputs // specialArgs;
+                home-manager.extraSpecialArgs = specialArgs;
 
-                # home-manager.users.${username} = import ./hosts/${hostname}/${username}/home.nix;
                 home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
               }
             ];

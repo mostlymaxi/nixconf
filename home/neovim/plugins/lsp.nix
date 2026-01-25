@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{ pkgs, hostname, ... }:
+{
+  # required for nixd
+  home.packages = with pkgs; [
+    nixfmt-rfc-style
+  ];
+
   programs.nixvim = {
     # Dependencies
     # { 'Bilal2453/luvit-meta', lazy = true },
@@ -72,8 +78,20 @@
         clangd = {
           enable = true;
         };
-        nil_ls = {
+        nixd = {
           enable = true;
+
+          settings =
+            let
+              flake = ''(builtins.getFlake (builtins.toString ./.))'';
+              system = ''''${builtins.currentSystem}'';
+            in
+            {
+              formatting.command = [ "nixfmt" ];
+              options.nixos.expr = ''${flake}.nixosConfigurations.${hostname}.options'';
+              options.nixvim.expr = ''${flake}.packages.${system}.neovimNixvim.options'';
+              options.home-manager.expr = ''${flake}.nixosConfigurations.${hostname}.options.home-manager.users.type.getSubOptions []'';
+            };
         };
         # gopls = {
         #  enable = true;

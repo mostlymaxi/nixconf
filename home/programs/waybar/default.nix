@@ -1,4 +1,9 @@
-{lib, ...}: {
+{ lib, ... }:
+{
+  # home.packages = with pkgs; [
+  #   libcava
+  # ];
+
   programs.waybar = {
     enable = true;
     systemd.enable = true;
@@ -17,7 +22,8 @@
           # "wlr/taskbar"
         ];
         modules-center = [
-          "custom/music"
+          "cava"
+          # "custom/music"
         ];
         modules-right = [
           "cpu"
@@ -33,6 +39,29 @@
           escape = true;
           exec = ./scripts/peak-meter-visualizer;
           return-type = "json";
+        };
+        "cava" = {
+          framerate = 30;
+          bars = 16;
+          autosense = 1;
+          bar_delimiter = 32;
+          hide_on_silence = false;
+          method = "pipewire";
+          source = "auto";
+          input_delay = 2;
+          format-icons = [
+            "▁"
+            "▂"
+            "▃"
+            "▄"
+            "▅"
+            "▆"
+            "▇"
+            "█"
+          ];
+          # "actions"= {
+          #            "on-click-right"= "mode"
+          #            }
         };
         "custom/music" = {
           format = "{icon}{}";
@@ -63,8 +92,7 @@
         };
         clock = {
           timezone = "America/New York";
-          tooltip-format = ''
-            <big>{:%d %B %Y}</big>'';
+          tooltip-format = ''<big>{:%d %B %Y}</big>'';
           format = "{:%I:%M %p}";
         };
         cpu = {
@@ -84,7 +112,7 @@
             critical = 80;
           };
         };
-       # network = {
+        # network = {
         #   format-wifi = "{essid} ({signalStrength}%) ";
         #   format-ethernet = "{ipaddr}/{cidr} 󰈀";
         #   tooltip-format = "{ifname} via {gwaddr} 󰈀";
@@ -118,4 +146,3 @@
     ];
   };
 }
-

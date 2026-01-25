@@ -1,10 +1,11 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ../../home
   ];
 
   # adds a bunch of default programs
-  programs.enable = true; 
+  programs.enable = true;
   # stylix config to manage color schemes + swaybg
   pretty.enable = true;
 

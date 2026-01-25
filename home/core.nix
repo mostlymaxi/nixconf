@@ -1,6 +1,8 @@
-{username, lib, ...}: {
+{inputs, username, lib, ...}: {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
+    nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+
   home = {
     inherit username;
     homeDirectory = "/home/${username}";

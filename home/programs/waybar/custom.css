@@ -11,11 +11,23 @@ window#waybar.hidden {
     opacity: 0.2;
 }
 
+@keyframes test {
+  50% {
+    color: #5bc236;
+  }
+}
+
 #workspaces {
-    background-color: @base00;
     border-radius: 8px;
     border: 2px solid @base08;
     margin-right: 8px;
+    background: @base00;
+    background: linear-gradient(
+        90deg,
+        @base00 0%,
+        @base08 100%
+    );
+    animation: test 4s linear infinite;
 }
 
 #cpu {
@@ -81,7 +93,7 @@ window#waybar.hidden {
     color: @base08
 }
 
-#custom-music {
+#cava {
     border-radius: 8px 8px 8px 8px;
     border: 2px solid @base09;
     padding-right: 8px;
@@ -91,6 +103,16 @@ window#waybar.hidden {
 @keyframes gradient_f {
     0%{background-position:0% 0%}
     100%{background-position:400% 0%}
+}
+
+#cava {
+    background: rgb(137, 180, 250);
+    background: radial-gradient(circle, rgba(137, 180, 250, 120) 0%, rgba(142, 179, 250, 120) 6%, rgba(148, 226, 213, 1) 14%, rgba(147, 178, 250, 1) 14%, rgba(155, 176, 249, 1) 18%, rgba(245, 194, 231, 1) 28%, rgba(158, 175, 249, 1) 28%, rgba(181, 170, 248, 1) 58%, rgba(205, 214, 244, 1) 69%, rgba(186, 169, 248, 1) 69%, rgba(195, 167, 247, 1) 72%, rgba(137, 220, 235, 1) 73%, rgba(198, 167, 247, 1) 78%, rgba(203, 166, 247, 1) 100%);
+    background-size: 400% 400%;
+    animation: gradient_f 18s cubic-bezier(.72, .39, .21, 1) infinite;
+    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.377);
+    font-weight: bold;
+    color: #fff;
 }
 
 #custom-music.Playing {

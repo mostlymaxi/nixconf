@@ -1,5 +1,13 @@
-{pkgs, lib, config, stylix, ...}: with lib; {
-  imports = [ stylix.homeManagerModules.stylix ];
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}:
+with lib;
+{
+  imports = [ inputs.stylix.homeManagerModules.stylix ];
 
   options = {
     pretty.enable = mkEnableOption "pretty DE with stylix + swaybg";
@@ -9,10 +17,10 @@
     systemd.user.services."swaybg" = {
       Unit = {
         Description = "wallpapers! brought to you by stylix! :3";
-        PartOf = ["graphical-session.target"];
-        After = ["graphical-session.target"];
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
       };
-      Install.WantedBy = ["graphical-session.target"];
+      Install.WantedBy = [ "graphical-session.target" ];
       Service = {
         ExecStart = "${lib.getExe pkgs.swaybg} -m fill -i ${config.stylix.image}";
         Restart = "on-failure";
@@ -31,8 +39,8 @@
 
       ### cityscape laptop
       image = pkgs.fetchurl {
-          url = "https://4kwallpapers.com/images/wallpapers/lofi-room-cityscape-urban-3840x2160-14880.jpg";
-          hash = "sha256-chYF50xJYWpdnV+tTp9b0VgjVXrBl8L3JjEiNbVqOZc=";
+        url = "https://4kwallpapers.com/images/wallpapers/lofi-room-cityscape-urban-3840x2160-14880.jpg";
+        hash = "sha256-chYF50xJYWpdnV+tTp9b0VgjVXrBl8L3JjEiNbVqOZc=";
       };
 
       # Coca Cola Anime Girl
@@ -51,18 +59,22 @@
       polarity = "dark";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/pandora.yaml";
-      # base16Scheme = "${pkgs.base16-schemes}/share/themes/pop.yaml";
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/irblack.yaml";
-      # base16Scheme = ./dandandan.style;
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/pop.yaml";
+      # base16Scheme = "${pkgs.base16-schemes}/share/themes/irblack.yaml";
 
       # this must be a multiple of 3 for gtk-3.0
       # apps to understand this properly for some
       # very strange reason
-      cursor.size = 32;
+      # cursor.size = 32;
+      cursor = {
+        size = 32;
+        package = pkgs.simp1e-cursors;
+        name = "Simp1e-Adw-Dark";
+      };
 
       fonts = {
-        monospace.package = pkgs.cascadia-code;
-        monospace.name = "Cascadia Code NF";
+        monospace.package = pkgs.nerd-fonts.caskaydia-cove;
+        monospace.name = "CaskaydiaCove NFM";
         sansSerif.package = pkgs.noto-fonts;
         sansSerif.name = "Noto Sans";
         serif.package = pkgs.noto-fonts;
@@ -78,4 +90,3 @@
     };
   };
 }
-

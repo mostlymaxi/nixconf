@@ -5,18 +5,17 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ../../modules/system.nix
-      ../../modules/greeter
-      ../../modules/desktop
+  imports = [
+    ../../modules/system.nix
+    ../../modules/greeter
+    ../../modules/desktop
 
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   greeter = "tuigreet";
-  available-desktops = ["niri"];
+  available-desktops = [ "niri" ];
   initial-session = "${pkgs.niri}/bin/niri-session";
 
   # Bootloader.
@@ -24,6 +23,8 @@
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
+
+  programs.steam.enable = true;
 
   networking.hostName = "nixos-test"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -44,5 +45,3 @@
   system.stateVersion = "24.11"; # Did you read the comment?
 
 }
-
-

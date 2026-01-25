@@ -5,16 +5,15 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ../../modules/system.nix
+  imports = [
+    ../../modules/system.nix
 
-      ../../home/desktop/plasma
-      ../../modules/greeter/sddm
+    ../../home/desktop/plasma
+    ../../modules/greeter/sddm
 
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader = {
@@ -24,7 +23,7 @@
     # };
     grub = {
       enable = true;
-      device = "/dev/sda";  #  "nodev"
+      device = "/dev/sda"; # "nodev"
       efiSupport = false;
       useOSProber = true;
       #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
@@ -50,5 +49,3 @@
   system.stateVersion = "24.11"; # Did you read the comment?
 
 }
-
-

@@ -95,7 +95,7 @@ while read -r line; do
     # then show the cava equilizer
     if [[ $EQUILIZER == 1 && $(echo $line | jq -r '.class') == 'Playing' ]]; then
         # Show the playing title for 2 seconds
-        sleep 2
+        sleep 5
 
         # cava output into cava_waybar_pipe
         cava -p $cava_waybar_config >$cava_waybar_pipe &

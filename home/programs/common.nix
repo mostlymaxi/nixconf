@@ -1,8 +1,9 @@
 {
-lib,
-pkgs,
-...
-}: {
+  inputs,
+  pkgs,
+  ...
+}:
+{
   home.packages = with pkgs; [
     # archives
     zip
@@ -18,6 +19,7 @@ pkgs,
     fzf
     hyfetch
     grc
+    inputs.wlavu.packages.${pkgs.system}.default
 
     # misc
     libnotify
@@ -145,7 +147,6 @@ pkgs,
     ssh.enable = true;
   };
 
-
   # qt = {
   #   enable = true;
   #   platformTheme = "qt5ct";
@@ -157,14 +158,16 @@ pkgs,
     mako = {
       enable = true;
 
-      defaultTimeout = 15000;
+      settings = {
+        defaultTimeout = 15000;
 
-      margin = "24";
-      padding = "8";
-      borderSize = 2;
-      borderRadius = 8;
-      width = 300;
-      height = 160;
+        margin = "24";
+        padding = "8";
+        borderSize = 2;
+        borderRadius = 8;
+        width = 300;
+        height = 160;
+      };
     };
 
     # auto mount usb drives

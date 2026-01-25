@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     # material-design-icons
     # font-awesome
@@ -13,7 +14,7 @@
     nerd-fonts.caskaydia-mono
 
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
 
   ];
 

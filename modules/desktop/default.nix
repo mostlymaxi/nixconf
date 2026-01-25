@@ -1,9 +1,11 @@
-{lib, ...}: with lib; {
-  imports = [./niri];
+{ lib, ... }:
+with lib;
+{
+  imports = [ ./niri ];
 
   options = {
     available-desktops = mkOption {
-      type = types.listOf (types.enum []);
+      type = types.listOf (types.enum [ ]);
     };
 
     initial-session = mkOption {

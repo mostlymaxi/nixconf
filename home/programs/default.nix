@@ -3,6 +3,7 @@
     ./browsers.nix
     ./common.nix
     ./git.nix
+    ./games.nix
     ./media.nix
     ./fonts.nix
     ./waybar

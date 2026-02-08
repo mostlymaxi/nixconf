@@ -27,10 +27,9 @@ with lib;
         useTextGreeter = true;
 
         settings = {
-          initial_session = {
+          initial_session = mkIf (config.desktop.initial-session != "") {
             user = specialArgs.username;
-            # command = "$HOME/.wayland-session";
-            command = "${config.initial-session}";
+            command = "${config.desktop.initial-session}";
           };
 
           default_session = {

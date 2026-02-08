@@ -17,7 +17,7 @@ with lib;
 
       exec = mkOption {
         type = types.str;
-        default = "";
+        default = "sh";
       };
 
       aliases = mkOption {

@@ -13,12 +13,19 @@ with lib;
   ];
 
   options = {
-    available-desktops = mkOption {
-      type = types.listOf (types.enum [ "niri" ]);
+    desktop = {
+      default = mkOption {
+        type = types.enum [ "niri" ];
+      };
+
+      niri = {
+        enable = mkEnableOption "niri desktop environment";
+      };
     };
   };
 
-  config = mkIf (builtins.elem "niri" config.available-desktops) {
+  config = mkIf config.desktop.niri.enable {
+    desktop."initial-session" = mkIf (config.desktop.default == "niri") "${pkgs.niri}/bin/niri-session";
     programs.niri.enable = true;
 
     services.displayManager.sessionPackages = [ pkgs.niri ];

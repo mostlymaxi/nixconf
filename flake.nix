@@ -76,6 +76,33 @@
       };
 
       nixosConfigurations = {
+        pickle =
+          let
+            inherit (inputs.nixpkgs) lib;
+            mylib = import ./utils.nix { inherit lib; };
+
+            hostname = "pickle";
+            username = "maxi";
+
+            specialArgs = { inherit inputs hostname username mylib; };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit specialArgs;
+            system = "x86_64-linux";
+
+            modules = [
+              ./hosts/pickle
+
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+
+                home-manager.extraSpecialArgs =  specialArgs;
+                home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
+              }
+            ];
+          };
         strawberry =
           let
             hostname = "strawberry";

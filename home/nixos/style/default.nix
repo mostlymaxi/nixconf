@@ -60,7 +60,7 @@ with lib;
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/pandora.yaml";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/pop.yaml";
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/irblack.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/eldritch.yaml";
 
       # this must be a multiple of 3 for gtk-3.0
       # apps to understand this properly for some

@@ -2,12 +2,15 @@
   imports = [./fuzzel];
 
   options = {
-    launcher = mkOption {
-      type = types.enum [];
-    };
+    launcher = {
+      default = mkOption {
+        type = types.enum [ "none" ];
+        default = "none";
+      };
 
-    launchLauncher = mkOption {
-      type = types.str;
+      exec = mkOption {
+        type = types.str;
+      };
     };
   };
 }

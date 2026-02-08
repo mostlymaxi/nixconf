@@ -1,12 +1,11 @@
 {
   pkgs,
-  nixvim,
-  luasnip-snippets,
+  inputs,
   ...
 }:
 {
   imports = [
-    nixvim.homeModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     # Plugins
     ./plugins/gitsigns.nix
     ./plugins/which-key.nix

@@ -1,5 +1,6 @@
 {
   lib,
+mylib,
   pkgs,
   config,
   ...
@@ -7,7 +8,7 @@
 with lib;
 {
 
-  imports = [ ./fastfetch.nix ];
+  imports = mylib.listFiles ./.;
 
   config = mkIf config.programs.core.enable {
     home.packages = with pkgs; [

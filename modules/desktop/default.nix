@@ -1,13 +1,18 @@
-{mylib, lib, ...}: with lib; {
+{ mylib, lib, ... }:
+with lib;
+{
   imports = mylib.listFiles ./.;
 
   options = {
-    available-desktops = mkOption {
-      type = types.listOf (types.enum []);
-    };
+    desktop = {
+      default = mkOption {
+        type = types.enum [ ];
+      };
 
-    initial-session = mkOption {
-      type = types.str;
+      initial-session = mkOption {
+        type = types.str;
+        default = "";
+      };
     };
   };
 

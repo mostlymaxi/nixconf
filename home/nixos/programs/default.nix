@@ -1,7 +1,3 @@
-{
-  mylib,
-  ...
-}:
-{
+{ mylib, ...}: {
   imports = mylib.listFiles ./.;
 }

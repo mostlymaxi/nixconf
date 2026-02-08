@@ -1,39 +1,16 @@
 {
-  pkgs,
   lib,
   config,
   osConfig,
   ...
 }:
 with lib;
-let
-  name = "niri";
-in
 {
   imports = [
     ./stylix.nix
   ];
 
-  options = {
-    desktop = mkOption {
-      type = types.enum [ name ];
-    };
-  };
-
-  config = mkIf (config.desktop == name) {
-    assertions = [
-      {
-        assertion = builtins.elem name osConfig.available-desktops;
-        message = "${name} is not an available desktop environment";
-      }
-    ];
-
-    # if we want wayland sessions to be defined by home-manager
-    home.file.".wayland-session" = {
-      source = "${pkgs.niri}/bin/niri-session";
-      executable = true;
-    };
-
+  config = mkIf osConfig.desktop.niri.enable {
     programs.niri =
       let
         gaps = 16;
@@ -91,8 +68,8 @@ in
 
         settings.binds = with config.lib.niri.actions; {
           "Mod+Shift+Slash".action = show-hotkey-overlay;
-          "Mod+Return".action = spawn "${config.launchTerminal}";
-          "Mod+D".action = spawn "${config.launchLauncher}";
+          "Mod+Return".action = spawn "${config.terminal.exec}";
+          "Mod+D".action = spawn "${config.launcher.exec}";
           "Mod+Space".action = toggle-overview;
 
           "Mod+P".action.screenshot = {

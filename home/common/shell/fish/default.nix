@@ -11,7 +11,7 @@
     };
   };
 
-  config = mkIf config.shell.fish.enable {
+  config = mkIf (config.shell.fish.enable || config.shell.default == "fish") {
     shell.exec = mkIf (config.shell.default == "fish") "${pkgs.fish}/bin/fish";
     home.sessionVariables.SHELL = mkIf (config.shell.default == "fish") "${pkgs.fish}/bin/fish";
 

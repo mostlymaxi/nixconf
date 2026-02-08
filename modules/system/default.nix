@@ -1,12 +1,12 @@
 {
   username,
+  hostname,
   ...
 }:
 {
 
   imports = [ ./core.nix ];
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
     isNormalUser = true;
     description = "i was here";
@@ -42,15 +42,9 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # Enable networking
+  networking.hostName = "${hostname}";
   networking.networkmanager.enable = true;
 
-  # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
     settings = {
@@ -60,7 +54,6 @@
     openFirewall = true;
   };
 
-  # ssh timeout
   services.fail2ban.enable = true;
 
   nix.gc = {

@@ -20,22 +20,18 @@
     #    2. command line args `--options substituers http://xxx`
     nix.settings.trusted-users = [ username ];
 
-    # customise /etc/nix/nix.conf declaratively via `nix.settings`
     nix.settings = {
-      # enable flakes globally
       experimental-features = [
         "nix-command"
         "flakes"
       ];
     };
 
-    # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
 
-    # $ nix search wget
     environment.systemPackages = with pkgs; [
       curl
-      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      vim
       git
       nh
     ];

@@ -6,19 +6,24 @@
 }:
 with lib;
 {
+
   options = {
-    terminal = mkOption {
-      type = types.enum [ "foot" ];
+    terminal = {
+      default = mkOption {
+        type = types.enum [ "foot" ];
+      };
+
+      foot = {
+        enable = mkEnableOption "foot terminal";
+      };
     };
   };
 
-  config = lib.mkIf (config.terminal == "foot") {
-    launchTerminal = "${pkgs.foot}/bin/footclient";
-    # launchTerminal = "footclient";
+  config = mkIf config.terminal.foot.enable {
+    terminal.exec = mkIf (config.terminal.default == "foot") "${pkgs.foot}/bin/footclient";
 
     programs.foot = {
       enable = true;
-
       server.enable = true;
 
       settings = {
@@ -27,7 +32,7 @@ with lib;
         };
 
         main = {
-          shell = "${config.launchShell}";
+          shell = "${config.shell.exec}";
           term = "xterm-256color";
           dpi-aware = mkForce "yes";
           pad = "5x0";
@@ -37,7 +42,6 @@ with lib;
           hide-when-typing = "yes";
         };
       };
-
     };
   };
 }

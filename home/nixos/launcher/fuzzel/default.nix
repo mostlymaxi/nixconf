@@ -1,24 +1,30 @@
-{pkgs, lib, config, ...}: with lib; {
+{
+  lib,
+  config,
+  ...
+}:
+with lib;
+{
   options = {
-    launcher = mkOption {
-      type = types.enum ["fuzzel"];
+    launcher = {
+      default = mkOption {
+        type = types.enum [ "fuzzel" ];
+      };
     };
   };
 
-  config = lib.mkIf (config.launcher == "fuzzel") {
-    # launchLauncher = "${pkgs.fuzzel}/bin/fuzzel";
-    launchLauncher = "fuzzel";
+  config = lib.mkIf (config.launcher.default == "fuzzel") {
+    launcher.exec = "fuzzel";
 
     programs.fuzzel = {
       enable = true;
 
       settings = {
-	main = {
-	  terminal = "${config.launchTerminal}";
-	  font = mkForce "${config.stylix.fonts.monospace.name}:size=20";
-	};
+        main = {
+          terminal = "${config.terminal.exec}";
+          font = mkForce "${config.stylix.fonts.monospace.name}:size=20";
+        };
       };
     };
   };
 }
-

@@ -6,7 +6,7 @@
 # Media - control and enjoy audio/video
 {
   imports = [
-    inputs.spicetify-nix.homeManagerModules.default
+    inputs.spicetify.homeManagerModules.default
   ];
 
   # Media packages
@@ -16,8 +16,8 @@
     playerctl
     pavucontrol
     imv
-    grim  # wayland screenshots - needed for satty
-    satty # screenshot annotator 
+    grim # wayland screenshots - needed for satty
+    satty # screenshot annotator
 
     # misc
     cava

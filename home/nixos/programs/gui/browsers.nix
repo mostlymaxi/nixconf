@@ -3,13 +3,17 @@
   config,
   username,
   ...
-}: with lib; {
+}:
+with lib;
+{
   config = mkIf config.programs.gui.enable {
-  programs = {
-    firefox = {
-      enable = true;
-      profiles.${username} = {};
+    programs = {
+      firefox = {
+        enable = true;
+        profiles.${username} = { };
+      };
     };
-  };
+
+    stylix.targets.firefox.profileNames = [ "${username}" ];
   };
 }

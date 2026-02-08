@@ -8,6 +8,9 @@
     homeDirectory = "/home/${username}";
   };
 
-  imports = [ ./core.nix ./nixos/default.nix ];
+  imports = [
+    ./core.nix
+    ./nixos/default.nix
+  ];
 
 }

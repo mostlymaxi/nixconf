@@ -1,4 +1,5 @@
-{lib, ...}: {
+{ lib, ... }:
+{
   programs.waybar = {
     enable = true;
     systemd.enable = true;
@@ -63,8 +64,7 @@
         };
         clock = {
           timezone = "America/New York";
-          tooltip-format = ''
-            <big>{:%d %B %Y}</big>'';
+          tooltip-format = "<big>{:%d %B %Y}</big>";
           format = "{:%I:%M %p}";
         };
         cpu = {
@@ -84,7 +84,7 @@
             critical = 80;
           };
         };
-       # network = {
+        # network = {
         #   format-wifi = "{essid} ({signalStrength}%) ";
         #   format-ethernet = "{ipaddr}/{cidr} 󰈀";
         #   tooltip-format = "{ifname} via {gwaddr} 󰈀";
@@ -118,4 +118,3 @@
     ];
   };
 }
-

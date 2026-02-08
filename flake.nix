@@ -34,7 +34,6 @@
 
   outputs =
     inputs@{
-      self,
       nixpkgs,
       home-manager,
       nix-darwin,
@@ -51,7 +50,12 @@
             hostname = "orange";
 
             specialArgs = {
-              inherit inputs hostname username mylib;
+              inherit
+                inputs
+                hostname
+                username
+                mylib
+                ;
             };
           in
           nix-darwin.lib.darwinSystem {
@@ -84,7 +88,14 @@
             hostname = "pickle";
             username = "maxi";
 
-            specialArgs = { inherit inputs hostname username mylib; };
+            specialArgs = {
+              inherit
+                inputs
+                hostname
+                username
+                mylib
+                ;
+            };
           in
           nixpkgs.lib.nixosSystem {
             inherit specialArgs;
@@ -98,23 +109,34 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
 
-                home-manager.extraSpecialArgs =  specialArgs;
+                home-manager.extraSpecialArgs = specialArgs;
                 home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
               }
             ];
           };
         strawberry =
           let
+            inherit (inputs.nixpkgs) lib;
+            mylib = import ./utils.nix { inherit lib; };
+
             hostname = "strawberry";
             username = "maxi";
-            specialArgs = { inherit hostname username inputs; };
+
+            specialArgs = {
+              inherit
+                inputs
+                hostname
+                username
+                mylib
+                ;
+            };
           in
           nixpkgs.lib.nixosSystem {
             inherit specialArgs;
             system = "x86_64-linux";
 
             modules = [
-              ./hosts/strawberry
+              ./hosts/pickle
 
               home-manager.nixosModules.home-manager
               {
@@ -122,7 +144,7 @@
                 home-manager.useUserPackages = true;
 
                 home-manager.extraSpecialArgs = specialArgs;
-                home-manager.users.${username} = import ./users/${username}/home.nix;
+                home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
               }
             ];
           };
@@ -134,7 +156,14 @@
             username = "maxi";
             hostname = "blueberry";
 
-            specialArgs = { inherit inputs hostname username mylib; };
+            specialArgs = {
+              inherit
+                inputs
+                hostname
+                username
+                mylib
+                ;
+            };
           in
           nixpkgs.lib.nixosSystem {
             inherit specialArgs;

@@ -1,4 +1,12 @@
-{lib, config, pkgs, specialArgs, ...}: with lib; {
+{
+  lib,
+  config,
+  pkgs,
+  specialArgs,
+  ...
+}:
+with lib;
+{
 
   # this option is an enum because we only
   # want one greeter enabled at a time.
@@ -6,7 +14,7 @@
   # very annoying as we add more greeters.
   options = {
     greeter = mkOption {
-      type = types.enum ["greetd"];
+      type = types.enum [ "greetd" ];
     };
   };
 
@@ -15,20 +23,20 @@
       xserver.enable = false;
 
       greetd = {
-	enable = true;
+        enable = true;
 
-	settings = {
-	  initial_session = {
-	    user = specialArgs.username;
-	    # command = "$HOME/.wayland-session";
-	    command = "${config.initial-session}";
-	  };
+        settings = {
+          initial_session = {
+            user = specialArgs.username;
+            # command = "$HOME/.wayland-session";
+            command = "${config.initial-session}";
+          };
 
-	  default_session = {
-	    user = "greeter";
-	    command = "${pkgs.greetd.greetd}/bin/agreety --cmd ${config.initial-session}";
-	  };
-	};
+          default_session = {
+            user = "greeter";
+            command = "${pkgs.greetd.greetd}/bin/agreety --cmd ${config.initial-session}";
+          };
+        };
       };
     };
 

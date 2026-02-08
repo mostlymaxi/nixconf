@@ -1,3 +1,4 @@
-{...}: {
-  imports = [./niri];
+{ ... }:
+{
+  imports = [ ./niri ];
 }

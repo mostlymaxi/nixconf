@@ -1,9 +1,10 @@
 {
-config,
-lib,
-pkgs,
-...
-}: {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   systemd.user.services.xwayland-satellite = {
     Unit = {
       Description = "Xwayland outside your Wayland";
@@ -21,4 +22,3 @@ pkgs,
     };
   };
 }
-

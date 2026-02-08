@@ -1,5 +1,7 @@
-{lib, ...}: with lib; {
-  imports = [./fuzzel];
+{ lib, ... }:
+with lib;
+{
+  imports = [ ./fuzzel ];
 
   options = {
     launcher = {

@@ -15,4 +15,5 @@
   pretty.enable = true;
 
   programs.enable = true;
+  games.enable = true;
 }

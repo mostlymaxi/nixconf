@@ -6,15 +6,6 @@
   ...
 }:
 {
-
-  # options = {
-  #   style = {
-  #     fonts = {
-  #       default = "Caskaydia";
-  #     };
-  #   };
-  # };
-
   config = lib.mkIf (config.style.fonts.enable == true) {
     home.packages = with pkgs; [
       nerd-fonts.caskaydia-cove # includes ligatures <=>
@@ -23,8 +14,8 @@
       noto-fonts
       noto-fonts-emoji
 
-      private-fonts.packages."${pkgs.system}".codelia
-      private-fonts.packages."${pkgs.system}".tabulamore-script
+      private-fonts.packages."${pkgs.stdenv.system}".codelia
+      private-fonts.packages."${pkgs.stdenv.system}".tabulamore-script
 
     ];
 

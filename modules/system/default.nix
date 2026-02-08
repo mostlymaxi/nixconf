@@ -54,7 +54,7 @@
     openFirewall = true;
   };
 
-  services.fail2ban.enable = true;
+  services.fail2ban.enable = false; # disabling until i figure out how to configure this to be less strict
 
   nix.gc = {
     automatic = true;

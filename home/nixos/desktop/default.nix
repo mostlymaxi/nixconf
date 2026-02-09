@@ -1,4 +1,4 @@
-{ ... }:
+{ mylib, ... }:
 {
-  imports = [ ./niri ];
+  imports = mylib.listFiles ./.;
 }

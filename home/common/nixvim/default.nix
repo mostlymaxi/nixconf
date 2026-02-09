@@ -1,5 +1,4 @@
 {
-  pkgs,
   inputs,
   ...
 }:
@@ -19,19 +18,10 @@
     ./plugins/oil.nix
     ./plugins/rustaceanvim.nix
     ./plugins/lazygit.nix
+    ./plugins/smear-cursor.nix
+    ./plugins/opencode.nix
 
     ./plugins/custom/eldritch-theme.nix
-
-    # NOTE: Add/Configure additional plugins for Kickstart.nixvim
-    #
-    #  Here are some example plugins that I've included in the Kickstart repository.
-    #  Uncomment any of the lines below to enable them (you will need to restart nvim).
-    #
-    # ./plugins/kickstart/plugins/debug.nix
-    # ./plugins/kickstart/plugins/indent-blankline.nix
-    # ./plugins/kickstart/plugins/lint.nix
-    # ./plugins/kickstart/plugins/autopairs.nix
-    # ./plugins/kickstart/plugins/neo-tree.nix
   ];
 
   /*
@@ -132,41 +122,24 @@
     #  For more options, you can see `:help option-list`
     # https://nix-community.github.io/nixvim/NeovimOptions/index.html?highlight=globals#opts
     opts = {
-      # Show line numbers
       number = true;
-      # You can also add relative line numbers, to help with jumping.
-      #  Experiment for yourself to see if you like it!
-      #relativenumber = true
-
-      # Enable mouse mode, can be useful for resizing splits for example!
       mouse = "a";
 
-      # Don't show the mode, since it's already in the statusline
       showmode = false;
 
-      #  See `:help 'clipboard'`
       clipboard = {
         providers = {
           wl-copy.enable = true; # For Wayland
-          xsel.enable = true; # For X11
+          xsel.enable = false; # For X11
         };
-
-        # Sync clipboard between OS and Neovim
-        #  Remove this option if you want your OS clipboard to remain independent.
-        register = "unnamedplus";
       };
 
-      # Enable break indent
       breakindent = true;
-
-      # Save undo history
       undofile = true;
 
-      # Case-insensitive searching UNLESS \C or one or more capital letters in search term
       ignorecase = true;
       smartcase = true;
 
-      # Keep signcolumn on by default
       signcolumn = "yes";
 
       # Decrease update time
@@ -224,33 +197,6 @@
           desc = "Exit terminal mode";
         };
       }
-      # TIP: Disable arrow keys in normal mode
-      /*
-        {
-          mode = "n";
-          key = "<left>";
-          action = "<cmd>echo 'Use h to move!!'<CR>";
-        }
-        {
-          mode = "n";
-          key = "<right>";
-          action = "<cmd>echo 'Use l to move!!'<CR>";
-        }
-        {
-          mode = "n";
-          key = "<up>";
-          action = "<cmd>echo 'Use k to move!!'<CR>";
-        }
-        {
-          mode = "n";
-          key = "<down>";
-          action = "<cmd>echo 'Use j to move!!'<CR>";
-        }
-      */
-      # Keybinds to make split navigation easier.
-      #  Use CTRL+<hjkl> to switch between windows
-      #
-      #  See `:help wincmd` for a list of all window commands
       {
         mode = "n";
         key = "<C-h>";

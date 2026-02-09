@@ -5,9 +5,12 @@
     ../../modules/system
     ../../modules/greeter
     ../../modules/desktop
+    ../../modules/services/minecraft-server.nix
 
     ./hardware-configuration.nix
   ];
+
+  services.minecraft-simple.enable = true;
 
   greeter = "tuigreet";
   desktop.niri.enable = true;

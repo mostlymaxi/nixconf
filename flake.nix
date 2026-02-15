@@ -44,6 +44,10 @@
       ...
     }:
     {
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+      formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixfmt;
+      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt;
+
       darwinConfigurations = {
         orange =
           let

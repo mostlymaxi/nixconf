@@ -22,6 +22,7 @@
     ./plugins/opencode.nix
 
     ./plugins/custom/eldritch-theme.nix
+    ./plugins/custom/neovim-power-mode.nix
   ];
 
   /*
@@ -122,6 +123,7 @@
     #  For more options, you can see `:help option-list`
     # https://nix-community.github.io/nixvim/NeovimOptions/index.html?highlight=globals#opts
     opts = {
+      termguicolors = true;
       number = true;
       mouse = "a";
 

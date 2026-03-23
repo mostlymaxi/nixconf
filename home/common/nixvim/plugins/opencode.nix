@@ -3,11 +3,7 @@
   programs.nixvim = {
     plugins.opencode = {
       enable = true;
-      settings = {
-        provider = {
-          enabled = "snacks";
-        };
-      };
+      settings = { };
     };
 
     keymaps = [

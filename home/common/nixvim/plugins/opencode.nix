@@ -5,7 +5,7 @@
       enable = true;
       settings = {
         provider = {
-          enabled = "terminal";
+          enabled = "snacks";
         };
       };
     };

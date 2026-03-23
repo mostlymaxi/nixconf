@@ -20,6 +20,7 @@ in
     extraConfigLua = ''
       require("power-mode").setup({
         particles = { preset = "explosion" },
+        combo = { enabled = false },
         shake = { mode = "none" },
       })
     '';

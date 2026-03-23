@@ -49,6 +49,14 @@ with lib;
             opacity = 0.8;
           }
           {
+            matches = [ { app-id = "ghostty$"; } ];
+            default-column-width = {
+              proportion = 1.0 / 2.0;
+            };
+            open-maximized = true;
+            opacity = 0.8;
+          }
+          {
             matches = [ { app-id = "^firefox$"; } ];
             border.active.gradient = {
               from = "orange";

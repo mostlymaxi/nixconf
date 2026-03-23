@@ -9,8 +9,8 @@
 
   launcher.default = "fuzzel";
 
-  terminal.foot.enable = true;
-  terminal.default = "foot";
+  terminal.ghostty.enable = true;
+  terminal.default = "ghostty";
 
   pretty.enable = true;
 

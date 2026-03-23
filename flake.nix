@@ -31,6 +31,8 @@
     spicetify.url = "github:Gerg-L/spicetify-nix";
     spicetify.inputs.nixpkgs.follows = "nixpkgs";
 
+    ghostty-nightly.url = "github:ghostty-org/ghostty";
+
     private-fonts.url = "git+ssh://git@github.com/mostlymaxi/private-fonts.git?shallow=1";
     private-fonts.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -117,6 +119,8 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
 
+                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce []; } ];
+
                 home-manager.extraSpecialArgs = specialArgs;
                 home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
               }
@@ -151,6 +155,8 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
 
+                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce []; } ];
+
                 home-manager.extraSpecialArgs = specialArgs;
                 home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
               }
@@ -184,6 +190,8 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
+
+                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce []; } ];
 
                 home-manager.extraSpecialArgs = specialArgs;
 

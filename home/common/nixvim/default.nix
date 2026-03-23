@@ -19,6 +19,7 @@
     ./plugins/rustaceanvim.nix
     ./plugins/lazygit.nix
     ./plugins/smear-cursor.nix
+    ./plugins/snacks.nix
     ./plugins/opencode.nix
 
     ./plugins/custom/eldritch-theme.nix
@@ -200,33 +201,33 @@
         };
       }
       {
-        mode = "n";
+        mode = [ "n" "t" ];
         key = "<C-h>";
-        action = "<C-w><C-h>";
+        action = "<C-\\><C-n><C-w><C-h>";
         options = {
           desc = "Move focus to the left window";
         };
       }
       {
-        mode = "n";
+        mode = [ "n" "t" ];
         key = "<C-l>";
-        action = "<C-w><C-l>";
+        action = "<C-\\><C-n><C-w><C-l>";
         options = {
           desc = "Move focus to the right window";
         };
       }
       {
-        mode = "n";
+        mode = [ "n" "t" ];
         key = "<C-j>";
-        action = "<C-w><C-j>";
+        action = "<C-\\><C-n><C-w><C-j>";
         options = {
           desc = "Move focus to the lower window";
         };
       }
       {
-        mode = "n";
+        mode = [ "n" "t" ];
         key = "<C-k>";
-        action = "<C-w><C-k>";
+        action = "<C-\\><C-n><C-w><C-k>";
         options = {
           desc = "Move focus to the upper window";
         };

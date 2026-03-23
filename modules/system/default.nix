@@ -1,4 +1,5 @@
 {
+  lib,
   username,
   hostname,
   ...
@@ -43,7 +44,7 @@
   };
 
   networking.hostName = "${hostname}";
-  networking.networkmanager.enable = true;
+  networking.networkmanager.enable = lib.mkDefault true;
 
   services.openssh = {
     enable = true;

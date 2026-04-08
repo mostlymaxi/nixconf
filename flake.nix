@@ -36,6 +36,9 @@
     private-fonts.url = "git+ssh://git@github.com/mostlymaxi/private-fonts.git?shallow=1";
     private-fonts.inputs.nixpkgs.follows = "nixpkgs";
 
+    forgecode.url = "github:antinomyhq/forgecode";
+    forgecode.inputs.nixpkgs.follows = "nixpkgs";
+
   };
 
   outputs =

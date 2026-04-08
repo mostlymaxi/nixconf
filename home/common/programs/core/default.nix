@@ -3,6 +3,7 @@
   mylib,
   pkgs,
   config,
+  inputs,
   ...
 }:
 with lib;
@@ -12,6 +13,7 @@ with lib;
 
   config = mkIf config.programs.core.enable {
     home.packages = with pkgs; [
+      inputs.forgecode.packages.${pkgs.system}.forge
       # ssh
       openssh # default version in macos seems incomplete
 

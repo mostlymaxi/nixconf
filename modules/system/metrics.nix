@@ -47,6 +47,8 @@ in
           };
         };
 
+        globalConfig.scrape_interval = "5m";
+
         scrapeConfigs = [
           {
             job_name = "node-exporter";
@@ -70,9 +72,9 @@ in
               password_file = cfg.grafanaCloud.apiKeyFile;
             };
             queue_config = {
-              capacity = 10000;
-              max_samples_per_send = 5000;
-              batch_send_deadline = "30s";
+              capacity = 2000;
+              max_samples_per_send = 1000;
+              batch_send_deadline = "5m";
             };
           }
         ];

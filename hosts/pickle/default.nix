@@ -14,13 +14,7 @@
   desktop.niri.enable = true;
   desktop.default = "niri";
 
-  services.metrics.enable = true;
-  services.metrics.grafanaCloud = {
-    enable = true;
-    prometheusUrl = "https://prometheus-prod-66-prod-us-east-3.grafana.net/api/prom/push";
-    prometheusUsername = "3055526";
-    apiKeyFile = "/run/secrets/grafana_api_key";
-  };
+  services.metrics.enable = false;
 
   networking.networkmanager.enable = false;
   # hard coded like a true genius (faster boot times)

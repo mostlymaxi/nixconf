@@ -122,7 +122,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
 
-                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce []; } ];
+                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce [ ]; } ];
 
                 home-manager.extraSpecialArgs = specialArgs;
                 home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
@@ -158,7 +158,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
 
-                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce []; } ];
+                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce [ ]; } ];
 
                 home-manager.extraSpecialArgs = specialArgs;
                 home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
@@ -194,7 +194,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
 
-                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce []; } ];
+                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce [ ]; } ];
 
                 home-manager.extraSpecialArgs = specialArgs;
 

@@ -2,7 +2,7 @@
   pkgs,
   lib,
   config,
-  private-fonts,
+  inputs,
   ...
 }:
 {
@@ -12,10 +12,10 @@
       nerd-fonts.caskaydia-mono
 
       noto-fonts
-      noto-fonts-emoji
+      noto-fonts-color-emoji
 
-      private-fonts.packages."${pkgs.stdenv.system}".codelia
-      private-fonts.packages."${pkgs.stdenv.system}".tabulamore-script
+      inputs.private-fonts.packages."${pkgs.stdenv.system}".codelia
+      inputs.private-fonts.packages."${pkgs.stdenv.system}".tabulamore-script
 
     ];
 

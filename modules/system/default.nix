@@ -6,7 +6,7 @@
 }:
 {
 
-  imports = [ ./core.nix ];
+  imports = [ ./core.nix ./monero.nix ];
 
   users.users.${username} = {
     isNormalUser = true;

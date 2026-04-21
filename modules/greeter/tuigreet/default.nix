@@ -15,9 +15,9 @@ with lib;
   };
 
   config = mkIf (config.greeter == "tuigreet") {
-    boot.kernelParams = [
-      "vt.cur_default=0x800006" # set cursor to white solid block
-    ];
+    # boot.kernelParams = [
+    #   "vt.cur_default=0x800006" # set cursor to white solid block
+    # ];
 
     services = {
       xserver.enable = false;

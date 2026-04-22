@@ -154,10 +154,6 @@
           modules = [
             "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
             ./modules/system/installer.nix
-            {
-              # enable USB boot on Pi 3 (burns one-time fuse, ignored on Pi 4/5)
-              sdImage.firmwareConfig = "program_usb_boot_mode=1";
-            }
           ];
         }).config.system.build.sdImage;
     };

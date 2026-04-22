@@ -10,11 +10,8 @@ usage() {
 Usage:
   ./bootstrap build-usb [system]                     — build installer image
   ./bootstrap init      <hostname> [target] [system] — discover hardware + scaffold host config
-  ./bootstrap deploy    <hostname> [target]           — install NixOS via nixos-anywhere
-  ./bootstrap switch    <hostname> [target]           — apply config changes to a running host
-
-Options:
-  --no-kexec    skip kexec (required for Pi 3 and other devices that don't support it)
+  ./bootstrap deploy    <hostname> [target] [--no-kexec] — install NixOS via nixos-anywhere
+  ./bootstrap switch    <hostname> [target]              — apply config changes to a running host
 
 target defaults to $DEFAULT_TARGET (mDNS from installer image)
 system defaults to $DEFAULT_SYSTEM
@@ -33,7 +30,7 @@ scp_from_target() {
 }
 
 cleanup_ssh() {
-  ssh -o "ControlPath=/tmp/deploy-%r@%h" -O exit "root@${TARGET}" 2>/dev/null || true
+  [[ -n "${TARGET:-}" ]] && ssh -o "ControlPath=/tmp/deploy-%r@%h" -O exit "root@${TARGET}" 2>/dev/null || true
 }
 trap cleanup_ssh EXIT
 
@@ -153,8 +150,55 @@ cmd_new() {
 
   echo "==> Scaffolding hosts/${HOSTNAME}/..."
 
+  # detect hardware model for Pi 3 vs generic
+  local MODEL
+  MODEL=$(ssh_target "cat /proc/device-tree/model 2>/dev/null" || echo "")
+  local IS_PI3=false
+  if [[ "$MODEL" == *"Raspberry Pi 3"* ]]; then
+    IS_PI3=true
+    echo "    Detected: Raspberry Pi 3 (using MBR + extlinux)"
+  fi
+
   # generate disko.nix
-  cat > "${HOST_DIR}/disko.nix" <<DISKO
+  if [[ "$IS_PI3" == true ]]; then
+    cat > "${HOST_DIR}/disko.nix" <<DISKO
+{
+  disko.devices.disk.main = {
+    type = "disk";
+    device = "${DEVICE}";
+    content = {
+      type = "table";
+      format = "msdos";
+      partitions = [
+        {
+          name = "boot";
+          start = "0";
+          end = "512MiB";
+          fs-type = "fat32";
+          bootable = true;
+          content = {
+            type = "filesystem";
+            format = "vfat";
+            mountpoint = "/boot";
+          };
+        }
+        {
+          name = "root";
+          start = "512MiB";
+          end = "100%";
+          content = {
+            type = "filesystem";
+            format = "ext4";
+            mountpoint = "/";
+          };
+        }
+      ];
+    };
+  };
+}
+DISKO
+  else
+    cat > "${HOST_DIR}/disko.nix" <<DISKO
 {
   disko.devices.disk.main = {
     type = "disk";
@@ -185,9 +229,11 @@ cmd_new() {
   };
 }
 DISKO
+  fi
 
   # generate default.nix
-  cat > "${HOST_DIR}/default.nix" <<'DEFAULTNIX'
+  if [[ "$IS_PI3" == true ]]; then
+    cat > "${HOST_DIR}/default.nix" <<'DEFAULTNIX'
 { ... }:
 {
   imports = [
@@ -196,19 +242,30 @@ DISKO
     ../../modules/system
   ];
 
-  # TODO: configure boot loader
-  # EFI:
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-  # Raspberry Pi / ARM:
-  # boot.loader.grub.enable = false;
-  # boot.loader.generic-extlinux-compatible.enable = true;
+  boot.loader.grub.enable = false;
+  boot.loader.generic-extlinux-compatible.enable = true;
 
+  system.stateVersion = "26.05";
+}
+DEFAULTNIX
+  else
+    cat > "${HOST_DIR}/default.nix" <<'DEFAULTNIX'
+{ ... }:
+{
+  imports = [
+    ./hardware-configuration.nix
+    ./disko.nix
+    ../../modules/system
+  ];
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
   boot.kexec.enable = true;
 
   system.stateVersion = "26.05";
 }
 DEFAULTNIX
+  fi
 
   # generate home.nix
   cat > "${HOST_DIR}/home.nix" <<'HOMENIX'

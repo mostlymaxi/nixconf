@@ -13,7 +13,7 @@ with lib;
     pretty.enable = mkEnableOption "pretty DE with stylix + swaybg";
   };
 
-  config = mkIf (config.pretty.enable) {
+  config = mkIf (config.style.enable) {
     systemd.user.services."swaybg" = {
       Unit = {
         Description = "wallpapers! brought to you by stylix! :3";
@@ -62,9 +62,6 @@ with lib;
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/pop.yaml";
       base16Scheme = "${pkgs.base16-schemes}/share/themes/eldritch.yaml";
 
-      # this must be a multiple of 3 for gtk-3.0
-      # apps to understand this properly for some
-      # very strange reason
       # cursor.size = 32;
       cursor = {
         size = 32;
@@ -73,8 +70,10 @@ with lib;
       };
 
       fonts = {
-        monospace.package = pkgs.nerd-fonts.caskaydia-cove;
-        monospace.name = "CaskaydiaCove NFM";
+        monospace = lib.mkIf config.style.fonts.enable {
+          package = inputs.private-fonts.packages."${pkgs.stdenv.system}".codelia;
+          name = "Codelia";
+        };
         sansSerif.package = pkgs.noto-fonts;
         sansSerif.name = "Noto Sans";
         serif.package = pkgs.noto-fonts;

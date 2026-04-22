@@ -32,6 +32,8 @@
     enable = true;
     defaultEditor = true;
 
+    nixpkgs.useGlobalPackages = true;
+
     globals = {
       mapleader = " ";
       maplocalleader = " ";

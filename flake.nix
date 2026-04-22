@@ -33,6 +33,9 @@
 
     ghostty-nightly.url = "github:ghostty-org/ghostty";
 
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
     private-fonts.url = "git+ssh://git@github.com/mostlymaxi/private-fonts.git?shallow=1";
     private-fonts.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -48,15 +51,14 @@
       inherit (inputs.nixpkgs) lib;
       mylib = import ./utils.nix { inherit lib; };
 
-      mkSpecialArgs =
-        hostname: username: {
-          inherit
-            inputs
-            hostname
-            username
-            mylib
-            ;
-        };
+      mkSpecialArgs = hostname: username: {
+        inherit
+          inputs
+          hostname
+          username
+          mylib
+          ;
+      };
 
       mkNixos =
         {
@@ -72,6 +74,8 @@
           inherit specialArgs system;
 
           modules = [
+            inputs.disko.nixosModules.disko
+            inputs.agenix.nixosModules.default
             hostPath
 
             home-manager.nixosModules.home-manager
@@ -132,7 +136,33 @@
           hostname = "blueberry";
           system = "aarch64-linux";
         };
+        blueberry1 = mkNixos {
+          hostname = "blueberry1";
+          system = "aarch64-linux";
+        };
       };
+
+      packages.x86_64-linux.installer =
+        (nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            ./modules/installer.nix
+          ];
+        }).config.system.build.isoImage;
+
+      packages.aarch64-linux.installer =
+        (nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            ./modules/installer.nix
+            {
+              # enable USB boot on Pi 3 (burns one-time fuse, ignored on Pi 4/5)
+              sdImage.firmwareConfig = "program_usb_boot_mode=1";
+            }
+          ];
+        }).config.system.build.sdImage;
     };
 
 }

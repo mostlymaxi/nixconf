@@ -41,7 +41,13 @@
     efi.canTouchEfiVariables = true;
   };
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.kexec.enable = true;
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+  };
 
   programs.steam.enable = true;
 

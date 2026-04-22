@@ -8,10 +8,10 @@
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIDrwB1o6SQRY7DlJ2JxPw9dedIkbZBCnzpd777RQW3hCAAAABHNzaDo="
   ];
 
-  # broadcast nixos-installer.local via mDNS
   services.avahi = {
     enable = true;
     nssmdns4 = true;
+    openFirewall = true;
     publish = {
       enable = true;
       addresses = true;

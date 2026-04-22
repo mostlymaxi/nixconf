@@ -218,6 +218,7 @@ cmd_deploy() {
   nix run github:nix-community/nixos-anywhere -- \
     --flake "${SCRIPT_DIR}#${HOSTNAME}" \
     --target-host "root@${TARGET}" \
+    --build-on local \
     "${extra_args[@]}"
 }
 

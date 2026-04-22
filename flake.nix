@@ -148,7 +148,7 @@
           system = "x86_64-linux";
           modules = [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-            ./modules/installer.nix
+            ./modules/system/installer.nix
           ];
         }).config.system.build.isoImage;
 
@@ -157,7 +157,7 @@
           system = "aarch64-linux";
           modules = [
             "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-            ./modules/installer.nix
+            ./modules/system/installer.nix
             {
               # enable USB boot on Pi 3 (burns one-time fuse, ignored on Pi 4/5)
               sdImage.firmwareConfig = "program_usb_boot_mode=1";

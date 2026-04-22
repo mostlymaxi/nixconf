@@ -1,7 +1,4 @@
+{ mylib, lib, ... }:
 {
-  imports = [
-    ./audio.nix
-    ./desktop
-    ./greeter
-  ];
+  imports = lib.filter (p: baseNameOf p != "system") (mylib.listFiles ./.);
 }

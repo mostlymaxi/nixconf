@@ -41,10 +41,7 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.kexec.enable = true;
 
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-  };
+  mdns.enable = true;
 
   programs.steam.enable = true;
 

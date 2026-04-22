@@ -9,7 +9,7 @@
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  boot.kexec.enable = true;
+  mdns.enable = true;
 
   system.stateVersion = "26.05";
 }

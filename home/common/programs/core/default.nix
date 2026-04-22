@@ -3,7 +3,6 @@
   mylib,
   pkgs,
   config,
-  inputs,
   ...
 }:
 with lib;

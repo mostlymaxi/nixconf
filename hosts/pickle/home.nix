@@ -9,10 +9,10 @@
 
   launcher.default = "fuzzel";
 
-  terminal.ghostty.enable = true;
-  terminal.default = "ghostty";
+  terminal.foot.enable = true;
+  terminal.default = "foot";
 
-  pretty.enable = true;
+  style.enable = true;
 
   programs.enable = true;
   games.enable = true;

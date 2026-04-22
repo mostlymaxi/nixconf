@@ -10,6 +10,7 @@ usage() {
 Usage:
   ./deploy.sh init   <hostname> [target] [system]  — discover hardware + scaffold host config
   ./deploy.sh deploy <hostname> [target]            — install NixOS via nixos-anywhere
+  ./deploy.sh switch <hostname> [target]            — apply config changes to a running host
 
 Options:
   --no-kexec    skip kexec (required for Pi 3 and other devices that don't support it)
@@ -222,10 +223,23 @@ cmd_deploy() {
     "${extra_args[@]}"
 }
 
+# ── switch: apply config to a running host ───────────────────────────────────
+
+cmd_switch() {
+  local HOSTNAME="${1:?Usage: ./deploy.sh switch <hostname> [target]}"
+  TARGET="${2:-${HOSTNAME}.local}"
+
+  nixos-rebuild switch \
+    --flake "${SCRIPT_DIR}#${HOSTNAME}" \
+    --target-host "maxi@${TARGET}" \
+    --sudo
+}
+
 # ── main ─────────────────────────────────────────────────────────────────────
 
 case "${1:-}" in
   init)   shift; cmd_new "$@" ;;
   deploy) shift; cmd_deploy "$@" ;;
+  switch) shift; cmd_switch "$@" ;;
   *)      usage ;;
 esac

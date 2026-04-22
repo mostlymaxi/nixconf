@@ -133,12 +133,8 @@
           system = "x86_64-linux";
           hostPath = ./hosts/pickle;
         };
-        blueberry = mkNixos {
-          hostname = "blueberry";
-          system = "aarch64-linux";
-        };
-        blueberry1 = mkNixos {
-          hostname = "blueberry1";
+        blueberry-1 = mkNixos {
+          hostname = "blueberry-1";
           system = "aarch64-linux";
         };
       };

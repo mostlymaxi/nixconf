@@ -8,9 +8,10 @@ DEFAULT_SYSTEM="x86_64-linux"
 usage() {
   cat <<EOF
 Usage:
-  ./deploy.sh init   <hostname> [target] [system]  — discover hardware + scaffold host config
-  ./deploy.sh deploy <hostname> [target]            — install NixOS via nixos-anywhere
-  ./deploy.sh switch <hostname> [target]            — apply config changes to a running host
+  ./bootstrap build-usb [system]                     — build installer image
+  ./bootstrap init      <hostname> [target] [system] — discover hardware + scaffold host config
+  ./bootstrap deploy    <hostname> [target]           — install NixOS via nixos-anywhere
+  ./bootstrap switch    <hostname> [target]           — apply config changes to a running host
 
 Options:
   --no-kexec    skip kexec (required for Pi 3 and other devices that don't support it)
@@ -36,10 +37,63 @@ cleanup_ssh() {
 }
 trap cleanup_ssh EXIT
 
-# ── new: discover hardware and scaffold host config ──────────────────────────
+# ── build-usb: build and flash installer image ──────────────────────────────
+
+cmd_build_usb() {
+  local SYSTEM="${1:-$DEFAULT_SYSTEM}"
+
+  echo "==> Building installer for ${SYSTEM}..."
+  nix build "${SCRIPT_DIR}#packages.${SYSTEM}.installer"
+
+  local IMAGE
+  if [[ "$SYSTEM" == *"aarch64"* ]]; then
+    IMAGE=$(echo result/sd-image/*.img.zst)
+  else
+    IMAGE=$(echo result/iso/*.iso)
+  fi
+
+  echo ""
+  echo "Image built: ${IMAGE}"
+  echo ""
+
+  # list removable block devices
+  echo "Available removable devices:"
+  lsblk -d -n -p -o NAME,SIZE,MODEL,RM | grep "1$" || echo "  (none found)"
+  echo ""
+
+  read -rp "Flash to device (e.g. /dev/sda), or leave blank to skip: " DEVICE
+
+  if [[ -z "$DEVICE" ]]; then
+    echo "Skipping flash. To flash manually:"
+    if [[ "$SYSTEM" == *"aarch64"* ]]; then
+      echo "  zstd -d ${IMAGE} --stdout | dd of=/dev/sdX bs=4M status=progress && sync"
+    else
+      echo "  dd if=${IMAGE} of=/dev/sdX bs=4M status=progress && sync"
+    fi
+    return
+  fi
+
+  echo "WARNING: This will ERASE ALL DATA on ${DEVICE}."
+  read -rp "Continue? [y/N] " -n 1
+  echo ""
+  [[ $REPLY =~ ^[Yy]$ ]] || exit 1
+
+  umount "${DEVICE}"* 2>/dev/null || true
+
+  if [[ "$SYSTEM" == *"aarch64"* ]]; then
+    zstd -d "${IMAGE}" --stdout | sudo dd of="${DEVICE}" bs=4M status=progress
+  else
+    sudo dd if="${IMAGE}" of="${DEVICE}" bs=4M status=progress
+  fi
+  sync
+
+  echo "==> Done! Remove the drive safely."
+}
+
+# ── init: discover hardware and scaffold host config ─────────────────────────
 
 cmd_new() {
-  local HOSTNAME="${1:?Usage: ./deploy.sh new <hostname> [target] [system]}"
+  local HOSTNAME="${1:?Usage: ./bootstrap init <hostname> [target] [system]}"
   TARGET="${2:-$DEFAULT_TARGET}"
   local SYSTEM="${3:-$DEFAULT_SYSTEM}"
   local HOST_DIR="${SCRIPT_DIR}/hosts/${HOSTNAME}"
@@ -184,7 +238,7 @@ HOMENIX
   echo "         system = \"${SYSTEM}\";"
   echo "       };"
   echo "  3. Test build: nix build .#nixosConfigurations.${HOSTNAME}.config.system.build.toplevel"
-  echo "  4. Deploy:     ./deploy.sh deploy ${HOSTNAME} ${TARGET}"
+  echo "  4. Deploy:     ./bootstrap deploy ${HOSTNAME} ${TARGET}"
 }
 
 # ── deploy: install NixOS via nixos-anywhere ─────────────────────────────────
@@ -199,7 +253,7 @@ cmd_deploy() {
     esac
   done
 
-  local HOSTNAME="${args[0]:?Usage: ./deploy.sh deploy <hostname> [target] [--no-kexec]}"
+  local HOSTNAME="${args[0]:?Usage: ./bootstrap deploy <hostname> [target] [--no-kexec]}"
   TARGET="${args[1]:-$DEFAULT_TARGET}"
 
   echo "Deploying ${HOSTNAME} to ${TARGET}..."
@@ -226,7 +280,7 @@ cmd_deploy() {
 # ── switch: apply config to a running host ───────────────────────────────────
 
 cmd_switch() {
-  local HOSTNAME="${1:?Usage: ./deploy.sh switch <hostname> [target]}"
+  local HOSTNAME="${1:?Usage: ./bootstrap switch <hostname> [target]}"
   TARGET="${2:-${HOSTNAME}.local}"
 
   nixos-rebuild switch \
@@ -238,8 +292,9 @@ cmd_switch() {
 # ── main ─────────────────────────────────────────────────────────────────────
 
 case "${1:-}" in
-  init)   shift; cmd_new "$@" ;;
-  deploy) shift; cmd_deploy "$@" ;;
-  switch) shift; cmd_switch "$@" ;;
-  *)      usage ;;
+  build-usb) shift; cmd_build_usb "$@" ;;
+  init)      shift; cmd_new "$@" ;;
+  deploy)    shift; cmd_deploy "$@" ;;
+  switch)    shift; cmd_switch "$@" ;;
+  *)         usage ;;
 esac

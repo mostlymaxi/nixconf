@@ -69,7 +69,6 @@ in
         ];
       };
 
-      networking.firewall.allowedTCPPorts = [ 9100 ];
     })
 
     (lib.mkIf (cfg.enable && cfg.grafanaCloud.enable) {

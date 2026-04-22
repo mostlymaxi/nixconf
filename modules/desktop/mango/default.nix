@@ -28,6 +28,6 @@ with lib;
     desktop."initial-session" = mkIf (config.desktop.default == "mango") "${pkgs.mangowc}/bin/mango";
     programs.mango.enable = true;
 
-    services.displayManager.sessionPackages = [ pkgs.niri ];
+    services.displayManager.sessionPackages = [ pkgs.mangowc ];
   };
 }

@@ -46,19 +46,26 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  networking.hostName = "${hostname}";
   networking.networkmanager.enable = lib.mkDefault true;
+
+  networking.firewall.enable = lib.mkDefault true;
 
   services.openssh = {
     enable = true;
     settings = {
       PermitRootLogin = "no"; # disable root login
       PasswordAuthentication = false; # disable password login
+      X11Forwarding = false;
     };
     openFirewall = true;
   };
 
-  services.fail2ban.enable = false; # disabling until i figure out how to configure this to be less strict
+  services.fail2ban = {
+    enable = true;
+    maxretry = 5;
+    bantime = "1h";
+    bantime-increment.enable = true; # repeat offenders get exponentially longer bans
+  };
 
   nix.gc = {
     automatic = true;

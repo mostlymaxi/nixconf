@@ -1,5 +1,5 @@
 {
-  description = "Example nix-darwin system flake";
+  description = "NixOS and nix-darwin system configurations";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -44,155 +44,94 @@
       nix-darwin,
       ...
     }:
+    let
+      inherit (inputs.nixpkgs) lib;
+      mylib = import ./utils.nix { inherit lib; };
+
+      mkSpecialArgs =
+        hostname: username: {
+          inherit
+            inputs
+            hostname
+            username
+            mylib
+            ;
+        };
+
+      mkNixos =
+        {
+          hostname,
+          system,
+          username ? "maxi",
+          hostPath ? ./hosts/${hostname},
+        }:
+        let
+          specialArgs = mkSpecialArgs hostname username;
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit specialArgs system;
+
+          modules = [
+            hostPath
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = specialArgs;
+              home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
+            }
+          ];
+        };
+
+      mkDarwin =
+        {
+          hostname,
+          username ? "maxi",
+        }:
+        let
+          specialArgs = mkSpecialArgs hostname username;
+        in
+        nix-darwin.lib.darwinSystem {
+          inherit specialArgs;
+          system = "aarch64-darwin";
+
+          modules = [
+            ./hosts/${hostname}
+
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = specialArgs;
+              home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
+            }
+          ];
+        };
+    in
     {
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
       formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixfmt;
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt;
 
       darwinConfigurations = {
-        orange =
-          let
-            inherit (inputs.nixpkgs) lib;
-            mylib = import ./utils.nix { inherit lib; };
-
-            username = "maxi";
-            hostname = "orange";
-
-            specialArgs = {
-              inherit
-                inputs
-                hostname
-                username
-                mylib
-                ;
-            };
-          in
-          nix-darwin.lib.darwinSystem {
-            inherit specialArgs;
-            system = "aarch64-darwin";
-
-            modules = [
-              ./hosts/${hostname}
-
-              home-manager.darwinModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-
-                home-manager.extraSpecialArgs = specialArgs;
-
-                home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
-
-              }
-            ];
-          };
+        orange = mkDarwin { hostname = "orange"; };
       };
 
       nixosConfigurations = {
-        pickle =
-          let
-            inherit (inputs.nixpkgs) lib;
-            mylib = import ./utils.nix { inherit lib; };
-
-            hostname = "pickle";
-            username = "maxi";
-
-            specialArgs = {
-              inherit
-                inputs
-                hostname
-                username
-                mylib
-                ;
-            };
-          in
-          nixpkgs.lib.nixosSystem {
-            inherit specialArgs;
-            system = "x86_64-linux";
-
-            modules = [
-              ./hosts/pickle
-
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-
-                home-manager.extraSpecialArgs = specialArgs;
-                home-manager.users.${username} = import ./hosts/pickle/home.nix;
-              }
-            ];
-          };
-        strawberry =
-          let
-            inherit (inputs.nixpkgs) lib;
-            mylib = import ./utils.nix { inherit lib; };
-
-            hostname = "strawberry";
-            username = "maxi";
-
-            specialArgs = {
-              inherit
-                inputs
-                hostname
-                username
-                mylib
-                ;
-            };
-          in
-          nixpkgs.lib.nixosSystem {
-            inherit specialArgs;
-            system = "x86_64-linux";
-
-            modules = [
-              ./hosts/pickle
-
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-
-                home-manager.extraSpecialArgs = specialArgs;
-                home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
-              }
-            ];
-          };
-        blueberry =
-          let
-            inherit (inputs.nixpkgs) lib;
-            mylib = import ./utils.nix { inherit lib; };
-
-            username = "maxi";
-            hostname = "blueberry";
-
-            specialArgs = {
-              inherit
-                inputs
-                hostname
-                username
-                mylib
-                ;
-            };
-          in
-          nixpkgs.lib.nixosSystem {
-            inherit specialArgs;
-            system = "aarch64-linux";
-
-            modules = [
-              ./hosts/${hostname}
-
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-
-                home-manager.extraSpecialArgs = specialArgs;
-
-                home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
-              }
-            ];
-          };
-
+        pickle = mkNixos {
+          hostname = "pickle";
+          system = "x86_64-linux";
+        };
+        strawberry = mkNixos {
+          hostname = "strawberry";
+          system = "x86_64-linux";
+          hostPath = ./hosts/pickle;
+        };
+        blueberry = mkNixos {
+          hostname = "blueberry";
+          system = "aarch64-linux";
+        };
       };
     };
 

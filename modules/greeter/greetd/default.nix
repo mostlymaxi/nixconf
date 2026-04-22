@@ -29,12 +29,12 @@ with lib;
           initial_session = {
             user = specialArgs.username;
             # command = "$HOME/.wayland-session";
-            command = "${config.initial-session}";
+            command = "${config.desktop.initial-session}";
           };
 
           default_session = {
             user = "greeter";
-            command = "${pkgs.greetd.greetd}/bin/agreety --cmd ${config.initial-session}";
+            command = "${pkgs.greetd.greetd}/bin/agreety --cmd ${config.desktop.initial-session}";
           };
         };
       };

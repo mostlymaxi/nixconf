@@ -66,7 +66,6 @@ in
 
     networking.firewall.allowedTCPPorts = [
       18080 # monero p2p
-      18081 # monero rpc
       37889 # p2pool default
       37888 # p2pool mini
       37890 # p2pool nano

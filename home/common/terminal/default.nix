@@ -13,6 +13,7 @@ with lib;
 
       exec = mkOption {
         type = types.str;
+        default = "";
       };
     };
   };

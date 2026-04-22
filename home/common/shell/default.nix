@@ -30,6 +30,7 @@ with lib;
 
       greeting = mkOption {
         type = types.str;
+        default = "";
       };
     };
   };

@@ -2,3 +2,4 @@
 
 /secret/*
 !/secret/*.age
+!/secret/secrets.nix

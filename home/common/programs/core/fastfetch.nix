@@ -16,7 +16,7 @@ with lib;
           separator = " ";
         };
         modules = mkMerge [
-          (mkIf (!osConfig.host.is_headless) [
+          (mkIf (osConfig.desktop.default != "none") [
             "break"
             {
               type = "host";
@@ -102,7 +102,7 @@ with lib;
               keyColor = "blue";
             }
           ])
-          (mkIf (osConfig.host.is_headless) [
+          (mkIf (osConfig.desktop.default == "none") [
             "break"
             {
               type = "host";

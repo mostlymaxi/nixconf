@@ -5,7 +5,8 @@ with lib;
 
   options = {
     greeter = mkOption {
-      type = types.enum [ ];
+      type = types.enum [ "none" ];
+      default = "none";
     };
   };
 }

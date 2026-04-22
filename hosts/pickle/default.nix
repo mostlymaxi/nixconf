@@ -3,9 +3,6 @@
   imports = [
     ../../modules/system
     ../../modules/system/metrics.nix
-    ../../modules/greeter
-    ../../modules/desktop
-
     ./hardware-configuration.nix
   ];
 

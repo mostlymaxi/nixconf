@@ -1,4 +1,4 @@
-{ mylib, lib, ... }:
+{ mylib, lib, config, ... }:
 with lib;
 {
   imports = mylib.listFiles ./.;
@@ -6,7 +6,8 @@ with lib;
   options = {
     desktop = {
       default = mkOption {
-        type = types.enum [ ];
+        type = types.enum [ "none" ];
+        default = "none";
       };
 
       initial-session = mkOption {
@@ -16,7 +17,7 @@ with lib;
     };
   };
 
-  config = {
+  config = mkIf (config.desktop.default != "none") {
     xdg.portal.enable = true;
   };
 }

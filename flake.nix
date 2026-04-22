@@ -76,6 +76,7 @@
           modules = [
             inputs.disko.nixosModules.disko
             inputs.agenix.nixosModules.default
+            ./modules
             hostPath
 
             home-manager.nixosModules.home-manager

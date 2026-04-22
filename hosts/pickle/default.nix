@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-
+{ ... }:
 {
   imports = [
     ../../modules/system
@@ -18,7 +17,7 @@
 
   services.monero.p2pool = {
     enable = true;
-    size = "nano";
+    size = "mini";
     address = "4Atjs1BtpTtFKnK6ZxF8y7bWp4kiy6eBE2F2RDGV8YXiXDUnMUMAgBmBrNczWWKgYiLSvUSEFRuidca2hRCZL7BFHzTsrkN";
   };
 
@@ -46,5 +45,5 @@
 
   programs.steam.enable = true;
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "26.05";
 }

@@ -201,7 +201,10 @@
         };
       }
       {
-        mode = [ "n" "t" ];
+        mode = [
+          "n"
+          "t"
+        ];
         key = "<C-h>";
         action = "<C-\\><C-n><C-w><C-h>";
         options = {
@@ -209,7 +212,10 @@
         };
       }
       {
-        mode = [ "n" "t" ];
+        mode = [
+          "n"
+          "t"
+        ];
         key = "<C-l>";
         action = "<C-\\><C-n><C-w><C-l>";
         options = {
@@ -217,7 +223,10 @@
         };
       }
       {
-        mode = [ "n" "t" ];
+        mode = [
+          "n"
+          "t"
+        ];
         key = "<C-j>";
         action = "<C-\\><C-n><C-w><C-j>";
         options = {
@@ -225,7 +234,10 @@
         };
       }
       {
-        mode = [ "n" "t" ];
+        mode = [
+          "n"
+          "t"
+        ];
         key = "<C-k>";
         action = "<C-\\><C-n><C-w><C-k>";
         options = {

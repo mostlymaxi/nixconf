@@ -43,7 +43,15 @@ in
         exporters = {
           node = {
             enable = true;
-            enabledCollectors = [ "systemd" "logind" "diskstats" "filesystem" "meminfo" "netdev" "time" ];
+            enabledCollectors = [
+              "systemd"
+              "logind"
+              "diskstats"
+              "filesystem"
+              "meminfo"
+              "netdev"
+              "time"
+            ];
           };
         };
 
@@ -52,9 +60,11 @@ in
         scrapeConfigs = [
           {
             job_name = "node-exporter";
-            static_configs = [{
-              targets = [ "localhost:9100" ];
-            }];
+            static_configs = [
+              {
+                targets = [ "localhost:9100" ];
+              }
+            ];
           }
         ];
       };

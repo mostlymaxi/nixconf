@@ -35,10 +35,6 @@
 
     private-fonts.url = "git+ssh://git@github.com/mostlymaxi/private-fonts.git?shallow=1";
     private-fonts.inputs.nixpkgs.follows = "nixpkgs";
-
-    forgecode.url = "github:antinomyhq/forgecode";
-    forgecode.inputs.nixpkgs.follows = "nixpkgs";
-
   };
 
   outputs =
@@ -122,10 +118,8 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
 
-                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce [ ]; } ];
-
                 home-manager.extraSpecialArgs = specialArgs;
-                home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
+                home-manager.users.${username} = import ./hosts/pickle/home.nix;
               }
             ];
           };
@@ -157,8 +151,6 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-
-                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce [ ]; } ];
 
                 home-manager.extraSpecialArgs = specialArgs;
                 home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
@@ -193,8 +185,6 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-
-                home-manager.sharedModules = [ { nixpkgs.overlays = nixpkgs.lib.mkForce [ ]; } ];
 
                 home-manager.extraSpecialArgs = specialArgs;
 

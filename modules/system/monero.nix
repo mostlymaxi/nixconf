@@ -66,6 +66,7 @@ in
 
     networking.firewall.allowedTCPPorts = [
       18080 # monero p2p
+      18081 # monero rpc
       37889 # p2pool default
       37888 # p2pool mini
       37890 # p2pool nano
@@ -109,6 +110,11 @@ in
       };
     };
 
+    boot.kernelModules = mkIf cfg.p2pool.xmrig [ "msr" ];
+    services.udev.extraRules = mkIf cfg.p2pool.xmrig ''
+      DEVPATH=="/devices/virtual/msr/msr[0-9]*", GROUP="p2pool", MODE="0660"
+    '';
+
     environment.systemPackages = [ pkgs.p2pool ] ++ optionals cfg.p2pool.xmrig [ pkgs.xmrig ];
 
     systemd.services.xmrig = mkIf cfg.p2pool.xmrig {
@@ -124,10 +130,10 @@ in
         User = "p2pool";
         Group = "p2pool";
         ExecStart = "${pkgs.xmrig}/bin/xmrig -o 127.0.0.1:3333";
+        AmbientCapabilities = [ "CAP_SYS_RAWIO" ];
         Restart = "on-failure";
         RestartSec = 30;
         PrivateTmp = true;
-        NoNewPrivileges = true;
       };
     };
   };

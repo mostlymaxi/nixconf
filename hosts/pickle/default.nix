@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ../../modules/system
@@ -17,6 +17,7 @@
     size = "mini";
     address = "4Atjs1BtpTtFKnK6ZxF8y7bWp4kiy6eBE2F2RDGV8YXiXDUnMUMAgBmBrNczWWKgYiLSvUSEFRuidca2hRCZL7BFHzTsrkN";
   };
+
 
   networking.networkmanager.enable = false;
   # hard coded like a true genius (faster boot times)
@@ -38,6 +39,7 @@
     efi.canTouchEfiVariables = true;
   };
 
+  boot.kernelPackages = pkgs.linuxPackages_7_0;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.kexec.enable = true;
 

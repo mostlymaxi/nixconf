@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   mylib,
   config,
@@ -46,5 +47,15 @@ with lib;
 
       greeting = mkIf config.programs.core.enable "fastfetch";
     };
+
+    # Shell-agnostic scripts. `dev` drops into a `nix develop` shell using the
+    # configured interactive shell (not bash), tagging it so the prompt can
+    # show which project's virtual environment we are in.
+    home.packages = [
+      (pkgs.writeShellScriptBin "dev" ''
+        export DEV_PROJECT="$(basename "$PWD")"
+        exec nix develop "$@" --command ${config.shell.exec}
+      '')
+    ];
   };
 }

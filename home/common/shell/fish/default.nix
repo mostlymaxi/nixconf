@@ -28,8 +28,33 @@ with lib;
       shellAliases = config.shell.aliases;
 
       functions = {
-        fish_greeting = config.shell.greeting;
+        # Skip the (heavy) greeting when re-exec'd into a `dev` shell; the
+        # prompt already shows we are in a virtual environment.
+        fish_greeting = ''
+          if not set -q IN_NIX_SHELL
+            ${config.shell.greeting}
+          end
+        '';
       };
+
+      # While inside a `nix develop` shell, prefix the prompt with a [project]
+      # tag (truncated if long), wrapping the existing default prompt instead
+      # of replacing it.
+      interactiveShellInit = ''
+        functions --copy fish_prompt __default_fish_prompt
+        function fish_prompt
+          if set -q IN_NIX_SHELL
+            set -l proj (set -q DEV_PROJECT; and echo $DEV_PROJECT; or basename $PWD)
+            if test (string length -- $proj) -gt 20
+              set proj (string sub -l 19 -- $proj)"…"
+            end
+            set_color -o brmagenta
+            echo -n "[$proj] "
+            set_color normal
+          end
+          __default_fish_prompt
+        end
+      '';
 
       plugins = mkMerge [
         ([ ])

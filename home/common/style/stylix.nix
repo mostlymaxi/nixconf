@@ -45,7 +45,7 @@ with lib;
             popups = 12;
             # stylix scales terminal pt by 4/3 on darwin (96 -> 72 dpi compensation),
             # which overshoots on retina displays; 12 * 4/3 lands back at 16pt
-            terminal = if pkgs.stdenv.hostPlatform.isDarwin then 12 else 16;
+            terminal = if pkgs.stdenv.hostPlatform.isDarwin then 14 else 16;
           };
         };
       };

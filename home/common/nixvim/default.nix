@@ -145,6 +145,19 @@
 
     autoCmd = [
       {
+        event = [ "FileType" ];
+        pattern = [ "lazygit" ];
+        desc = "Pass ctrl+j/k through to lazygit (move commits) instead of window navigation";
+        callback.__raw = ''
+          function(ev)
+            -- buffer-local noremap to the key itself shadows the global
+            -- terminal-mode window-nav maps and sends the key to lazygit
+            vim.keymap.set("t", "<C-j>", "<C-j>", { buffer = ev.buf })
+            vim.keymap.set("t", "<C-k>", "<C-k>", { buffer = ev.buf })
+          end
+        '';
+      }
+      {
         event = [ "TextYankPost" ];
         desc = "Highlight when yanking (copying) text";
         group = "kickstart-highlight-yank";

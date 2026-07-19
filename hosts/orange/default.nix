@@ -52,7 +52,6 @@
   environment.variables.EDITOR = "nvim";
 
   homebrew = {
-    # install apps from the Mac App Store
     casks = [
       "discord"
       "kitty"
@@ -60,6 +59,10 @@
       "spotify"
       "firefox"
     ];
+
+    masApps = {
+      "WireGuard" = 1451685025;
+    };
 
     enable = true;
     global.autoUpdate = true;

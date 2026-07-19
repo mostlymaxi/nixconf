@@ -5,6 +5,24 @@
   ...
 }:
 with lib;
+let
+  # desktop.default is a nixos option, so fall back on darwin
+  hasDesktop = (osConfig.desktop.default or "none") != "none";
+
+  # draws the ╭─/├─/╰─ tree corners by position so modules can be
+  # added or removed without touching their neighbours
+  section =
+    keyColor: mods:
+    [ "break" ]
+    ++ imap0 (
+      i: mod:
+      mod
+      // {
+        inherit keyColor;
+        key = (if i == 0 then "╭─" else if i == length mods - 1 then "╰─" else "├─") + mod.key;
+      }
+    ) mods;
+in
 {
 
   config = mkIf config.programs.core.enable {
@@ -15,160 +33,86 @@ with lib;
         display = {
           separator = " ";
         };
-        modules = mkMerge [
-          (mkIf (osConfig.desktop.default != "none") [
-            "break"
-            {
-              type = "host";
-              key = "╭─󰌢";
-              keyColor = "green";
-            }
-            {
-              type = "cpu";
-              key = "├─󰻠";
-              keyColor = "green";
-            }
-            {
-              type = "gpu";
-              key = "├─󰍛";
-              keyColor = "green";
-            }
-            {
-              type = "disk";
-              key = "├─";
-              keyColor = "green";
-            }
-            {
-              type = "memory";
-              key = "├─󰑭";
-              keyColor = "green";
-            }
-            {
-              type = "swap";
-              key = "├─󰓡";
-              keyColor = "green";
-            }
-            {
-              type = "display";
-              key = "╰─󰍹";
-              keyColor = "green";
-            }
-            "break"
-            {
-              type = "shell";
-              key = "╭─";
-              keyColor = "yellow";
-            }
-            {
-              type = "terminal";
-              key = "├─";
-              keyColor = "yellow";
-            }
-            {
-              type = "de";
-              key = "├─";
-              keyColor = "yellow";
-            }
-            {
-              type = "wm";
-              key = "├─";
-              keyColor = "yellow";
-            }
-            {
-              type = "terminalfont";
-              key = "╰─";
-              keyColor = "yellow";
-            }
-            "break"
+        modules =
+          section "green" (
+            [
+              {
+                type = "host";
+                key = "󰌢";
+              }
+              {
+                type = "cpu";
+                key = "󰻠";
+              }
+              {
+                type = "gpu";
+                key = "󰍛";
+              }
+              {
+                type = "disk";
+                key = "";
+              }
+              {
+                type = "memory";
+                key = "󰑭";
+              }
+              {
+                type = "swap";
+                key = "󰓡";
+              }
+            ]
+            ++ optionals hasDesktop [
+              {
+                type = "display";
+                key = "󰍹";
+              }
+            ]
+          )
+          ++ section "yellow" (
+            [
+              {
+                type = "shell";
+                key = "";
+              }
+              {
+                type = "terminal";
+                key = "";
+              }
+            ]
+            ++ optionals hasDesktop [
+              {
+                type = "de";
+                key = "";
+              }
+              {
+                type = "wm";
+                key = "";
+              }
+              {
+                type = "terminalfont";
+                key = "";
+              }
+            ]
+          )
+          ++ section "blue" [
             {
               type = "title";
-              key = "╭─";
+              key = "";
               format = "{user-name}@{host-name}";
-              keyColor = "blue";
             }
             {
               type = "os";
-              key = "├─{icon}"; # Just get your distro's logo off nerdfonts.com
-              keyColor = "blue";
+              key = "{icon}"; # Just get your distro's logo off nerdfonts.com
             }
             {
               type = "kernel";
-              key = "├─";
-              keyColor = "blue";
+              key = "";
             }
             {
               type = "uptime";
-              key = "╰─󰅐";
-              keyColor = "blue";
+              key = "󰅐";
             }
-          ])
-          (mkIf (osConfig.desktop.default == "none") [
-            "break"
-            {
-              type = "host";
-              key = "╭─󰌢";
-              keyColor = "green";
-            }
-            {
-              type = "cpu";
-              key = "├─󰻠";
-              keyColor = "green";
-            }
-            {
-              type = "gpu";
-              key = "├─󰍛";
-              keyColor = "green";
-            }
-            {
-              type = "disk";
-              key = "├─";
-              keyColor = "green";
-            }
-            {
-              type = "memory";
-              key = "├─󰑭";
-              keyColor = "green";
-            }
-            {
-              type = "swap";
-              key = "╰─󰓡";
-              keyColor = "green";
-            }
-            "break"
-            {
-              type = "shell";
-              key = "╭─";
-              keyColor = "yellow";
-            }
-            {
-              type = "terminal";
-              key = "╰─";
-              keyColor = "yellow";
-            }
-            "break"
-            {
-              type = "title";
-              key = "╭─";
-              format = "{user-name}@{host-name}";
-              keyColor = "blue";
-            }
-            {
-              type = "os";
-              key = "├─{icon}"; # Just get your distro's logo off nerdfonts.com
-              keyColor = "blue";
-            }
-            {
-              type = "kernel";
-              key = "├─";
-              keyColor = "blue";
-            }
-            {
-              type = "uptime";
-              key = "╰─󰅐";
-              keyColor = "blue";
-            }
-          ])
-        ];
+          ];
 
       };
     };

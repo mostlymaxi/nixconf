@@ -42,7 +42,6 @@ with lib;
           inputs.ghostty-nightly.packages.${pkgs.stdenv.hostPlatform.system}.ghostty;
 
       settings = {
-        font-size = mkIf (config.style.fonts.enable) 14;
         command = mkIf (config.shell.exec != "") config.shell.exec;
         cursor-style = "block";
         cursor-style-blink = false;

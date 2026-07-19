@@ -12,7 +12,7 @@
   terminal.ghostty.enable = true;
   terminal.default = "ghostty";
 
-  style.fonts.enable = true;
+  style.enable = true;
 
   programs.enable = true;
 }

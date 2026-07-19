@@ -9,6 +9,8 @@
   shell.default = "fish";
 
   terminal.kitty.enable = true;
+  terminal.ghostty.enable = true;
+  terminal.default = "ghostty";
 
   style.fonts.enable = true;
 

@@ -83,6 +83,7 @@
   homebrew = {
     casks = [
       "discord"
+      "ghostty"
       "kitty"
       "steam"
       "spotify"

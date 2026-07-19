@@ -20,7 +20,12 @@ with lib;
   };
 
   config = mkIf config.terminal.ghostty.enable {
-    terminal.exec = mkIf (config.terminal.default == "ghostty") "${pkgs.ghostty}/bin/ghostty";
+    terminal.exec = mkIf (config.terminal.default == "ghostty") (
+      if pkgs.stdenv.hostPlatform.isDarwin then
+        "/Applications/Ghostty.app/Contents/MacOS/ghostty"
+      else
+        "${pkgs.ghostty}/bin/ghostty"
+    );
 
     xdg.configFile = {
       "ghostty/shaders/cursor_warp.glsl".source = ./shaders/cursor_warp.glsl;
@@ -29,7 +34,12 @@ with lib;
 
     programs.ghostty = {
       enable = true;
-      package = inputs.ghostty-nightly.packages.${pkgs.stdenv.hostPlatform.system}.ghostty;
+      # on darwin the app is installed as a homebrew cask, home-manager only manages config
+      package =
+        if pkgs.stdenv.hostPlatform.isDarwin then
+          null
+        else
+          inputs.ghostty-nightly.packages.${pkgs.stdenv.hostPlatform.system}.ghostty;
 
       settings = {
         font-size = mkIf (config.style.fonts.enable) 14;

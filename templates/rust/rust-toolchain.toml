@@ -1,0 +1,11 @@
+[toolchain]
+channel = "1.97.1"
+# minimal = rustc + cargo + rust-std only; the components below are
+# added explicitly (drops rust-docs from the toolchain closure)
+profile = "minimal"
+components = [
+  "rustfmt",
+  "clippy",
+  "rust-analyzer",
+  "rust-src",
+]

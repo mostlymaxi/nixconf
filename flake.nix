@@ -129,6 +129,12 @@
       formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixfmt;
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt;
 
+      # scaffold a new project: nix flake init -t ~/nixconf#rust
+      templates.rust = {
+        path = ./templates/rust;
+        description = "Rust dev shell";
+      };
+
       darwinConfigurations = {
         orange = mkDarwin { hostname = "orange"; };
       };

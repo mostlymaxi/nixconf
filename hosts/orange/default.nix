@@ -17,6 +17,35 @@
           DSDontWriteUSBStores = true;
         };
 
+        # Mission Control "Move left/right a space" (symbolic hotkeys 79/81),
+        # rebound from Ctrl+Left/Right to Cmd+H/Cmd+L.
+        # parameters = [ ascii-code virtual-keycode modifier-mask ]; 1048576 = Cmd
+        "com.apple.symbolichotkeys" = {
+          AppleSymbolicHotKeys = {
+            "79" = {
+              enabled = true;
+              value = {
+                type = "standard";
+                parameters = [
+                  104
+                  4
+                  1048576
+                ];
+              };
+            };
+            "81" = {
+              enabled = true;
+              value = {
+                type = "standard";
+                parameters = [
+                  108
+                  37
+                  1048576
+                ];
+              };
+            };
+          };
+        };
       };
       # Show hidden files in Finder
       finder = {

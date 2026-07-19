@@ -18,7 +18,6 @@
     address = "4Atjs1BtpTtFKnK6ZxF8y7bWp4kiy6eBE2F2RDGV8YXiXDUnMUMAgBmBrNczWWKgYiLSvUSEFRuidca2hRCZL7BFHzTsrkN";
   };
 
-
   networking.networkmanager.enable = false;
   # hard coded like a true genius (faster boot times)
   networking.interfaces.enp12s0.ipv4.addresses = [
@@ -39,7 +38,7 @@
     efi.canTouchEfiVariables = true;
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_7_0;
+  boot.kernelPackages = pkgs.linuxPackages_7_1;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.kexec.enable = true;
 

@@ -76,7 +76,10 @@
   programs.fish.enable = true;
 
   # Enables TouchID for sudo operations
-  security.pam.services.sudo_local.touchIdAuth = true;
+  security.pam.services.sudo_local = {
+    touchIdAuth = true;
+    reattach = true; # pam_reattach, so TouchID also works inside tmux
+  };
 
   environment.variables.EDITOR = "nvim";
 

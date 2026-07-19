@@ -5,6 +5,7 @@
   ];
 
   shell.fish.enable = true;
+  shell.nu.enable = true;
   shell.default = "fish";
 
   terminal.kitty.enable = true;

@@ -10,7 +10,7 @@ with lib;
     signing.format = "openpgp";
     settings = {
       user.name = "Maxi Saparov";
-      user.email = "maxi.saparov@gmail.com";
+      user.email = "max.saparov@gmail.com";
     };
   };
 }

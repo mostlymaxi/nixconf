@@ -1,4 +1,17 @@
-{ ... }:
+{
+  config,
+  pkgs,
+  hostname,
+  ...
+}:
+let
+  flake = ''builtins.getFlake "${config.home.homeDirectory}/nixconf"'';
+  hostOptions =
+    if pkgs.stdenv.isDarwin then
+      "(${flake}).darwinConfigurations.${hostname}.options"
+    else
+      "(${flake}).nixosConfigurations.${hostname}.options";
+in
 {
   programs.nixvim = {
     plugins.cmp-nvim-lsp.enable = true;
@@ -15,7 +28,18 @@
 
       servers = {
         clangd.enable = true;
-        nixd.enable = true;
+
+        nixd = {
+          enable = true;
+          settings = {
+            nixpkgs.expr = "import (${flake}).inputs.nixpkgs { }";
+            formatting.command = [ "nixfmt" ];
+            options = {
+              ${if pkgs.stdenv.isDarwin then "darwin" else "nixos"}.expr = hostOptions;
+              home-manager.expr = "${hostOptions}.home-manager.users.type.getSubOptions [ ]";
+            };
+          };
+        };
 
         lua_ls = {
           enable = true;

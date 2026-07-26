@@ -84,6 +84,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = specialArgs;
+              home-manager.sharedModules = [ ./home ];
               home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
             }
           ];
@@ -119,6 +120,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = specialArgs;
+              home-manager.sharedModules = [ ./home/darwin.nix ];
               home-manager.users.${username} = import ./hosts/${hostname}/home.nix;
             }
           ];

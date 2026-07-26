@@ -1,7 +1,5 @@
 { ... }:
 {
-  imports = [ ../../home/default.nix ];
-
   shell.fish.enable = true;
   shell.default = "fish";
 

@@ -1,9 +1,5 @@
 { ... }:
 {
-  imports = [
-    ../../home
-  ];
-
   shell.fish.enable = true;
   shell.default = "fish";
 

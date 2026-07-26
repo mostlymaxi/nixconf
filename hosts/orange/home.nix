@@ -1,9 +1,5 @@
 { ... }:
 {
-  imports = [
-    ../../home/darwin.nix
-  ];
-
   shell.fish.enable = true;
   shell.nu.enable = true;
   shell.default = "fish";

@@ -23,10 +23,13 @@ with lib;
 
       # utils
       nh # nix cli
+      bitwarden-cli # password vault
       ripgrep # better grep
       htop # alternate top
       nnn # tui folder
       fzf # fuzzy finder
+      fd # better find
+      tree
       grc # generic colorizer
 
       # containerization

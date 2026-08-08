@@ -9,11 +9,13 @@ let
   # tmux-mcp only understands bash/zsh/fish exit-status markers; anything else
   # (nu, none) gets its bash fallback
   tmuxMcpShell =
-    if elem config.shell.default [
-      "bash"
-      "zsh"
-      "fish"
-    ] then
+    if
+      elem config.shell.default [
+        "bash"
+        "zsh"
+        "fish"
+      ]
+    then
       config.shell.default
     else
       "bash";
@@ -38,11 +40,17 @@ in
   programs.claude-code = mkIf config.programs.core.enable {
     enable = true;
 
+    # settings.editorMode = "vim";
+
     # tmux mcp: claude can read panes / send keys in the current tmux server
     mcpServers.tmux = {
       type = "stdio";
       command = getExe tmux-mcp;
       args = [ "--shell-type=${tmuxMcpShell}" ];
     };
+  };
+
+  programs.codex = mkIf config.programs.core.enable {
+    enable = true;
   };
 }

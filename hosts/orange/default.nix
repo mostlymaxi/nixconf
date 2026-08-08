@@ -74,6 +74,7 @@
   # annoying MacOS stuff
   # this needs to be enabled both here AND in home-manager
   programs.fish.enable = true;
+  programs.zsh.enable = true;
 
   # Enables TouchID for sudo operations
   security.pam.services.sudo_local = {
@@ -91,6 +92,7 @@
       "steam"
       "spotify"
       "firefox"
+      "google-chrome"
     ];
 
     masApps = {

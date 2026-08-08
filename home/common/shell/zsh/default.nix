@@ -25,6 +25,8 @@ with lib;
     programs.zsh = {
       enable = true;
 
+      syntaxHighlighting.enable = true;
+
       shellAliases = config.shell.aliases;
 
       # Greeting on interactive start, skipped when re-exec'd into a `dev`

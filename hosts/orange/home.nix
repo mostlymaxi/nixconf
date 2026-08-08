@@ -1,10 +1,9 @@
 { ... }:
 {
   shell.fish.enable = true;
-  shell.nu.enable = true;
+  shell.zsh.enable = true;
   shell.default = "fish";
 
-  terminal.kitty.enable = true;
   terminal.ghostty.enable = true;
   terminal.default = "ghostty";
 

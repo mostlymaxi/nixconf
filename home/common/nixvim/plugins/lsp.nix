@@ -7,7 +7,7 @@
 let
   flake = ''builtins.getFlake "${config.home.homeDirectory}/nixconf"'';
   hostOptions =
-    if pkgs.stdenv.isDarwin then
+    if pkgs.stdenv.hostPlatform.isDarwin then
       "(${flake}).darwinConfigurations.${hostname}.options"
     else
       "(${flake}).nixosConfigurations.${hostname}.options";
@@ -35,7 +35,7 @@ in
             nixpkgs.expr = "import (${flake}).inputs.nixpkgs { }";
             formatting.command = [ "nixfmt" ];
             options = {
-              ${if pkgs.stdenv.isDarwin then "darwin" else "nixos"}.expr = hostOptions;
+              ${if pkgs.stdenv.hostPlatform.isDarwin then "darwin" else "nixos"}.expr = hostOptions;
               home-manager.expr = "${hostOptions}.home-manager.users.type.getSubOptions [ ]";
             };
           };

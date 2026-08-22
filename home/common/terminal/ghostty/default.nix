@@ -43,6 +43,14 @@ with lib;
 
       settings = {
         command = mkIf (config.shell.exec != "") config.shell.exec;
+
+        # stylix scales terminal pt by 4/3 on darwin (ghostty uses 72 dpi there),
+        # which turns 14pt into a repeating fraction that nixpkgs warns about when
+        # serializing ("Imprecise conversion from float to string"); re-do the
+        # scaling rounded to 1/16 pt so the float stringifies exactly
+        font-size = mkIf (pkgs.stdenv.hostPlatform.isDarwin && config.stylix.enable) (
+          mkForce (builtins.floor (config.stylix.fonts.sizes.terminal * 4.0 / 3.0 * 16 + 0.5) / 16.0)
+        );
         cursor-style = "block";
         cursor-style-blink = false;
         shell-integration-features = "no-cursor";

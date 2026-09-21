@@ -12,12 +12,6 @@
 
   services.metrics.enable = false;
 
-  services.monero.p2pool = {
-    enable = true;
-    size = "mini";
-    address = "4Atjs1BtpTtFKnK6ZxF8y7bWp4kiy6eBE2F2RDGV8YXiXDUnMUMAgBmBrNczWWKgYiLSvUSEFRuidca2hRCZL7BFHzTsrkN";
-  };
-
   networking.networkmanager.enable = false;
   # hard coded like a true genius (faster boot times)
   networking.interfaces.enp12s0.ipv4.addresses = [
@@ -33,12 +27,16 @@
     "8.8.8.8"
   ];
 
+  networking.firewall.allowedTCPPorts = [
+    25565 # mc
+  ];
+
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_7_1;
+  boot.kernelPackages = pkgs.linuxPackages_7_2;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.kexec.enable = true;
 

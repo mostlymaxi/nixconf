@@ -27,6 +27,7 @@ with lib;
   config = mkIf config.desktop.niri.enable {
     desktop."initial-session" = mkIf (config.desktop.default == "niri") "${pkgs.niri}/bin/niri-session";
     programs.niri.enable = true;
+    programs.niri.package = pkgs.niri;
 
     services.displayManager.sessionPackages = [ pkgs.niri ];
 

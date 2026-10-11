@@ -22,6 +22,9 @@ with lib;
       stylix = {
         enable = true;
         autoEnable = true;
+        # rofi is not used anywhere, and the target sets the renamed
+        # programs.rofi.font, which warns on every eval
+        targets.rofi.enable = false;
 
         polarity = "dark";
         base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";

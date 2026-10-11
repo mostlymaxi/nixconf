@@ -1,110 +1,120 @@
 * {
-    font-family: "Cascadia Code NF";
+    /* NFP: proportional icons, no double-cell gap */
+    font-family: "CaskaydiaCove NFP";
+    font-size: 14pt;
+    font-weight: 600;
+    min-height: 0;
 }
 
 window#waybar {
     background: transparent;
-    border-radius: 8px;
+    color: @base05;
 }
 
-window#waybar.hidden {
-    opacity: 0.2;
+tooltip {
+    background: alpha(@base00, 0.95);
+    border: 1px solid @base02;
+    border-radius: 10px;
 }
 
-#workspaces {
-    background-color: @base00;
-    border-radius: 8px;
-    border: 2px solid @base08;
-    margin-right: 8px;
+tooltip label {
+    color: @base05;
 }
 
-#cpu {
-    background-color: @base00;
-    border-radius: 8px 0 0 8px;
-    border: 2px solid @base0C;
-    border-right: 0;
-    margin-right: 0;
-    padding-left: 8px;
-    font-weight: bold;
+#workspaces,
+#custom-peak-meter,
+#custom-music,
+#stats,
+#clock {
+    background: @base00;
+    border: 1px solid alpha(@base04, 0.55);
+    border-radius: 999px;
+    padding: 0 6px;
 }
 
-#cpu.warning {
+#workspaces button {
+    min-width: 14px;
+    margin: 8px 2px;
+    padding: 0 7px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: @base05;
+    box-shadow: none;
+    text-shadow: none;
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#workspaces button:hover {
+    background: alpha(@base05, 0.1);
+    color: @base05;
+}
+
+#workspaces button.focused {
+    min-width: 34px;
+    background: linear-gradient(135deg, @base08, @base0C);
+    color: @base00;
+}
+
+#workspaces button.urgent {
+    background: @base08;
+    color: @base00;
+}
+
+#stats {
+    padding: 0 8px;
+}
+
+#temperature,
+#cpu,
+#custom-gpu,
+#memory,
+#disk {
+    padding: 0 6px;
+}
+
+#temperature.warning,
+#cpu.warning,
+#custom-gpu.warning,
+#memory.warning,
+#disk.warning {
     color: @base09;
 }
 
-#cpu.critical {
-    color: @base08;
-}
-
-#memory {
-    background-color: @base00;
-    border-radius: 0 ;
-    border: 2px solid @base0C;
-    border-left: 0;
-    border-right: 0;
-    margin-left: 0;
-    margin-right: 0;
-    font-weight: bold;
-}
-
-#memory.warning {
-    color: @base09;
-}
-
-#memory.critical {
+#temperature.critical,
+#cpu.critical,
+#custom-gpu.critical,
+#memory.critical,
+#disk.critical {
     color: @base08;
 }
 
 #clock {
-    background-color: @base00;
-    border-radius: 0 8px 8px 0;
-    border: 2px solid @base0C;
-    border-left: 0;
-    margin-left: 0;
-    padding-right: 8px;
-    font-weight: bold;
+    padding: 0 14px;
 }
 
 #custom-peak-meter {
-    background-color: @base00;
-    border-radius: 8px 8px 8px 8px;
-    border: 2px solid @base08;
-    padding-right: 8px;
-    padding-left: 8px;
+    padding: 0 10px;
 }
 
-#custom-peak-meter.warn {
-    color: @base0A
-}
-
-#custom-peak-meter.peak {
-    color: @base08
+/* bar colours come from the meter's own markup; dim the pill while it is silent */
+#custom-peak-meter.silent {
+    opacity: 0.6;
 }
 
 #custom-music {
-    border-radius: 8px 8px 8px 8px;
-    border: 2px solid @base09;
-    padding-right: 8px;
-    padding-left: 8px;
+    padding: 0 12px;
 }
 
 @keyframes gradient_f {
-    0%{background-position:0% 0%}
-    100%{background-position:400% 0%}
+    0% { background-position: 0% 0%; }
+    100% { background-position: 400% 0%; }
 }
 
 #custom-music.Playing {
-    background: rgb(137, 180, 250);
     background: radial-gradient(circle, rgba(137, 180, 250, 120) 0%, rgba(142, 179, 250, 120) 6%, rgba(148, 226, 213, 1) 14%, rgba(147, 178, 250, 1) 14%, rgba(155, 176, 249, 1) 18%, rgba(245, 194, 231, 1) 28%, rgba(158, 175, 249, 1) 28%, rgba(181, 170, 248, 1) 58%, rgba(205, 214, 244, 1) 69%, rgba(186, 169, 248, 1) 69%, rgba(195, 167, 247, 1) 72%, rgba(137, 220, 235, 1) 73%, rgba(198, 167, 247, 1) 78%, rgba(203, 166, 247, 1) 100%);
     background-size: 400% 400%;
-    animation: gradient_f 18s cubic-bezier(.72, .39, .21, 1) infinite;
+    animation: gradient_f 18s cubic-bezier(0.72, 0.39, 0.21, 1) infinite;
     text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.377);
-    font-weight: bold;
     color: #fff;
 }
-
-#custom-music.Paused,
-#custom-music.Stopped {
-    background: @base00;
-}
-

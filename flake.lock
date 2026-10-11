@@ -110,6 +110,23 @@
         "type": "github"
       }
     },
+    "caway": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791726483,
+        "narHash": "sha256-dM1AZB38URaBZdQHJRwbCoBIKkWZzT9pL+kP4C12lvA=",
+        "path": "/home/maxi/build/caway-rs",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/maxi/build/caway-rs",
+        "type": "path"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -621,6 +638,23 @@
         "type": "github"
       }
     },
+    "peak-meter-way": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791726852,
+        "narHash": "sha256-AbwM1makgbMA53FECBCKbwrMQ+/XphSZ+t+KqFL8+N8=",
+        "path": "/home/maxi/build/peak-meter-way",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/maxi/build/peak-meter-way",
+        "type": "path"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -670,6 +704,7 @@
       "inputs": {
         "agenix": "agenix",
         "agenix-rekey": "agenix-rekey",
+        "caway": "caway",
         "disko": "disko",
         "ghostty-nightly": "ghostty-nightly",
         "home-manager": "home-manager_2",
@@ -678,6 +713,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
         "nixvim": "nixvim",
+        "peak-meter-way": "peak-meter-way",
         "private-fonts": "private-fonts",
         "spicetify": "spicetify",
         "stylix": "stylix"

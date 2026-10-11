@@ -9,6 +9,7 @@ with lib;
 {
   imports = [
     ./stylix.nix
+    ./termfilechooser.nix
   ];
 
   config = mkIf osConfig.desktop.niri.enable {

@@ -24,8 +24,8 @@ with lib;
         autoEnable = true;
 
         polarity = "dark";
-        # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
-        base16Scheme = "${pkgs.base16-schemes}/share/themes/pandora.yaml";
+        base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
+        # base16Scheme = "${pkgs.base16-schemes}/share/themes/pandora.yaml";
         # base16Scheme = "${pkgs.base16-schemes}/share/themes/pop.yaml";
         # base16Scheme = "${pkgs.base16-schemes}/share/themes/eldritch.yaml";
 

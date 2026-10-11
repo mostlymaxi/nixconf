@@ -6,6 +6,17 @@
   ...
 }:
 with lib;
+let
+  spotify-notify = pkgs.writeShellApplication {
+    name = "spotify-notify";
+    runtimeInputs = with pkgs; [
+      playerctl
+      libnotify
+      curl
+    ];
+    text = builtins.readFile ./spotify-notify.sh;
+  };
+in
 # Media - control and enjoy audio/video
 {
   imports = [
@@ -51,6 +62,19 @@ with lib;
     # playback control
     services = {
       playerctld.enable = true;
+    };
+
+    systemd.user.services.spotify-notify = {
+      Unit = {
+        Description = "now-playing notifications for spotify";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = lib.getExe spotify-notify;
+        Restart = "on-failure";
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
     };
 
   };

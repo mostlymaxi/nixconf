@@ -16,8 +16,9 @@ with lib;
       libnotify
       xdg-utils
       xwayland
-      vesktop
     ];
+
+    programs.vesktop.enable = true;
 
     services = {
       # notification daemon
@@ -25,12 +26,12 @@ with lib;
         enable = true;
 
         settings = {
-          defaultTimeout = 15000;
+          default-timeout = 15000;
 
           margin = "24";
           padding = "8";
-          borderSize = 2;
-          borderRadius = 8;
+          border-size = 2;
+          border-radius = 8;
           width = 300;
           height = 160;
         };

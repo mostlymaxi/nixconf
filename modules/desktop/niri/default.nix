@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   lib,
   config,
@@ -7,11 +6,6 @@
 }:
 with lib;
 {
-
-  imports = [
-    inputs.niri.nixosModules.niri
-  ];
-
   options = {
     desktop = {
       default = mkOption {
@@ -26,23 +20,12 @@ with lib;
 
   config = mkIf config.desktop.niri.enable {
     desktop."initial-session" = mkIf (config.desktop.default == "niri") "${pkgs.niri}/bin/niri-session";
+
+    # Only what cannot live in home-manager: session registration, PAM for
+    # gnome-keyring, polkit policy and the system-wide portal routing.
+    # Everything else is in home/nixos/desktop/niri.
     programs.niri.enable = true;
-    programs.niri.package = pkgs.niri;
-
-    services.displayManager.sessionPackages = [ pkgs.niri ];
-
-    environment.systemPackages = with pkgs; [
-      wl-clipboard
-      wayland-utils
-      xwayland-satellite
-    ];
-
-    # xdg.portal = {
-    #   extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
-    #
-    #   config = {
-    #     niri.default = "gnome";
-    #   };
-    # };
+    # Route FileChooser to the gtk portal instead of Nautilus.
+    programs.niri.useNautilus = false;
   };
 }

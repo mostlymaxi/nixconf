@@ -41,6 +41,9 @@
 
     peak-meter-way.url = "path:/home/maxi/build/peak-meter-way";
     peak-meter-way.inputs.nixpkgs.follows = "nixpkgs";
+
+    random-fx.url = "github:mostlymaxi/random-niri-fx";
+    random-fx.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =

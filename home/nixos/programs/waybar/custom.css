@@ -33,7 +33,7 @@ tooltip label {
 }
 
 #workspaces button {
-    min-width: 14px;
+    min-width: 24px;
     margin: 8px 2px;
     padding: 0 7px;
     border: none;
@@ -51,7 +51,6 @@ tooltip label {
 }
 
 #workspaces button.focused {
-    min-width: 34px;
     background: linear-gradient(135deg, @base08, @base0C);
     color: @base00;
 }

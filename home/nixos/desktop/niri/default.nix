@@ -110,7 +110,8 @@ with lib;
             "Mod+Shift+Slash".show-hotkey-overlay = { };
             "Mod+Return".spawn = [ config.terminal.exec ];
             "Mod+D".spawn = [ config.launcher.exec ];
-            "Mod+Space".toggle-overview = { };
+            "Mod+Space".toggle-window-floating = { };
+            "Mod+O".toggle-overview = { };
 
             "Mod+P".screenshot._props.show-pointer = false;
             "Mod+Control+P".spawn = [
@@ -125,6 +126,9 @@ with lib;
 
             "Mod+H".focus-column-left = { };
             "Mod+L".focus-column-right = { };
+            # unmodified: niri swallows the side buttons in every app (no browser back/forward)
+            "MouseBack".focus-column-left = { };
+            "MouseForward".focus-column-right = { };
             "Mod+K".focus-window-up = { };
             "Mod+J".focus-window-down = { };
 

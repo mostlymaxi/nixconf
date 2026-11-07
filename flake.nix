@@ -36,10 +36,10 @@
     private-fonts.url = "git+ssh://git@github.com/mostlymaxi/private-fonts.git?shallow=1";
     private-fonts.inputs.nixpkgs.follows = "nixpkgs";
 
-    caway.url = "path:/home/maxi/build/caway-rs";
+    caway.url = "github:mostlymaxi/caway-rs";
     caway.inputs.nixpkgs.follows = "nixpkgs";
 
-    peak-meter-way.url = "path:/home/maxi/build/peak-meter-way";
+    peak-meter-way.url = "github:mostlymaxi/peak-meter-way-rs";
     peak-meter-way.inputs.nixpkgs.follows = "nixpkgs";
 
     random-fx.url = "github:mostlymaxi/random-niri-fx";

@@ -118,14 +118,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1791727373,
-        "narHash": "sha256-lhNmCepDjY+dL3UMLpIFPevmkIl8Il+O0jxS+SxuhPA=",
-        "path": "/home/maxi/build/caway-rs",
-        "type": "path"
+        "lastModified": 1794014551,
+        "narHash": "sha256-JBbRP3bZhiPmI5oA04YBnnCtfnBslLUs0AgoKl95WN0=",
+        "owner": "mostlymaxi",
+        "repo": "caway-rs",
+        "rev": "597e521e007b361f1e27553dedc1b342bf897be9",
+        "type": "github"
       },
       "original": {
-        "path": "/home/maxi/build/caway-rs",
-        "type": "path"
+        "owner": "mostlymaxi",
+        "repo": "caway-rs",
+        "type": "github"
       }
     },
     "devshell": {
@@ -662,14 +665,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1791726852,
-        "narHash": "sha256-AbwM1makgbMA53FECBCKbwrMQ+/XphSZ+t+KqFL8+N8=",
-        "path": "/home/maxi/build/peak-meter-way",
-        "type": "path"
+        "lastModified": 1794015474,
+        "narHash": "sha256-nMp2rEiwflspIusxb82pgnyOx/TCKJ2UL6M//F9EcUs=",
+        "owner": "mostlymaxi",
+        "repo": "peak-meter-way-rs",
+        "rev": "cc6be6d7979296adb9d2f8fabacfaf984f75f2bf",
+        "type": "github"
       },
       "original": {
-        "path": "/home/maxi/build/peak-meter-way",
-        "type": "path"
+        "owner": "mostlymaxi",
+        "repo": "peak-meter-way-rs",
+        "type": "github"
       }
     },
     "pre-commit-hooks": {

@@ -21,8 +21,8 @@
     ./plugins/lazygit.nix
     ./plugins/smear-cursor.nix
     ./plugins/snacks.nix
-    ./plugins/opencode.nix
     ./plugins/claudecode.nix
+    ./plugins/markdown-preview.nix
 
     ./plugins/custom/eldritch-theme.nix
     ./plugins/custom/neovim-power-mode.nix

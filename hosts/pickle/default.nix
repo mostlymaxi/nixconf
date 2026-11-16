@@ -2,7 +2,6 @@
 {
   imports = [
     ../../modules/system
-    ../../modules/system/metrics.nix
     ./hardware-configuration.nix
   ];
 
@@ -10,7 +9,7 @@
   desktop.niri.enable = true;
   desktop.default = "niri";
 
-  services.metrics.enable = false;
+  services.metrics.snmpDevices.router = "192.168.88.1";
 
   networking.networkmanager.enable = false;
   # hard coded like a true genius (faster boot times)

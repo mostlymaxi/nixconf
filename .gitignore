@@ -3,3 +3,6 @@
 /secret/*
 !/secret/*.age
 !/secret/secrets.nix
+!/secret/hosts/
+/secret/hosts/*
+!/secret/hosts/*.pub

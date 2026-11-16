@@ -8,6 +8,7 @@
   imports = [
     ./core.nix
     ./monero.nix
+    ./metrics.nix
   ];
 
   users.users.${username} = {

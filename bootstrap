@@ -1,208 +1,80 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DEFAULT_TARGET="nixos-installer.local"
-DEFAULT_SYSTEM="x86_64-linux"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+INSTALLER="nixos-installer.local"
+
+TMP=$(mktemp -d)
+trap 'rm -rf "$TMP"' EXIT
 
 usage() {
   cat <<EOF
 Usage:
-  ./bootstrap build-usb [system]                     — build installer image
-  ./bootstrap init      <hostname> [target] [system] — discover hardware + scaffold host config
-  ./bootstrap deploy    <hostname> [target] [--no-kexec] — install NixOS via nixos-anywhere
-  ./bootstrap switch    <hostname> [target]              — apply config changes to a running host
+  ./bootstrap build-usb [system]           build the installer image and flash it
+  ./bootstrap init   <hostname> [target]   scaffold hosts/<hostname>/ from a booted installer
+  ./bootstrap deploy <hostname> [target [nixos-anywhere args...]]
+                                           wipe the target and install <hostname> on it
+  ./bootstrap switch <hostname> [target]   apply config changes to a running host
+  ./bootstrap rekey                        re-encrypt secrets for the keys in secret/hosts
 
-target defaults to $DEFAULT_TARGET (mDNS from installer image)
-system defaults to $DEFAULT_SYSTEM
+system defaults to x86_64-linux
+target defaults to $INSTALLER (<hostname>.local for switch)
 EOF
   exit 1
 }
 
-SSH_OPTS=(-o StrictHostKeyChecking=accept-new -o ControlMaster=auto -o "ControlPath=/tmp/deploy-%r@%h" -o ControlPersist=300)
-
-ssh_target() {
-  ssh "${SSH_OPTS[@]}" "root@${TARGET}" "$@"
+confirm() {
+  read -rp "$1 [y/N] " -n 1
+  echo
+  [[ $REPLY == [Yy] ]] || exit 1
 }
 
-scp_from_target() {
-  scp "${SSH_OPTS[@]}" "root@${TARGET}:${1}" "${2}"
+build-usb() {
+  local out image device
+
+  out=$(nix build --no-link --print-out-paths "$ROOT#packages.${1:-x86_64-linux}.installer")
+  image=$(find "$out" -type f \( -name '*.iso' -o -name '*.img.zst' \))
+  echo "Built $image"
+
+  lsblk -dnpo NAME,SIZE,MODEL,RM | grep '1$' || echo "no removable devices found"
+  read -rp "Flash to device (blank to skip): " device
+  [[ -n $device ]] || return 0
+  confirm "This will ERASE ALL DATA on $device. Continue?"
+
+  sudo umount "$device"* 2>/dev/null || true
+  case $image in
+    *.zst) zstd -dc "$image" ;;
+    *) cat "$image" ;;
+  esac | sudo dd of="$device" bs=4M status=progress conv=fsync
 }
 
-cleanup_ssh() {
-  [[ -n "${TARGET:-}" ]] && ssh -o "ControlPath=/tmp/deploy-%r@%h" -O exit "root@${TARGET}" 2>/dev/null || true
-}
-trap cleanup_ssh EXIT
+init() {
+  local host=$1 target=${2:-$INSTALLER} dir="$ROOT/hosts/$1"
+  local lsblk disks disk hw system release
+  # installer host keys change on every boot; one shared connection means one YubiKey touch
+  local ssh=(ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+    -o ControlMaster=auto -o ControlPersist=60 -o "ControlPath=$TMP/ssh" "root@$target")
 
-# ── build-usb: build and flash installer image ──────────────────────────────
+  [[ ! -e $dir ]] || { echo "error: hosts/$host already exists" >&2; exit 1; }
 
-cmd_build_usb() {
-  local SYSTEM="${1:-$DEFAULT_SYSTEM}"
+  lsblk=$("${ssh[@]}" lsblk -dnpo NAME,SIZE,TRAN,MODEL -e 7,11)
+  mapfile -t disks <<<"$lsblk"
+  PS3="Install to: "
+  select disk in "${disks[@]}"; do [[ -z $disk ]] || break; done
+  [[ -n ${disk:-} ]] || exit 1
 
-  echo "==> Building installer for ${SYSTEM}..."
-  nix build "${SCRIPT_DIR}#packages.${SYSTEM}.installer"
+  hw=$("${ssh[@]}" nixos-generate-config --show-hardware-config --no-filesystems)
+  system="$("${ssh[@]}" uname -m)-linux"
+  release=$(nix eval --raw --inputs-from "$ROOT" nixpkgs#lib.trivial.release)
 
-  local IMAGE
-  if [[ "$SYSTEM" == *"aarch64"* ]]; then
-    IMAGE=$(echo result/sd-image/*.img.zst)
-  else
-    IMAGE=$(echo result/iso/*.iso)
-  fi
+  mkdir "$dir"
+  printf '%s\n' "$hw" >"$dir/hardware-configuration.nix"
 
-  echo ""
-  echo "Image built: ${IMAGE}"
-  echo ""
-
-  # list removable block devices
-  echo "Available removable devices:"
-  lsblk -d -n -p -o NAME,SIZE,MODEL,RM | grep "1$" || echo "  (none found)"
-  echo ""
-
-  read -rp "Flash to device (e.g. /dev/sda), or leave blank to skip: " DEVICE
-
-  if [[ -z "$DEVICE" ]]; then
-    echo "Skipping flash. To flash manually:"
-    if [[ "$SYSTEM" == *"aarch64"* ]]; then
-      echo "  zstd -d ${IMAGE} --stdout | dd of=/dev/sdX bs=4M status=progress && sync"
-    else
-      echo "  dd if=${IMAGE} of=/dev/sdX bs=4M status=progress && sync"
-    fi
-    return
-  fi
-
-  echo "WARNING: This will ERASE ALL DATA on ${DEVICE}."
-  read -rp "Continue? [y/N] " -n 1
-  echo ""
-  [[ $REPLY =~ ^[Yy]$ ]] || exit 1
-
-  umount "${DEVICE}"* 2>/dev/null || true
-
-  if [[ "$SYSTEM" == *"aarch64"* ]]; then
-    zstd -d "${IMAGE}" --stdout | sudo dd of="${DEVICE}" bs=4M status=progress
-  else
-    sudo dd if="${IMAGE}" of="${DEVICE}" bs=4M status=progress
-  fi
-  sync
-
-  echo "==> Done! Remove the drive safely."
-}
-
-# ── init: discover hardware and scaffold host config ─────────────────────────
-
-cmd_new() {
-  local HOSTNAME="${1:?Usage: ./bootstrap init <hostname> [target] [system]}"
-  TARGET="${2:-$DEFAULT_TARGET}"
-  local SYSTEM="${3:-$DEFAULT_SYSTEM}"
-  local HOST_DIR="${SCRIPT_DIR}/hosts/${HOSTNAME}"
-
-  if [[ -d "$HOST_DIR" ]]; then
-    echo "error: hosts/${HOSTNAME}/ already exists"
-    exit 1
-  fi
-
-  echo "==> Discovering hardware on ${TARGET}..."
-
-  # discover disks
-  local DISKS
-  DISKS=$(ssh_target "lsblk -d -n -p -o NAME,SIZE,MODEL --exclude 7,11")
-  local DISK_COUNT
-  DISK_COUNT=$(echo "$DISKS" | wc -l)
-
-  echo ""
-  echo "Available disks:"
-  echo "$DISKS" | nl -ba
-  echo ""
-
-  local DEVICE
-  if [[ "$DISK_COUNT" -eq 1 ]]; then
-    DEVICE=$(echo "$DISKS" | awk '{print $1}')
-    echo "Auto-selected: ${DEVICE}"
-  else
-    read -rp "Select disk number [1-${DISK_COUNT}]: " DISK_NUM
-    DEVICE=$(echo "$DISKS" | sed -n "${DISK_NUM}p" | awk '{print $1}')
-  fi
-
-  if [[ -z "$DEVICE" ]]; then
-    echo "error: no disk selected"
-    exit 1
-  fi
-
-  echo ""
-  echo "==> Generating hardware config on ${TARGET}..."
-
-  # generate hardware-configuration.nix on target
-  # try --no-filesystems first (recent nixpkgs), fall back to stripping manually
-  if ! ssh_target "nixos-generate-config --no-filesystems --dir /tmp/hw-config 2>/dev/null"; then
-    echo "    (--no-filesystems not available, generating full config and stripping)"
-    ssh_target "nixos-generate-config --dir /tmp/hw-config"
-  fi
-
-  mkdir -p "$HOST_DIR"
-
-  scp_from_target "/tmp/hw-config/hardware-configuration.nix" "${HOST_DIR}/hardware-configuration.nix"
-
-  # strip fileSystems and swapDevices if present (disko handles these)
-  sed -i '/^\s*fileSystems\./,/^\s*};$/d' "${HOST_DIR}/hardware-configuration.nix"
-  sed -i '/^\s*swapDevices\s*=/d' "${HOST_DIR}/hardware-configuration.nix"
-
-  # replace hostPlatform with the correct system
-  sed -i "s|nixpkgs.hostPlatform = .*|nixpkgs.hostPlatform = lib.mkDefault \"${SYSTEM}\";|" "${HOST_DIR}/hardware-configuration.nix"
-
-  echo "==> Scaffolding hosts/${HOSTNAME}/..."
-
-  # detect hardware model for Pi 3 vs generic
-  local MODEL
-  MODEL=$(ssh_target "cat /proc/device-tree/model 2>/dev/null" || echo "")
-  local IS_PI3=false
-  if [[ "$MODEL" == *"Raspberry Pi 3"* ]]; then
-    IS_PI3=true
-    echo "    Detected: Raspberry Pi 3 (using MBR + extlinux)"
-  fi
-
-  # generate disko.nix
-  if [[ "$IS_PI3" == true ]]; then
-    cat > "${HOST_DIR}/disko.nix" <<DISKO
+  cat >"$dir/disko.nix" <<EOF
 {
   disko.devices.disk.main = {
     type = "disk";
-    device = "${DEVICE}";
-    content = {
-      type = "table";
-      format = "msdos";
-      partitions = [
-        {
-          name = "boot";
-          start = "0";
-          end = "512MiB";
-          fs-type = "fat32";
-          bootable = true;
-          content = {
-            type = "filesystem";
-            format = "vfat";
-            mountpoint = "/boot";
-          };
-        }
-        {
-          name = "root";
-          start = "512MiB";
-          end = "100%";
-          content = {
-            type = "filesystem";
-            format = "ext4";
-            mountpoint = "/";
-          };
-        }
-      ];
-    };
-  };
-}
-DISKO
-  else
-    cat > "${HOST_DIR}/disko.nix" <<DISKO
-{
-  disko.devices.disk.main = {
-    type = "disk";
-    device = "${DEVICE}";
+    device = "${disk%% *}";
     content = {
       type = "gpt";
       partitions = {
@@ -213,7 +85,10 @@ DISKO
             type = "filesystem";
             format = "vfat";
             mountpoint = "/boot";
-            mountOptions = [ "fmask=0077" "dmask=0077" ];
+            mountOptions = [
+              "fmask=0077"
+              "dmask=0077"
+            ];
           };
         };
         root = {
@@ -228,28 +103,9 @@ DISKO
     };
   };
 }
-DISKO
-  fi
+EOF
 
-  # generate default.nix
-  if [[ "$IS_PI3" == true ]]; then
-    cat > "${HOST_DIR}/default.nix" <<'DEFAULTNIX'
-{ ... }:
-{
-  imports = [
-    ./hardware-configuration.nix
-    ./disko.nix
-    ../../modules/system
-  ];
-
-  boot.loader.grub.enable = false;
-  boot.loader.generic-extlinux-compatible.enable = true;
-
-  system.stateVersion = "26.05";
-}
-DEFAULTNIX
-  else
-    cat > "${HOST_DIR}/default.nix" <<'DEFAULTNIX'
+  cat >"$dir/default.nix" <<EOF
 { ... }:
 {
   imports = [
@@ -262,96 +118,77 @@ DEFAULTNIX
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kexec.enable = true;
 
-  system.stateVersion = "26.05";
+  system.stateVersion = "$release";
 }
-DEFAULTNIX
-  fi
+EOF
 
-  # generate home.nix
-  cat > "${HOST_DIR}/home.nix" <<'HOMENIX'
+  cat >"$dir/home.nix" <<'EOF'
 { ... }:
 {
-  imports = [ ../../home/default.nix ];
-
   shell.fish.enable = true;
   shell.default = "fish";
 
   programs.core.enable = true;
 }
-HOMENIX
+EOF
 
-  echo ""
-  echo "==> Done! Created hosts/${HOSTNAME}/"
-  echo ""
-  echo "Next steps:"
-  echo "  1. Review and edit the generated files in hosts/${HOSTNAME}/"
-  echo "     - default.nix: uncomment the right boot loader, add modules"
-  echo "     - disko.nix: verify disk device and partition layout"
-  echo "     - hardware-configuration.nix: verify kernel modules"
-  echo "     - home.nix: add your preferred terminal, desktop, etc."
-  echo "  2. Add to flake.nix nixosConfigurations:"
-  echo "       ${HOSTNAME} = mkNixos {"
-  echo "         hostname = \"${HOSTNAME}\";"
-  echo "         system = \"${SYSTEM}\";"
-  echo "       };"
-  echo "  3. Test build: nix build .#nixosConfigurations.${HOSTNAME}.config.system.build.toplevel"
-  echo "  4. Deploy:     ./bootstrap deploy ${HOSTNAME} ${TARGET}"
+  # flakes only see files git knows about
+  git -C "$ROOT" add --intent-to-add "hosts/$host"
+
+  cat <<EOF
+
+Created hosts/$host/. Review it, then add it to nixosConfigurations in flake.nix:
+
+  $host = mkNixos {
+    hostname = "$host";
+    system = "$system";
+  };
+
+and install with: ./bootstrap deploy $host $target
+EOF
 }
 
-# ── deploy: install NixOS via nixos-anywhere ─────────────────────────────────
+deploy() {
+  local host=$1 target=${2:-$INSTALLER} extra="$TMP/extra"
 
-cmd_deploy() {
-  local NO_KEXEC=false
-  local args=()
-  for arg in "$@"; do
-    case "$arg" in
-      --no-kexec) NO_KEXEC=true ;;
-      *) args+=("$arg") ;;
-    esac
-  done
+  confirm "This will ERASE ALL DATA on $target and install $host. Continue?"
 
-  local HOSTNAME="${args[0]:?Usage: ./bootstrap deploy <hostname> [target] [--no-kexec]}"
-  TARGET="${args[1]:-$DEFAULT_TARGET}"
+  # the host decrypts its secrets with this key, so it has to exist before first boot
+  install -d -m 755 "$extra/etc/ssh"
+  ssh-keygen -q -t ed25519 -N "" -C "root@$host" -f "$extra/etc/ssh/ssh_host_ed25519_key"
+  cut -d' ' -f1,2 "$extra/etc/ssh/ssh_host_ed25519_key.pub" >"$ROOT/secret/hosts/$host.pub"
+  git -C "$ROOT" add --intent-to-add "secret/hosts/$host.pub"
+  rekey
 
-  echo "Deploying ${HOSTNAME} to ${TARGET}..."
-  echo "WARNING: This will ERASE ALL DATA on the target's configured disk."
-  echo ""
-  read -rp "Continue? [y/N] " -n 1
-  echo ""
-  [[ $REPLY =~ ^[Yy]$ ]] || exit 1
-
-  local extra_args=()
-  if [[ "$NO_KEXEC" == true ]]; then
-    extra_args+=(--phases "disko,install")
-    echo "NOTE: skipping kexec, using target's existing installer environment."
-    echo "      Manually power cycle the target after install completes."
-  fi
-
+  # Pis can't kexec: append --phases disko,install and power cycle by hand
   nix run github:nix-community/nixos-anywhere -- \
-    --flake "${SCRIPT_DIR}#${HOSTNAME}" \
-    --target-host "root@${TARGET}" \
-    --build-on local \
-    "${extra_args[@]}"
+    --flake "$ROOT#$host" --target-host "root@$target" --build-on local \
+    --extra-files "$extra" "${@:3}"
+
+  echo "Commit secret/ so $host keeps access to its secrets."
 }
 
-# ── switch: apply config to a running host ───────────────────────────────────
-
-cmd_switch() {
-  local HOSTNAME="${1:?Usage: ./bootstrap switch <hostname> [target]}"
-  TARGET="${2:-${HOSTNAME}.local}"
-
-  nixos-rebuild switch \
-    --flake "${SCRIPT_DIR}#${HOSTNAME}" \
-    --target-host "maxi@${TARGET}" \
-    --sudo
+switch() {
+  nixos-rebuild switch --flake "$ROOT#$1" --target-host "maxi@${2:-$1.local}" --sudo
 }
 
-# ── main ─────────────────────────────────────────────────────────────────────
+rekey() {
+  local secrets="$ROOT/secret" age name
+  age="$(nix build --no-link --print-out-paths nixpkgs#age)/bin/age"
+
+  echo "Re-encrypting secrets with this machine's host key..."
+  for name in $(nix eval --raw --file "$secrets/secrets.nix" --apply 's: toString (builtins.attrNames s)'); do
+    nix eval --raw --file "$secrets/secrets.nix" \
+      --apply "s: builtins.concatStringsSep \"\n\" s.\"$name\".publicKeys" >"$TMP/recipients"
+    sudo "$age" -d -i /etc/ssh/ssh_host_ed25519_key "$secrets/$name" |
+      "$age" -R "$TMP/recipients" -o "$TMP/$name"
+    mv "$TMP/$name" "$secrets/$name"
+    echo "  $name: $(grep -c . "$TMP/recipients") hosts"
+  done
+}
 
 case "${1:-}" in
-  build-usb) shift; cmd_build_usb "$@" ;;
-  init)      shift; cmd_new "$@" ;;
-  deploy)    shift; cmd_deploy "$@" ;;
-  switch)    shift; cmd_switch "$@" ;;
-  *)         usage ;;
+  build-usb | rekey) "$@" ;;
+  init | deploy | switch) [[ $# -ge 2 ]] || usage; "$@" ;;
+  *) usage ;;
 esac

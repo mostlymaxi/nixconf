@@ -97,16 +97,6 @@
           ];
         };
 
-      # extend an existing nixosConfiguration with the netboot module
-      # usage: nix build .#netboot.<hostname>.config.system.build.netbootRamdisk
-      mkNetboot =
-        base:
-        base.extendModules {
-          modules = [
-            "${nixpkgs}/nixos/modules/installer/netboot/netboot.nix"
-          ];
-        };
-
       mkDarwin =
         {
           hostname,
@@ -134,7 +124,7 @@
           ];
         };
     in
-    rec {
+    {
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
       formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixfmt;
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt;
@@ -169,10 +159,6 @@
         };
       };
 
-      # netboot variants of all nixosConfigurations
-      # build with: nix build .#netboot.<hostname>.config.system.build.netbootRamdisk
-      netboot = lib.mapAttrs (_: mkNetboot) nixosConfigurations;
-
       packages.x86_64-linux.installer =
         (nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -190,7 +176,6 @@
             ./modules/system/installer.nix
           ];
         }).config.system.build.sdImage;
-
     };
 
 }
